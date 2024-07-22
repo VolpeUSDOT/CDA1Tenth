@@ -1,0 +1,1855 @@
+[20-May-24 19:12:40.711] INFO - VANET: IP | PORT : 192.168.1.255 | 1234
+[20-May-24 19:12:40.711] INFO - VANET: HARDWARE INTERFACE: wlan0
+[20-May-24 19:12:40.712] INFO - VANET: Device_IP: {192.168.1.3
+[20-May-24 19:12:40.712] INFO - VANET: Socket bound at: 192.168.1.255 | 1234
+[20-May-24 20:29:42.280] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.281] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.282] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:42.283] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.283] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.284] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:42.299] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.299] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.300] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:42.400] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.401] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.401] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:42.501] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.502] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.503] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:42.603] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.604] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.605] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:42.705] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.706] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.707] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:42.808] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.809] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.809] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:42.908] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:42.910] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:42.911] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.009] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.010] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.011] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.111] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.112] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.112] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.212] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.213] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.214] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.314] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.315] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.316] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.416] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.417] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.417] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.519] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.519] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.520] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.622] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.623] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.624] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.724] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.725] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.725] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.825] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.826] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.827] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:43.927] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:43.928] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:43.929] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.029] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.030] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.030] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.130] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.131] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.131] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.232] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.233] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.233] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.333] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.334] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.335] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.435] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.436] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.436] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.536] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.537] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.538] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.638] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.638] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.639] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.739] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.740] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.740] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.841] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.841] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.842] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:44.942] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:44.943] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:44.944] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.044] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.045] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.045] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.146] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.147] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.148] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.248] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.249] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.250] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.352] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.353] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.354] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.453] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.454] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.454] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.552] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.553] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.554] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.654] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.655] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.655] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.755] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.756] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.756] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.858] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.858] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.859] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:45.959] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:45.960] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:45.961] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:46.060] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:46.061] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:46.062] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:46.162] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:46.163] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:46.163] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:46.263] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:46.264] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:46.265] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:46.365] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:46.366] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:46.367] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:46.467] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:46.467] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:46.468] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:46.568] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:50.175] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:50.175] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:50.176] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:50.177] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:50.177] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:50.178] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:50.179] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:50.179] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:50.180] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:50.180] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:50.181] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:50.181] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:50.182] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:50.183] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.183] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.184] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.185] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.185] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.186] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.186] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.187] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.187] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.188] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.188] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.188] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.189] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.189] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.189] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.189] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.190] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.190] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.190] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.190] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.190] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.191] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.191] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.191] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.191] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.192] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.192] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.192] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.192] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.193] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.193] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.193] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.193] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.194] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.194] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.194] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.194] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.195] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.195] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:50.195] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:50.195] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.195] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.196] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.196] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.196] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.196] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.197] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.197] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.197] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.197] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.198] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.198] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.198] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.198] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.199] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.199] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.199] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.199] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.199] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.200] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.200] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.200] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.200] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.200] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.201] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.201] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.201] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.201] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.201] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.202] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.202] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.202] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.202] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.202] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.203] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.203] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.203] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.203] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.204] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.204] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.204] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.205] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.205] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.205] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.205] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.206] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.206] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.206] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.206] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.206] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.207] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.209] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.210] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.210] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.230] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.231] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.231] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.334] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.439] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.440] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.440] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.441] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.442] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.537] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.537] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.538] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.639] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.686] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.686] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.740] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.741] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.741] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.842] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:50.842] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:50.842] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:50.943] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.096] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.096] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.097] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.097] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.097] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.147] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.147] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.148] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.248] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.249] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.249] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.350] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.350] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.351] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.451] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.452] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.452] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.553] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.553] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.553] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.655] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.655] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.656] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.756] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.757] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.757] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.858] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.859] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.860] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:51.960] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:51.961] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:51.961] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.062] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.063] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.063] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.166] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.167] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.167] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.267] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.268] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.269] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.369] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.370] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.370] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.470] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.471] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.471] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.571] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.572] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.573] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.673] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.674] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.675] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.775] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.776] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.777] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.876] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.877] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.878] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:52.978] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:52.979] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:52.979] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.079] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.080] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.081] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.182] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.183] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.184] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.285] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.286] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.287] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.387] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.388] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.389] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.488] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.489] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.490] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.590] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.590] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.591] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.691] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.692] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.693] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.792] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.793] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.794] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.894] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.895] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.895] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:53.995] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:53.997] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:53.997] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.097] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:54.098] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:54.098] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.199] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:54.200] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:54.200] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.300] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:29:54.301] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:29:54.302] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.402] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:54.403] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:54.403] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.503] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:54.504] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:54.505] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.605] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:54.606] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:54.606] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.706] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:54.707] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:54.707] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.808] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:54.809] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:54.809] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:54.909] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:54.910] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:54.911] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.010] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.011] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.012] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.112] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.113] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.114] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.214] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.215] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.215] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.315] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.316] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.317] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.416] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.417] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.418] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.518] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.519] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.519] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.619] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.620] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.620] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.721] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.722] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.722] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.824] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.825] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.826] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:55.924] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:55.925] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:55.925] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.025] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.026] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.027] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.127] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.128] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.129] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.229] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.229] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.230] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.331] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.332] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.332] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.432] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.433] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.434] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.534] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.535] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.536] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.636] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.637] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.638] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.738] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.739] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.739] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.839] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.840] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.841] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:56.941] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:56.942] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:56.943] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.043] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.044] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.044] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.144] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.145] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.146] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.247] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.248] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.248] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.349] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.350] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.351] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.451] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.452] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.453] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.553] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.554] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.554] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.654] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.655] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.656] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.757] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.758] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.758] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.858] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.859] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.859] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:57.959] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:57.960] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:57.961] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.061] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.062] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.062] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.162] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.163] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.164] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.264] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.265] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.265] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.366] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.367] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.367] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.467] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.468] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.469] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.569] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.570] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.571] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.671] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.672] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.673] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.773] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.774] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.775] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.874] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.875] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.876] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:58.976] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:58.977] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:58.978] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.078] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:59.078] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:59.079] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.179] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:59.180] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:59.181] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.280] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:59.281] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:59.282] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.382] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:29:59.383] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:29:59.384] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.484] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:59.485] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:59.485] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.585] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:59.586] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:59.587] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.790] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:59.791] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:59.792] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.892] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:59.893] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:59.893] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:29:59.994] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:29:59.995] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:29:59.996] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.097] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.098] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.098] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.199] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.200] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.201] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.301] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.302] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.302] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.404] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.405] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.406] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.506] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.508] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.508] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.608] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.609] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.610] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.708] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.709] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.710] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.812] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.813] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.813] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:00.911] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:00.912] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:00.913] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.013] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:01.013] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:01.014] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.113] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:01.114] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:01.115] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.215] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:01.216] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:01.217] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.317] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:01.318] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:01.318] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.419] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:30:01.420] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:30:01.420] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.520] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:01.521] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:01.522] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.622] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:01.622] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:01.623] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.724] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:01.725] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:01.725] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.825] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:01.826] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:01.827] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:01.927] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:01.928] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:01.929] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.029] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.029] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.030] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.130] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.131] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.132] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.232] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.233] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.233] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.333] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.334] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.335] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.435] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.436] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.437] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.536] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.537] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.538] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.638] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.639] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.640] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.739] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.740] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.741] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.842] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.843] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.844] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:02.943] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:02.944] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:02.944] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.045] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.046] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.046] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.146] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.147] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.147] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.247] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.248] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.249] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.348] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.349] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.350] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.451] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.452] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.452] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.552] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.553] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.554] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.654] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.655] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.656] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.756] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.757] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.757] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.858] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.858] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.859] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:03.960] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:03.961] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:03.961] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.061] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.062] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.063] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.163] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.164] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.165] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.265] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.266] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.267] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.366] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.367] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.368] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.468] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.469] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.469] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.569] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.570] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.571] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.671] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.672] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.672] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.772] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.773] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.774] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.874] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.875] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.875] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:04.975] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:04.976] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:04.977] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.076] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.077] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.078] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.178] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.179] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.180] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.280] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.282] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.283] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.381] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.381] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.382] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.482] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.483] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.484] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.584] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.585] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.586] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.686] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.686] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.687] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.787] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.788] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.789] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.888] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.889] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.890] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:05.990] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:05.991] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:05.992] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.092] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:06.093] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:06.093] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.193] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:06.194] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:06.195] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.294] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:06.295] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:06.295] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.396] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:06.397] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:06.398] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.498] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:30:06.499] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:30:06.499] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.599] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:06.600] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:06.601] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.701] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:06.702] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:06.702] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.802] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:06.803] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:06.804] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:06.904] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:06.905] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:06.905] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.005] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.006] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.007] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.107] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.107] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.108] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.209] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.210] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.210] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.310] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.311] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.311] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.412] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.413] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.413] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.513] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.514] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.515] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.615] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.616] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.616] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.716] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.717] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.717] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.818] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.819] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.819] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:07.920] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:07.921] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:07.921] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.021] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.022] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.022] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.123] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.124] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.124] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.224] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.225] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.226] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.327] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.328] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.328] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.428] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.429] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.429] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.529] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.530] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.531] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.631] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.631] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.632] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.732] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.733] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.734] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.834] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.835] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.835] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:08.936] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:08.937] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:08.937] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:09.037] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:09.038] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:09.039] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:09.139] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:09.140] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:09.140] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:09.240] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:09.241] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:09.242] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:30:09.342] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:30:09.343] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:30:09.343] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:08.499] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:08.500] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:08.501] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:08.567] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:08.569] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:08.569] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:08.669] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:08.670] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:08.670] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:08.771] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:08.772] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:08.772] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:08.872] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:08.873] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:08.874] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:08.974] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:08.974] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:08.975] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.076] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.077] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.077] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.177] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.178] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.179] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.278] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.279] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.280] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.380] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.381] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.381] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.481] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.482] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.482] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.582] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.583] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.584] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.684] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.685] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.685] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.786] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.787] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.788] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.887] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.888] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.888] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:09.990] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:09.991] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:09.991] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.091] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.092] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.092] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.192] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.193] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.194] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.294] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.295] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.295] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.395] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.396] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.397] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.497] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.498] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.499] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.599] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.600] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.600] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.700] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.701] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.702] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.801] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.802] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.803] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:10.903] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:10.904] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:10.905] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.005] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.006] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.006] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.106] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.107] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.108] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.208] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.209] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.210] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.309] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.310] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.311] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.411] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.412] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.412] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.512] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.513] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.514] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.614] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.615] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.615] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.715] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.716] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.716] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.817] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.817] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.818] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:11.918] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:11.919] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:11.920] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.020] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.021] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.022] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.121] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.122] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.123] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.223] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.224] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.225] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.325] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.326] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.327] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.427] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.428] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.428] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.528] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.529] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.530] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.629] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.630] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.631] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.731] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.732] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.732] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.833] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.834] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.834] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:12.936] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:12.937] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:12.938] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.036] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:13.037] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:13.037] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.138] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:13.139] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:13.139] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.239] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:13.240] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:13.241] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.341] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:13.341] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:13.342] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.443] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:13.444] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:13.444] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.544] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:13.545] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:13.546] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.646] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:13.647] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:13.648] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.748] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:13.749] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:13.749] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.849] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:13.850] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:13.851] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:13.951] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:13.952] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:13.952] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.053] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.054] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.054] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.154] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.155] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.156] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.256] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.257] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.257] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.357] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.358] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.359] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.468] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.469] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.469] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.561] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.562] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.562] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.662] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.663] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.664] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.764] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.765] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.765] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.865] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.865] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.866] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:14.967] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:14.968] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:14.968] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.068] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:15.069] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:15.070] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.170] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:15.171] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:15.172] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.272] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:15.273] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:15.274] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.374] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:15.375] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:15.375] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.476] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:15.477] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:15.478] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.578] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:15.579] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:15.580] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.679] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:15.680] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:15.681] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.781] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:15.781] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:15.782] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.882] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:15.883] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:15.884] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:15.984] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:15.985] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:15.985] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.085] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.086] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.087] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.186] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.187] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.188] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.288] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.289] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.290] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.390] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.391] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.391] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.492] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.493] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.493] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.593] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.594] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.595] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.695] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.695] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.696] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.796] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.797] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.798] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.898] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:16.899] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:16.899] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:16.999] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.000] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.000] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.101] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.102] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.103] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.204] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.205] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.205] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.306] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.307] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.307] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.405] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.406] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.407] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.507] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.508] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.509] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.608] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.609] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.610] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.710] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.711] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.711] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.811] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.812] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.813] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:17.913] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:17.914] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:17.915] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.014] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.015] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.016] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.116] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.117] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.118] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.217] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.218] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.219] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.319] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.320] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.320] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.421] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.421] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.422] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.525] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.526] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.527] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.627] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.628] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.628] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.728] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.729] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.730] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.830] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.831] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.831] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:18.931] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:18.932] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:18.933] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.033] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.034] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.034] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.135] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.136] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.136] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.236] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.237] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.238] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.338] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.339] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.339] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.439] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.440] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.441] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.541] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.542] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.543] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.643] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.644] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.644] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.745] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.746] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.746] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.846] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.847] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.848] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:19.948] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:19.949] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:19.950] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.050] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:20.051] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:20.052] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.151] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:20.152] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:20.153] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.253] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:20.254] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:20.254] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.356] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:20.357] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:20.358] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.460] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:20.461] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:20.462] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.562] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:20.563] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:20.564] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.663] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:20.664] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:20.664] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.765] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:20.765] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:20.766] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.866] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:20.867] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:20.868] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:20.967] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:20.968] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:20.969] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.069] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.070] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.070] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.170] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.171] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.171] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.272] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.273] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.273] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.373] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.375] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.376] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.475] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.476] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.476] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.577] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.578] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.579] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.678] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.679] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.680] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.779] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.780] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.780] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.881] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.882] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.882] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:21.982] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:21.983] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:21.983] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.083] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.086] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.086] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.185] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.186] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.186] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.286] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.287] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.287] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.388] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.389] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.390] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.489] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.490] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.491] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.591] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.592] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.592] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.693] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.694] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.694] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.794] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.795] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.796] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.896] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.896] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.897] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:22.997] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:22.998] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:22.999] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.099] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.100] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.100] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.201] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.202] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.202] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.302] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.303] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.304] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.404] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.405] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.406] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.506] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.507] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.507] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.607] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.608] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.609] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.709] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.710] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.711] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.810] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.811] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.812] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:23.912] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:23.913] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:23.913] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.014] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.015] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.015] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.115] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.115] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.116] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.217] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.218] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.219] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.319] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.320] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.320] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.421] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.422] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.424] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.522] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.523] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.524] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.624] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.625] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.626] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.726] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.727] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.727] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.827] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.828] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.829] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:24.929] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:24.929] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:24.930] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.030] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:25.031] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:25.032] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.132] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:25.133] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:25.133] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.233] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:25.234] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:25.234] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.335] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:25.336] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:25.336] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.436] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:25.437] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:25.438] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.538] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:25.539] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:25.539] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.639] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:25.640] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:25.641] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.741] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:25.742] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:25.742] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.842] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:25.843] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:25.844] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:25.944] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:25.945] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:25.945] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.045] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.046] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.047] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.147] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.148] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.149] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.249] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.250] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.251] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.351] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.352] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.353] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.454] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.455] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.455] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.556] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.557] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.557] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.658] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.659] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.659] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.759] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.760] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.761] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.861] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.862] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.862] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:26.962] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:26.963] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:26.964] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.063] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:27.064] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:27.065] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.165] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:27.166] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:27.168] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.266] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:27.267] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:27.268] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.368] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:27.369] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:27.369] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.469] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:27.470] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:27.471] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.571] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:27.571] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:27.572] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.672] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:27.673] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:27.674] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.774] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:27.774] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:27.775] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.875] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:27.876] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:27.877] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:27.976] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:27.977] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:27.978] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.078] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.078] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.079] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.179] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.180] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.180] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.280] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.281] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.282] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.382] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.383] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.383] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.483] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.484] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.484] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.585] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.585] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.586] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.686] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.687] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.688] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.788] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.789] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.790] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.890] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.891] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.891] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:28.991] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:28.992] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:28.992] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.093] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.094] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.094] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.195] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.196] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.196] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.296] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.297] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.298] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.397] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.398] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.399] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.499] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.500] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.500] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.600] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.601] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.602] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.702] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.703] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.703] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.803] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.804] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.805] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:29.905] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:29.906] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:29.906] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.006] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.007] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.008] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.108] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.109] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.109] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.209] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.210] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.210] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.311] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.312] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.313] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.414] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.414] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.415] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.515] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.516] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.516] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.615] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.616] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.616] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.716] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.717] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.718] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.818] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.819] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.819] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:30.920] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:30.920] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:30.921] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.022] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.023] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.023] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.123] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.124] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.124] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.225] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.226] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.226] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.326] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.327] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.328] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.428] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.429] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.430] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.529] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.530] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.531] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.631] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.631] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.632] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.732] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.733] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.734] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.833] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.834] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.835] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:31.935] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:31.936] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:31.937] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.037] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.038] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.038] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.138] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.139] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.140] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.240] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.241] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.241] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.341] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.342] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.343] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.443] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.444] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.445] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.545] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.545] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.546] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.646] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.646] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.647] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.747] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.748] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.749] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.849] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:32.850] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:32.851] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:32.951] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:32.952] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:32.952] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.052] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.053] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.054] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.154] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.155] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.155] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.255] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.256] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.257] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.357] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.358] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.358] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.459] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.460] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.460] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.560] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.561] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.562] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.662] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.663] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.664] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.763] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.764] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.765] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.865] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.866] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.866] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:33.967] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:33.968] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:33.968] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.068] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.069] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.070] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.170] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.170] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.171] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.271] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.272] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.273] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.372] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.373] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.374] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.473] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.474] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.475] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.575] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.576] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.577] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.677] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.678] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.679] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.779] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.780] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.780] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.880] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.881] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.882] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:34.981] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:34.982] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:34.983] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.082] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.083] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.084] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.184] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.185] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.186] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.286] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.287] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.287] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.387] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.388] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.389] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.489] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.490] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.490] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.591] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.592] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.592] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.692] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.693] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.693] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.793] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.794] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.795] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.895] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.896] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.896] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:35.997] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:35.998] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:35.998] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.098] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.098] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.098] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.200] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.201] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.202] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.301] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.302] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.303] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.403] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.403] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.404] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.505] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.506] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.506] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.606] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.607] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.608] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.707] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.708] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.709] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.810] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.810] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.811] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:36.911] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:36.912] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:36.912] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.012] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.013] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.014] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.114] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.115] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.115] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.215] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.216] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.217] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.317] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.317] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.318] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.418] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.419] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.420] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.520] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.521] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.522] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.622] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.623] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.623] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.723] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.724] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.725] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.827] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.828] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.829] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:37.929] INFO - VANET: Received 'b'\x05Green'' from 192.168.1.2
+[20-May-24 20:31:37.930] INFO - VANET: Packet 'b'\x05Green'' sent to 192.168.1.255
+[20-May-24 20:31:37.930] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.030] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.031] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.032] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.131] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.132] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.132] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.233] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.234] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.234] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.335] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.336] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.336] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.436] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.437] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.438] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.537] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.538] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.539] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.639] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.640] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.641] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.741] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.742] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.742] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.845] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.846] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.847] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:38.946] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:38.947] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:38.947] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.048] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.049] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.050] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.150] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.151] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.152] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.251] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.252] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.252] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.353] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.354] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.355] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.454] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.455] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.456] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.556] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.557] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.558] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.658] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.659] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.659] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.759] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.761] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.761] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.861] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.861] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.862] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:39.962] INFO - VANET: Received 'b'\x06Yellow'' from 192.168.1.2
+[20-May-24 20:31:39.963] INFO - VANET: Packet 'b'\x06Yellow'' sent to 192.168.1.255
+[20-May-24 20:31:39.964] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.064] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.065] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.065] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.165] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.166] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.166] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.266] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.267] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.268] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.368] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.369] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.369] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.470] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.470] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.471] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.572] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.573] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.573] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.673] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.674] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.675] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.775] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.776] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.777] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.877] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.878] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.878] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:40.978] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:40.979] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:40.980] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.079] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.080] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.081] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.181] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.182] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.183] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.283] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.284] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.284] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.384] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.385] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.386] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.486] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.487] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.488] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.591] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.592] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.593] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.693] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.694] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.695] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.795] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.796] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.797] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.896] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.897] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.897] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:41.998] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:41.999] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:41.999] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.099] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.100] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.100] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.200] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.201] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.202] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.315] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.316] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.317] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.403] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.404] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.404] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.504] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.505] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.505] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.605] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.606] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.607] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.707] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.708] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.709] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.809] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.810] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.810] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:42.910] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:42.911] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:42.911] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.012] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.013] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.014] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.123] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.124] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.125] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.214] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.215] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.216] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.316] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.317] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.317] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.418] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.419] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.420] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.521] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.522] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.522] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.622] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.623] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.624] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.722] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.723] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.723] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
+[20-May-24 20:31:43.823] INFO - VANET: Received 'b'\x03Red'' from 192.168.1.2
+[20-May-24 20:31:43.824] INFO - VANET: Packet 'b'\x03Red'' sent to 192.168.1.255
+[20-May-24 20:31:43.824] DEBUG - VANET: Received packet from self @ IP: 192.168.1.3
