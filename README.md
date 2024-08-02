@@ -1,4 +1,4 @@
-## Connected and Automated Vehicle (CAV) Educational Engineering Platform
+# Connected and Automated Vehicle (CAV) Educational Engineering Platform
 
 **Introduction**
 
@@ -25,3 +25,5 @@ This platform is distributed under the terms of the MIT License: [https://openso
 **Disclaimer**
 
 This platform is intended for educational and research purposes only. It should not be used for developing or deploying CAV systems in real-world scenarios without proper validation and safety considerations.
+
+
