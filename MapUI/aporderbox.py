@@ -2,10 +2,11 @@
 
 '''
 
-from PySide6.QtCore import QSize, Qt
+from PySide6.QtCore import QSize, Signal
 from PySide6.QtWidgets import QGroupBox, QGridLayout, QAbstractItemView, QListWidget, QListWidgetItem, QPushButton
 
 class APOrderBoxWidget(QGroupBox):
+    selectionUpdate = Signal()
 
     def __init__(self, box_name):
         super().__init__(box_name)
@@ -31,8 +32,22 @@ class APOrderBoxWidget(QGroupBox):
         layout.addWidget(self.removeSelectedAP, 1, 1)
         # layout.addWidget(self.apOrderList, 0, 0)
 
-
         self.setLayout(layout)
+
+        # Call for custom event
+        self.apOrderList.itemSelectionChanged.connect(self._compactedSignal)
+
+    def _compactedSignal(self):
+        '''
+        Send custom signal that selection has changed only when new item is selected, ignore when selection is cleared to prevent other code from running multiple times
+        '''
+        selected_ap_list = self.apOrderList.selectedItems()
+        if not selected_ap_list: return #List isn't empty
+        # Multiple can be selected, but we should only ever have one selected
+        if len(selected_ap_list) == 1:
+            self.selectionUpdate.emit()
+        else:
+            print("Error, multiple ap were selected in map which shouldn't be possible")
 
     def addActionPoint(self, ap_dict):
         '''

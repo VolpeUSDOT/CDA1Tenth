@@ -1,4 +1,4 @@
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QSize, Signal
 from PySide6.QtWidgets import QWidget, QGridLayout, QGraphicsView
 from MapWidget.vgraphicsscene import ViewGraphicsScene
 from MapWidget.mapitems import createRoadLink, ActionPoint
@@ -11,6 +11,8 @@ graph = './MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
 
 # Subclass QMainWindow to customize your application's main window
 class MapWidget(QWidget):
+    selectionUpdate = Signal()
+
     def __init__(self, pgm_map_fp = pgm_map, map_info_fp = map_info, graph_fp = graph):
         super().__init__()
         self.setMinimumSize(QSize(600,400))
@@ -39,6 +41,21 @@ class MapWidget(QWidget):
         mapWidgetLayout.addWidget(self.view, 0, 0)
 
         self.setLayout(mapWidgetLayout)
+
+        # Handle Scene event
+        self.scene.selectionChanged.connect(self._compactedSignal)
+
+    def _compactedSignal(self):
+        '''
+        Send custom signal that selection has changed only when new item is selected, ignore when selection is cleared to prevent other code from running multiple times
+        '''
+        selected_ap_list = self.scene.selectedItems()
+        if not selected_ap_list: return #List isn't empty
+        # Multiple can be selected, but we should only ever have one selected
+        if len(selected_ap_list) == 1:
+            self.selectionUpdate.emit()
+        else:
+            print("Error, multiple ap were selected in map which shouldn't be possible")
 
     def _readMapInfo(self, fp):
         with open(fp, 'r') as stream:
