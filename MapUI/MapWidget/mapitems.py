@@ -18,10 +18,11 @@ class ActionPoint(QGraphicsItem):
         self.setAcceptHoverEvents(True)
         self.setAcceptedMouseButtons(Qt.LeftButton)
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
-
-
         self.pen = actionPointPen
+
+        # TODO: Get data out of dict, store in some other form?
         self.actionPointData = actionPointData
+        self.ap_id = actionPointData['action_id']
         self.mapScene = mapScene
 
         x = actionPointData['destination_long']

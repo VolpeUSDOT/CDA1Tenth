@@ -2,7 +2,6 @@ from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QWidget, QGridLayout, QGraphicsView
 from MapWidget.vgraphicsscene import ViewGraphicsScene
 from MapWidget.mapitems import createRoadLink, ActionPoint
-from MysqlDataPull import Database
 import geopandas as gpd
 import yaml
 
@@ -27,7 +26,6 @@ class MapWidget(QWidget):
         self.y_origin = mapInfo['origin'][1]
         self.resolution = mapInfo['resolution']
         points, lines = self._readGraphFile(graph_fp, roundPixelPosition = True)
-        actionData = self._pullLocationActions('port_drayage')
 
         # Add all road segments to scene
         road_group = self.scene.createItemGroup([])
@@ -35,12 +33,6 @@ class MapWidget(QWidget):
             roadLink = createRoadLink(line['start_x'], line['start_y'], line['end_x'], line['end_y'])
             self.scene.addItem(roadLink)
             road_group.addToGroup(roadLink)
-
-        # add all action points to scene
-        for _, actionPointData in actionData.iterrows():
-            ap_dict = actionPointData.to_dict()
-            ap = ActionPoint(ap_dict, self.scene)
-            self.scene.addItem(ap)
 
         # Add QGraphicsView to main window
         mapWidgetLayout = QGridLayout()
@@ -82,14 +74,29 @@ class MapWidget(QWidget):
         points['adjusted_y'] = nearest * round(points['adjusted_y']/nearest)
         return points
 
-    def _pullLocationActions(self, schema):
+    def addActionPoint(self, ap_dict):
         '''
-        Pull data from SQL and convert coords to pixel coords
+        Takes an action point dictionary and adds the action point to the map
         '''
-        db = Database(schema)
-        actionData = db.getData()
-        actionData['destination_long'], actionData['destination_lat'] = self._convertCoords(actionData['destination_long'], actionData['destination_lat'])
-        return(actionData)
+        ap_dict['destination_long'], ap_dict['destination_lat'] = self._convertCoords(ap_dict['destination_long'], ap_dict['destination_lat'])
+        ap = ActionPoint(ap_dict, self.scene)
+        self.scene.addItem(ap)
+
+    def addActionPointList(self, ap_list):
+        '''
+        Add multiple action points
+        '''
+        for ap_dict in ap_list:
+            self.addActionPoint(ap_dict)
+
+    # def _pullLocationActions(self, schema):
+    #     '''
+    #     Pull data from SQL and convert coords to pixel coords
+    #     '''
+    #     db = Database(schema)
+    #     actionData = db.getData()
+    #     actionData['destination_long'], actionData['destination_lat'] = self._convertCoords(actionData['destination_long'], actionData['destination_lat'])
+    #     return(actionData)
 
     def _convertCoords(self, x_vals, y_vals):
         converted_y = (y_vals - self.y_origin) / self.resolution * -1
@@ -101,7 +108,6 @@ class MapWidget(QWidget):
             return
         self.view.scale(2, 2)
         self.zoomLevel += 1
-
 
     def zoom_out (self):
         if self.zoomLevel <= -3:
