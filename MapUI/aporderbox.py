@@ -1,7 +1,7 @@
 '''
 
 '''
-
+import pandas as pd
 from PySide6.QtCore import QSize, Signal
 from PySide6.QtWidgets import QGroupBox, QGridLayout, QAbstractItemView, QListWidget, QListWidgetItem, QPushButton
 
@@ -15,22 +15,19 @@ class APOrderBoxWidget(QGroupBox):
         self.apOrderList = APOrderList()
         self.addAPButton = QPushButton("Add Action Point")
         self.removeSelectedAP = QPushButton("Remove Selected Action Point")
+        self.updateSQLServerButton = QPushButton("Push Action List")
 
         # TODO: Add button to add new point
-
-        # TODO: Add button to remove a point
 
         # TODO: Allow points to be moved (Bonus if they can only be placed on roadway)
 
         # TODO: Add icons to list (Bonus if dynamic)
 
-        # TODO: Load initial items
-
         layout = QGridLayout()
         layout.addWidget(self.apOrderList, 0, 0, 1, 2)
         layout.addWidget(self.addAPButton, 1, 0)
         layout.addWidget(self.removeSelectedAP, 1, 1)
-        # layout.addWidget(self.apOrderList, 0, 0)
+        layout.addWidget(self.updateSQLServerButton, 2, 0, 1, 2)
 
         self.setLayout(layout)
 
@@ -64,6 +61,15 @@ class APOrderBoxWidget(QGroupBox):
         for ap_dict in ap_list:
             self.addActionPoint(ap_dict)
 
+    def convertToDataframe(self):
+        '''
+        Converts list to pandas df, generating columns required for linked list calls later
+        '''
+        ap_list = [self.apOrderList.item(x).actionPointData for x in range(self.apOrderList.count())]
+        ap_df = pd.DataFrame(ap_list)
+        ap_df['action_id'] = ap_df.index
+        ap_df['next_action'] = ap_df['action_id'].shift(1, fill_value=ap_df['action_id'].iloc[-1])
+        return ap_df
 
 class APOrderList(QListWidget):
 

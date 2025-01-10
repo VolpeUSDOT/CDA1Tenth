@@ -22,7 +22,8 @@ class MainWindow(QMainWindow):
         self.apInfoBox = ActionInfoBoxWidget("Action Point Info")
 
         # Get action points from SQL and populate widgets with them
-        self._readSQLActionPoints('port_drayage')
+        self.SQLdb = Database('port_drayage')
+        self._readSQLActionPoints()
 
         layout = QGridLayout()
 
@@ -44,6 +45,7 @@ class MainWindow(QMainWindow):
         # Add / remove AP button events
         # self.apOrderBox.addAPButton.clicked.connect()
         self.apOrderBox.removeSelectedAP.clicked.connect(self.deleteActionPoint)
+        self.apOrderBox.updateSQLServerButton.clicked.connect(self.updateSQLServer)
 
     def deleteActionPoint(self):
         '''
@@ -113,16 +115,30 @@ class MainWindow(QMainWindow):
             # Allow runs again
             self.selectionUpdating = False
 
-    def _readSQLActionPoints(self, schema):
+    def _readSQLActionPoints(self):
         '''
         Pull action points from SQL and add them to map and list
         '''
-        db = Database(schema)
-        actionData = db.getData()
+        actionData = self.SQLdb.getData()
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
             self.interactiveMap.addActionPoint(ap_dict)
             self.apOrderBox.addActionPoint(ap_dict)
+
+    def updateSQLServer(self):
+        ap_df = self.apOrderBox.convertToDataframe()
+        engine = self.SQLdb.createSQLEngine()
+        with engine.connect() as connection:
+            print('Insert Attempt')
+            ap_df.to_sql('freight', con=connection, if_exists='replace', index=False)
+            connection.commit()
+            connection.close()
+            print('Insert Finished')
+            #connection.
+
+        # engine = self.SQLdb.dbconn
+        # mycursor = engine.cursor()
+
 
 
 class App(QApplication):

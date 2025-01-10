@@ -95,8 +95,8 @@ class MapWidget(QWidget):
         '''
         Takes an action point dictionary and adds the action point to the map
         '''
-        ap_dict['destination_long'], ap_dict['destination_lat'] = self._convertCoords(ap_dict['destination_long'], ap_dict['destination_lat'])
-        ap = ActionPoint(ap_dict, self.scene)
+        x, y = self._convertCoords(ap_dict['destination_long'], ap_dict['destination_lat'])
+        ap = ActionPoint(ap_dict, x, y, self.scene)
         self.scene.addItem(ap)
 
     def addActionPointList(self, ap_list):

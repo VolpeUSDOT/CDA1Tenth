@@ -13,7 +13,7 @@ def createRoadLink(x1, y1, x2, y2):
 
 class ActionPoint(QGraphicsItem):
 
-    def __init__(self, actionPointData, mapScene):
+    def __init__(self, actionPointData, x, y, mapScene):
         super().__init__()
         self.setAcceptHoverEvents(True)
         self.setAcceptedMouseButtons(Qt.LeftButton)
@@ -25,8 +25,8 @@ class ActionPoint(QGraphicsItem):
         self.ap_id = actionPointData['action_id']
         self.mapScene = mapScene
 
-        x = actionPointData['destination_long']
-        y = actionPointData['destination_lat']
+        #x = actionPointData['destination_long']
+        #y = actionPointData['destination_lat']
 
         # Position in scene coords
         self.setPos(x,y)
