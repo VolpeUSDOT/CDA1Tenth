@@ -3,7 +3,7 @@
 '''
 import pandas as pd
 from PySide6.QtCore import QSize, Signal
-from PySide6.QtWidgets import QGroupBox, QGridLayout, QAbstractItemView, QListWidget, QListWidgetItem, QPushButton
+from PySide6.QtWidgets import QGroupBox, QGridLayout, QAbstractItemView, QListWidget, QListWidgetItem, QPushButton, QCheckBox
 
 class APOrderBoxWidget(QGroupBox):
     selectionUpdate = Signal()
@@ -13,6 +13,7 @@ class APOrderBoxWidget(QGroupBox):
         self.setMinimumSize(QSize(200,400))
 
         self.apOrderList = APOrderList()
+        self.loopCheckBox = QCheckBox("Loop Actions")
         self.addAPButton = QPushButton("Add Action Point")
         self.removeSelectedAP = QPushButton("Remove Selected Action Point")
         self.updateSQLServerButton = QPushButton("Push Action List")
@@ -25,9 +26,10 @@ class APOrderBoxWidget(QGroupBox):
 
         layout = QGridLayout()
         layout.addWidget(self.apOrderList, 0, 0, 1, 2)
-        layout.addWidget(self.addAPButton, 1, 0)
-        layout.addWidget(self.removeSelectedAP, 1, 1)
-        layout.addWidget(self.updateSQLServerButton, 2, 0, 1, 2)
+        layout.addWidget(self.loopCheckBox, 1, 0, 1, 2)
+        layout.addWidget(self.addAPButton, 2, 0)
+        layout.addWidget(self.removeSelectedAP, 2, 1)
+        layout.addWidget(self.updateSQLServerButton, 3, 0, 1, 2)
 
         self.setLayout(layout)
 
@@ -68,7 +70,16 @@ class APOrderBoxWidget(QGroupBox):
         ap_list = [self.apOrderList.item(x).actionPointData for x in range(self.apOrderList.count())]
         ap_df = pd.DataFrame(ap_list)
         ap_df['action_id'] = ap_df.index
-        ap_df['next_action'] = ap_df['action_id'].shift(1, fill_value=ap_df['action_id'].iloc[-1])
+
+        # NOTE: List of ap info (updated SQL data columns) "id", "vehicle_name", "cargo_name", "action_id", "prev_action_id", "next_action_id", "action_name", "action_status", "longitude", "latitude", "is_notify", "created_at", "updated_at"
+
+        isLooping = self.loopCheckBox.checkState()
+        if isLooping:
+            ap_df['next_action_id'] = ap_df['action_id'].shift(1, fill_value=ap_df['action_id'].iloc[-1])
+            ap_df['prev_action_id'] = ap_df["action_id"].shift(-1,fill_value=ap_df['action_id'].iloc[0] )
+        else:
+            ap_df['next_action'] = ap_df['action_id'].shift(1)
+            ap_df['prev_action_id'] = ap_df["action_id"].shift(-1)
         return ap_df
 
 class APOrderList(QListWidget):

@@ -1,5 +1,5 @@
 import pandas as pd
-import mysql.connector
+# import mysql.connector
 from sqlalchemy import create_engine
 import warnings
 import json
@@ -18,35 +18,51 @@ class Database():
     """
 
     def __init__(self, schema):
-        self.dbconn = self._FindDatabaseConnection()
         self.schema = schema
+        self.engine = self.createSQLEngine()
+        #self.dbconn = self._FindDatabaseConnection()
         self.action_data = self._GetActionData()
 
     def getData(self):
         return self.action_data
 
-    def _FindDatabaseConnection(self):
-        """
-        Connects to appropriate sql server based on environment
-        """
-        with open("secrets.json") as f:
-            secrets = json.load(f)
+    # def _FindDatabaseConnection(self):
+    #     """
+    #     Connects to appropriate sql server based on environment
+    #     """
+    #     with open("secrets.json") as f:
+    #         secrets = json.load(f)
 
-        dbconn = mysql.connector.connect(host=secrets["host"],
-                                         port=secrets["port"],
-                                         user=secrets["user"],
-                                         password=secrets["password"])
-        return dbconn
+    #     dbconn = mysql.connector.connect(host=secrets["host"],
+    #                                      port=secrets["port"],
+    #                                      user=secrets["user"],
+    #                                      password=secrets["password"])
+    #     print(dbconn)
+    #     return dbconn
 
     def _GetActionData(self):
         warnings.simplefilter(action='ignore', category=UserWarning)
         actionsQuery = f'''SELECT * FROM `{self.schema}`.`freight`;'''
-        action_data = pd.read_sql(actionsQuery, con=self.dbconn)
+        action_data = pd.read_sql(actionsQuery, con=self.engine)
         return action_data
 
     def createSQLEngine(self):
         with open("secrets.json") as f:
             secrets = json.load(f)
 
-        engine = create_engine(f"mysql+mysqlconnector://{secrets['user']}:{secrets['password']}@{secrets['host']}:{secrets['port']}/{self.schema}")
+        #mysqlconnector
+        engine = create_engine(f"mysql+pymysql://{secrets['user']}:{secrets['password']}@{secrets['host']}:{secrets['port']}/{self.schema}")
         return engine
+
+
+
+if __name__ == "__main__":
+    print('test')
+    ap_df = pd.DataFrame({'TestCol': [2,3,4,5,6,7],
+                          'AP_ID': [1,2,3,4,5,6]})
+
+    SQLdb = Database('port_drayage')
+
+    engine = SQLdb.createSQLEngine()
+
+    ap_df.to_sql('freight', con=engine, if_exists='replace', index=False, schema='port_drayage',)

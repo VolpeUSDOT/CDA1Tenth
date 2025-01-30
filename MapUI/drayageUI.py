@@ -1,10 +1,13 @@
 # from PySide6.QtCore import
-from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget
 from MapWidget.mapwidget import MapWidget, ActionPoint
 from actioninfobox import ActionInfoBoxWidget
 from aporderbox import APOrderBoxWidget
+from PortDrayageInteractiveTabs.pdTabs import PDTabs
+from tabBar import TabBar
 from MysqlDataPull import Database
-
+from sqlalchemy import text
+import json
 import sys
 
 
@@ -20,6 +23,7 @@ class MainWindow(QMainWindow):
         self.interactiveMap = MapWidget()
         self.apOrderBox = APOrderBoxWidget("Change order of Action Points")
         self.apInfoBox = ActionInfoBoxWidget("Action Point Info")
+        self.tabBar = TabBar()
 
         # Get action points from SQL and populate widgets with them
         self.SQLdb = Database('port_drayage')
@@ -31,10 +35,18 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.interactiveMap, 0, 1)
         layout.addWidget(self.apOrderBox, 0, 2)
 
-        window = QWidget()
-        window.setLayout(layout)
+        self.window = QWidget()
+        self.window.setLayout(layout)
 
-        self.setCentralWidget(window)
+        #
+        self.pdTabs = PDTabs()
+        self.stackedWidget = QStackedWidget()
+        self.stackedWidget.addWidget(self.window)
+        self.stackedWidget.addWidget(self.pdTabs)
+
+
+        self.setCentralWidget(self.stackedWidget)
+        self.setMenuWidget(self.tabBar)
 
         # selection Change Events
         # self.interactiveMap.scene.selectionChanged.connect(self.showAPInfo)
@@ -46,6 +58,21 @@ class MainWindow(QMainWindow):
         # self.apOrderBox.addAPButton.clicked.connect()
         self.apOrderBox.removeSelectedAP.clicked.connect(self.deleteActionPoint)
         self.apOrderBox.updateSQLServerButton.clicked.connect(self.updateSQLServer)
+        self.tabBar.currentChanged.connect(self.changeTab)
+
+    def changeTab(self):
+        '''
+        Changes the visible widget in the central stacked widget based on selected tab.
+
+        NOTE: PySide6 Documentation of setCurrentIndex is incorrect. It works as you would expect
+        '''
+        tabIndex = self.tabBar.currentIndex()
+        if tabIndex == 0:
+            self.stackedWidget.setCurrentIndex(0)
+        elif tabIndex == 1:
+            self.stackedWidget.setCurrentIndex(1)
+        else:
+            self.stackedWidget.setCurrentIndex(0)
 
     def deleteActionPoint(self):
         '''
@@ -126,20 +153,30 @@ class MainWindow(QMainWindow):
             self.apOrderBox.addActionPoint(ap_dict)
 
     def updateSQLServer(self):
+        '''
+        Connect to sql server and update with new action point information
+        TODO: Connect to sql in docker container of v2x hub
+        '''
         ap_df = self.apOrderBox.convertToDataframe()
-        engine = self.SQLdb.createSQLEngine()
-        with engine.connect() as connection:
-            print('Insert Attempt')
-            ap_df.to_sql('freight', con=connection, if_exists='replace', index=False)
-            connection.commit()
-            connection.close()
-            print('Insert Finished')
-            #connection.
-
         # engine = self.SQLdb.dbconn
-        # mycursor = engine.cursor()
+        ap_df.to_sql('freight', con=self.SQLdb.engine, if_exists='replace', index=False, schema='port_drayage',)
 
+    def momJSONCreator(self):
+        '''
+        collect data for mobility operation message
+        Returns:
+            JSON string in MOM format #TODO: This is not finalized
+        '''
+        # NOTE area is likely going to be changed to action point or site
+        area = {"latitude": self.apOrderBox.apOrderList.item(index).actionPointData["latitude"],
+                "longitude": self.apOrderBox.apOrderList.item(index).actionPointData["longitude"],
+                "name": self.apOrderBox.apOrderList.item(index).actionPointData["name"],
+                "status": self.apOrderBox.apOrderList.item(index).actionPointData["status"],
+                "is_notify": self.apOrderBox.apOrderList.item(index).actionPointData["is_notify"]}
+        json_to_be = {"action_id": 1,
+                      "area": area}
 
+        return json.dumps(json_to_be)
 
 class App(QApplication):
     def __init__(self, args):

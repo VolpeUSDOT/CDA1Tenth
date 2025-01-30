@@ -1,0 +1,12 @@
+# from PySide6.QtCore import
+from PySide6.QtWidgets import QTabBar
+from MapWidget.mapwidget import MapWidget, ActionPoint
+
+
+class TabBar(QTabBar):
+
+    def __init__(self):
+        super().__init__()
+        self.addTab("Map")
+        self.addTab("Port Interactions")
+        #self.setShape(QTabBar.RoundedNorth)

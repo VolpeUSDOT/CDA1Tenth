@@ -1,4 +1,4 @@
 pySide6==6.8.1.1
 pandas
 geopandas
-mysql
+mysql-connector-python
