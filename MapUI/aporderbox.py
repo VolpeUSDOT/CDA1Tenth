@@ -78,6 +78,7 @@ class APOrderBoxWidget(QGroupBox):
             ap_df['next_action_id'] = ap_df['action_id'].shift(1, fill_value=ap_df['action_id'].iloc[-1])
             ap_df['prev_action_id'] = ap_df["action_id"].shift(-1,fill_value=ap_df['action_id'].iloc[0] )
         else:
+            #TODO: Fill vlaues -1
             ap_df['next_action'] = ap_df['action_id'].shift(1)
             ap_df['prev_action_id'] = ap_df["action_id"].shift(-1)
         return ap_df
