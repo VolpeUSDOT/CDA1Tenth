@@ -20,6 +20,7 @@ class PDUnloadingWidget(QWidget):
         self.model = UnloadingActionList(unloadingActions=[ActionItem()])
         self.unloadingActionView = PendingActionView()
         self.unloadingActionView.setModel(self.model)
+        self.unloadingActionView.openPersistentEditor(self.model.index(0,0)) # TODO: Remove later when items appear based on received MOMs
 
         self.title = QLabel('''# Port Drayage Unloading Area''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -37,6 +38,8 @@ class PDUnloadingWidget(QWidget):
     def addLoadingAction(self):
 
         self.model.unloadingActions.append(ActionItem())
+        i = self.model.rowCount()
+        self.unloadingActionView.openPersistentEditor(self.model.index(i,0))
         self.model.layoutChanged.emit()
 
     def deleteLoadingAction(self):
@@ -67,18 +70,6 @@ class ActionItem():
         self.timeRequested = time.time()
         self.timeCompleted = None
 
-    # def pendingActionDisplay(self):
-    #     '''TODO: Update'''
-    #     return "EDITABLE: Vehicle: " + str(self.vehicle)  + " | Cargo: " + str(self.cargo) + " | Action ID: " + str(self.actionID) + " | Time Requested: " + str(self.timeRequested)
-
-
-
-    # def completedActionDisplay(self):
-    #     '''TODO: Update'''
-    #     return "Vehicle: " + str(self.vehicle)  + " | Cargo: " + str(self.cargo) + " | Action ID: " + str(self.actionID) + " | Time Requested: " + str(self.timeRequested)
-
-
-
 
 class PendingActionView(QListView):
 
@@ -87,8 +78,9 @@ class PendingActionView(QListView):
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setUniformItemSizes(True)
         self.setItemDelegate(ActionDelegate())
-        self.setEditTriggers(QAbstractItemView.DoubleClicked | QAbstractItemView.SelectedClicked)
-        # self.setEditTriggers(QAbstractItemView.EditTrigger.AllEditTriggers)
+        # self.setEditTriggers(QAbstractItemView.DoubleClicked | QAbstractItemView.SelectedClicked)
+        self.setEditTriggers(QAbstractItemView.EditTrigger.AllEditTriggers)
+
 
 class UnloadingActionList(QAbstractListModel):
 
@@ -129,9 +121,9 @@ class UnloadingActionList(QAbstractListModel):
 
     def flags(self, index):
         flags = super().flags(index)
-        if self.unloadingActions[index.row()].status == "Completed":
+        # if self.unloadingActions[index.row()].status == "Completed":
             # Special operator required to add a new flag to the list of flags
-            flags |= Qt.ItemFlag.ItemIsEditable
+        flags |= Qt.ItemFlag.ItemIsEditable
         return flags
 
 
@@ -143,32 +135,33 @@ class ActionDelegate(QStyledItemDelegate):
     # Paint?
 
     def sizeHint(self, option, index):
-        editor = ActionEditor()
+        editor = ActionEditor(None)
         return editor.sizeHint()
 
     def createEditor(self, parent, option, index):
         print("Creating Editor")
         editor = ActionEditor(parent)
-        editor.editing_finished.connect(self.commit_and_close_editor) # TODO Might need to lose this line
+        # editor.editing_finished.connect(self.commit_and_close_editor) # TODO Might need to lose this line
         return editor
 
     def setEditorData(self, editor, index):
+        print("Setting editor data")
         print(index.data())
         editor.action_data = ActionItem(index.data())
 
     def setModelData(self, editor, model, index):
         model.setData(index, editor.action_data)
 
-    def commit_and_close_editor(self):
-        '''
-        Commits the data to the model and closes the editor
-        '''
-        editor = self.sender()
+    # def commit_and_close_editor(self):
+    #     '''
+    #     Commits the data to the model and closes the editor
+    #     '''
+    #     editor = self.sender()
 
-        # The commitData signal must be emitted when we've finished editing
-        # and need to write our changed back to the model.
-        self.commitData.emit(editor)
-        self.closeEditor.emit(editor, QStyledItemDelegate.NoHint)
+    #     # The commitData signal must be emitted when we've finished editing
+    #     # and need to write our changed back to the model.
+    #     self.commitData.emit(editor)
+    #     # self.closeEditor.emit(editor, QStyledItemDelegate.NoHint)
 
 
     def updateEditorGeometry(self, editor, option, index):
@@ -181,8 +174,8 @@ class ActionDelegate(QStyledItemDelegate):
 class ActionEditor(QWidget):
     # actionCompleted = Signal()
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
 
 
 
@@ -193,7 +186,7 @@ class ActionEditor(QWidget):
         self.portArea = QWidget() # Placeholder b/c I have no clue what is intended to be in that box
         self.vehicleLabel = QLabel("Vehicle: ")
         self.cargoLabel = QLabel("With Cargo: ")
-        self.statusLabel = QLabel("Status: ")
+        self.statusLabel = QLabel(f"Status: {self.m_action_data.status}")
 
         # Layout widgets
         layout = QGridLayout()
@@ -203,6 +196,19 @@ class ActionEditor(QWidget):
         layout.addWidget(self.progressButton, 2, 0, 1, 2)
         layout.addWidget(self.portArea, 0, 2, 3, 2)
         self.setLayout(layout)
+
+        self.progressButton.clicked.connect(self.progressStatus)
+
+    def progressStatus(self):
+        if self.m_action_data.status == "Pending":
+            self.m_action_data.status = "Unloading"
+            self.progressButton.setText("Complete Unloading")
+        elif self.m_action_data.status == "Unloading":
+            self.m_action_data.status = "Completed"
+            # self.actionCompleted.emit()
+        else:
+            print("Action Already Completed")
+        self.statusLabel.setText(f"Status: {self.m_action_data.status}")
 
     def setValue(self, value):
         self.m_action_data = value
