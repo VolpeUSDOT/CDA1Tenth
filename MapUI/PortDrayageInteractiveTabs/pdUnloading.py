@@ -9,9 +9,33 @@ Actions contain info on vehicle, cargo(container) status(pending, unloading, com
 
 pending and unloading actions have a button to interact with and progress the action. Once an action is completed, the interactable object is removed and the info of the action is added to a completed action log
 '''
-import time
-from PySide6.QtCore import QAbstractListModel, Qt, Property
+from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal
 from PySide6.QtWidgets import QGroupBox, QGridLayout, QAbstractItemView, QListWidget, QListWidgetItem, QPushButton, QListView, QLabel, QWidget, QItemDelegate, QStyledItemDelegate, QLineEdit
+import time
+
+
+class ActionItem():
+    '''
+    Class to store data for individual items in model
+    This allows for in place data modification, and display functions to be attached to the data item
+    '''
+
+    def __init__(self, vehicle=None, cargo=None, actionPoint=None):
+        super().__init__()
+        self.vehicle = vehicle
+        self.cargo = cargo
+        self.actionPoint = actionPoint
+        self.actionID = None # actionID
+        self.next_action = None
+        self.prev_action = None
+
+        self.status = "Pending"
+        self.timeRequested = time.time()
+        self.timeCompleted = None
+
+    def completedActionDisplay(self):
+        text = 'Vehicle: {} \t Cargo: {} \t ActionID: {} \t Requested Time: {} \t Completed Time: {}'.format(self.vehicle, self.cargo, self.actionID, self.timeRequested, self.timeCompleted)
+        return text
 
 
 class PDUnloadingWidget(QWidget):
@@ -19,8 +43,18 @@ class PDUnloadingWidget(QWidget):
         super().__init__()
         self.model = UnloadingActionList(unloadingActions=[ActionItem()])
         self.unloadingActionView = PendingActionView()
-        self.unloadingActionView.setModel(self.model)
-        self.unloadingActionView.openPersistentEditor(self.model.index(0,0)) # TODO: Remove later when items appear based on received MOMs
+        self.completedActionView = CompletedActionView()
+        self.inProgressFilterProxyModel = InProgressActionListProxyModel()
+        self.inProgressFilterProxyModel.setSourceModel(self.model)
+        self.completedFilterProxyModel = CompletedActionListProxyModel()
+        self.completedFilterProxyModel.setSourceModel(self.model)
+
+        self.unloadingActionView.setModel(self.inProgressFilterProxyModel)
+        self.completedActionView.setModel(self.completedFilterProxyModel)
+
+        self.unloadingActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(0,0)) # TODO: Remove later when items appear based on received MOMs
+
+
 
         self.title = QLabel('''# Port Drayage Unloading Area''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -29,11 +63,18 @@ class PDUnloadingWidget(QWidget):
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 1)
         layout.addWidget(self.unloadingActionView, 1, 0, 1, 1)
-        # layout.addWidget(self.completedActionList, 2, 0, 1, 1)
+        layout.addWidget(self.completedActionView, 2, 0, 1, 1)
         layout.addWidget(self.completedResetButton, 3, 0, 1, 1)
 
         self.setLayout(layout)
 
+        # self.model.dataChanged.connect(self.updateFilters)
+
+    # def updateFilters(self, index):
+        #if index.data().status == "Completed":
+        #    self.unloadingActionView.closePersistentEditor(index)
+        # self.inProgressFilterProxyModel.invalidateFilter()
+        # self.completedFilterProxyModel.invalidateFilter()
 
     def addLoadingAction(self):
 
@@ -54,23 +95,6 @@ class PDUnloadingWidget(QWidget):
             self.unloadingActionView.clearSelection()
 
 
-
-class ActionItem():
-    '''
-    Class to store data for individual items in model
-    This allows for in place data modification, and display functions to be attached to the data item
-    '''
-
-    def __init__(self, vehicle=None, cargo=None, actionID=None):
-        super().__init__()
-        self.vehicle = vehicle
-        self.cargo = cargo
-        self.actionID = actionID
-        self.status = "Pending"
-        self.timeRequested = time.time()
-        self.timeCompleted = None
-
-
 class PendingActionView(QListView):
 
     def __init__(self):
@@ -80,6 +104,84 @@ class PendingActionView(QListView):
         self.setItemDelegate(ActionDelegate())
         # self.setEditTriggers(QAbstractItemView.DoubleClicked | QAbstractItemView.SelectedClicked)
         self.setEditTriggers(QAbstractItemView.EditTrigger.AllEditTriggers)
+
+class CompletedActionView(QListView):
+
+    def __init__(self):
+        super().__init__()
+        self.setSelectionMode(QAbstractItemView.SelectionMode.NoSelection)
+        self.setUniformItemSizes(True)
+        # self.setItemDelegate(ActionDelegate())
+        # self.setEditTriggers(QAbstractItemView.DoubleClicked | QAbstractItemView.SelectedClicked)
+        self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+
+class InProgressActionListProxyModel(QSortFilterProxyModel):
+    filterEnabledChanged = Signal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.m_filterEnabled = True
+        # NOTE must use setSourceModel on object when created
+
+    def filterAcceptsRow(self, source_row, source_parent):
+        '''
+        Filter
+        '''
+        print("Filter is updated")
+        index = self.sourceModel().index(source_row, 0, source_parent)
+
+        actionStatus = index.data(role=Qt.ItemDataRole.EditRole).status # index.data() calls the model data function at the given index
+
+        return (actionStatus != "Completed")
+
+    def filterEnabled(self):
+        return self.m_filterEnabled
+
+    def setFilterEnabled(self, enabled):
+        if self.m_filterEnabled == enabled:
+            return
+
+        self.m_filterEnabled = enabled
+        self.filterEnabledChanged.emit()
+        self.invalidateFilter()
+
+    filterEnabled = Property(type=bool, fget=filterEnabled, fset=setFilterEnabled, notify=filterEnabledChanged)
+
+
+class CompletedActionListProxyModel(QSortFilterProxyModel):
+    '''
+    Seperate filter from above, does the opposite job for completed list
+    '''
+    filterEnabledChanged = Signal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.m_filterEnabled = True
+        # NOTE must use setSourceModel on object when created
+
+    def filterAcceptsRow(self, source_row, source_parent):
+        '''
+        Filter
+        '''
+        print("completed Filter is updated")
+        index = self.sourceModel().index(source_row, 0, source_parent)
+
+        actionStatus = index.data(role=Qt.ItemDataRole.EditRole).status # index.data() calls the model data function at the given index
+
+        return (actionStatus == "Completed")
+
+    def filterEnabled(self):
+        return self.m_filterEnabled
+
+    def setFilterEnabled(self, enabled):
+        if self.m_filterEnabled == enabled:
+            return
+
+        self.m_filterEnabled = enabled
+        self.filterEnabledChanged.emit()
+        self.invalidateFilter()
+
+    filterEnabled = Property(type=bool, fget=filterEnabled, fset=setFilterEnabled, notify=filterEnabledChanged)
 
 
 class UnloadingActionList(QAbstractListModel):
@@ -96,15 +198,12 @@ class UnloadingActionList(QAbstractListModel):
     def data(self, index, role):
         action = self.unloadingActions[index.row()]
 
-        return action
-        # if role == Qt.ItemDataRole.EditRole: # Pending List
-        #     text = unloadingAction.pendingActionDisplay()
-        #     return text
+        if role == Qt.ItemDataRole.EditRole:
+            return action
 
-        # if role == Qt.ItemDataRole.DisplayRole: # Completed list display
-        #     text = unloadingAction.completedActionDisplay()
-        #     return text
-
+        if role == Qt.ItemDataRole.DisplayRole: # Completed list display
+            text = action.completedActionDisplay()
+            return text
 
     def setData(self, index, value, role):
         '''
@@ -114,16 +213,19 @@ class UnloadingActionList(QAbstractListModel):
             print("Not editable")
             return False
 
-        self.unloadingActions[index.row()] = value
 
-        self.dataChanged.emit(index)
+        self.unloadingActions[index.row()] = value
+        print(value)
+        print("Model Data Updated")
+        self.dataChanged.emit(index, index)
+
         return True
 
     def flags(self, index):
         flags = super().flags(index)
-        # if self.unloadingActions[index.row()].status == "Completed":
-            # Special operator required to add a new flag to the list of flags
-        flags |= Qt.ItemFlag.ItemIsEditable
+        if self.unloadingActions[index.row()].status != "Completed":
+            # |= is a special operator required to add a new flag to the list of flags
+            flags |= Qt.ItemFlag.ItemIsEditable
         return flags
 
 
@@ -132,8 +234,6 @@ class ActionDelegate(QStyledItemDelegate):
         super().__init__(parent)
         print("Delegate Created")
 
-    # Paint?
-
     def sizeHint(self, option, index):
         editor = ActionEditor(None)
         return editor.sizeHint()
@@ -141,28 +241,31 @@ class ActionDelegate(QStyledItemDelegate):
     def createEditor(self, parent, option, index):
         print("Creating Editor")
         editor = ActionEditor(parent)
-        # editor.editing_finished.connect(self.commit_and_close_editor) # TODO Might need to lose this line
+        # Connect the dataChanged signal from each item to update the backend model data
+        editor.actionDataChanged.connect(self.commit_from_editor) # TODO Might need to lose this line
         return editor
 
     def setEditorData(self, editor, index):
         print("Setting editor data")
-        print(index.data())
-        editor.action_data = ActionItem(index.data())
+        print(index)
+        print(index.data(role=Qt.ItemDataRole.EditRole).status)
+        editor.action_data = index.data(role=Qt.ItemDataRole.EditRole)
 
     def setModelData(self, editor, model, index):
         model.setData(index, editor.action_data)
 
-    # def commit_and_close_editor(self):
-    #     '''
-    #     Commits the data to the model and closes the editor
-    #     '''
-    #     editor = self.sender()
-
-    #     # The commitData signal must be emitted when we've finished editing
-    #     # and need to write our changed back to the model.
-    #     self.commitData.emit(editor)
-    #     # self.closeEditor.emit(editor, QStyledItemDelegate.NoHint)
-
+    def commit_from_editor(self):
+        '''
+        Commits the data to the model and closes the editor
+        '''
+        editor = self.sender()
+        print("Editor:")
+        print(editor)
+        print(editor.m_action_data)
+        # The commitData signal must be emitted when we've finished editing
+        # and need to write our changed back to the model.
+        self.commitData.emit(editor)
+        # self.closeEditor.emit(editor, QStyledItemDelegate.NoHint)
 
     def updateEditorGeometry(self, editor, option, index):
         return super().updateEditorGeometry(editor, option, index)
@@ -170,9 +273,8 @@ class ActionDelegate(QStyledItemDelegate):
 
 
 
-
 class ActionEditor(QWidget):
-    # actionCompleted = Signal()
+    actionDataChanged = Signal()
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -209,6 +311,7 @@ class ActionEditor(QWidget):
         else:
             print("Action Already Completed")
         self.statusLabel.setText(f"Status: {self.m_action_data.status}")
+        self.actionDataChanged.emit()
 
     def setValue(self, value):
         self.m_action_data = value
