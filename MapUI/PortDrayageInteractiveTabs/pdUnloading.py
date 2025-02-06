@@ -9,33 +9,10 @@ Actions contain info on vehicle, cargo(container) status(pending, unloading, com
 
 pending and unloading actions have a button to interact with and progress the action. Once an action is completed, the interactable object is removed and the info of the action is added to a completed action log
 '''
+from actionItem import ActionItem
 from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal
 from PySide6.QtWidgets import QGridLayout, QAbstractItemView, QPushButton, QListView, QLabel, QWidget, QStyledItemDelegate
 import datetime as dt
-
-
-class ActionItem():
-    '''
-    Class to store data for individual items in model
-    This allows for in place data modification, and display functions to be attached to the data item
-    '''
-
-    def __init__(self, vehicle=None, cargo=None, actionPoint=None):
-        super().__init__()
-        self.vehicle = vehicle
-        self.cargo = cargo
-        self.actionPoint = actionPoint
-        self.actionID = None # actionID
-        self.next_action = None
-        self.prev_action = None
-
-        self.status = "Pending"
-        self.timeRequested = dt.datetime.now()
-        self.timeCompleted = None
-
-    def completedActionDisplay(self):
-        text = 'Vehicle: {} \t\t Cargo: {} \t\t ActionID: {} \t Requested Time: {} \t Completed Time: {}'.format(self.vehicle, self.cargo, self.actionID, self.timeRequested, self.timeCompleted)
-        return text
 
 
 class PDUnloadingWidget(QWidget):
@@ -44,7 +21,7 @@ class PDUnloadingWidget(QWidget):
     '''
     def __init__(self):
         super().__init__()
-        self.model = UnloadingActionList(unloadingActions=[ActionItem()])
+        self.model = UnloadingActionList(unloadingActions=[ActionItem(), ActionItem()])
         self.unloadingActionView = PendingActionView()
         self.completedActionView = CompletedActionView()
         self.inProgressFilterProxyModel = InProgressActionListProxyModel()
@@ -56,6 +33,7 @@ class PDUnloadingWidget(QWidget):
         self.completedActionView.setModel(self.completedFilterProxyModel)
 
         self.unloadingActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(0,0)) # TODO: Remove later when items appear based on received MOMs
+        self.unloadingActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(1,0)) # TODO: Remove later when items appear based on received MOMs
 
 
 
@@ -277,7 +255,7 @@ class ActionEditor(QWidget):
         self.m_action_data = ActionItem()
 
         # Internal widgets
-        self.progressButton = QPushButton("Start Loading")
+        self.progressButton = QPushButton("Start Unloading")
         self.portArea = QWidget() # Placeholder b/c I have no clue what is intended to be in that box
         self.vehicleLabel = QLabel("Vehicle: ")
         self.cargoLabel = QLabel("With Cargo: ")

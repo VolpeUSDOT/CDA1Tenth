@@ -161,23 +161,6 @@ class MainWindow(QMainWindow):
         # engine = self.SQLdb.dbconn
         ap_df.to_sql('freight', con=self.SQLdb.engine, if_exists='replace', index=False, schema='port_drayage',)
 
-    def momJSONCreator(self):
-        '''
-        collect data for mobility operation message
-        Returns:
-            JSON string in MOM format #TODO: This is not finalized
-        '''
-        # NOTE area is likely going to be changed to action point or site
-        area = {"latitude": self.apOrderBox.apOrderList.item(index).actionPointData["latitude"],
-                "longitude": self.apOrderBox.apOrderList.item(index).actionPointData["longitude"],
-                "name": self.apOrderBox.apOrderList.item(index).actionPointData["name"],
-                "status": self.apOrderBox.apOrderList.item(index).actionPointData["status"],
-                "is_notify": self.apOrderBox.apOrderList.item(index).actionPointData["is_notify"]}
-        json_to_be = {"action_id": 1,
-                      "area": area}
-
-        return json.dumps(json_to_be)
-
 class App(QApplication):
     def __init__(self, args):
         super().__init__()

@@ -9,34 +9,10 @@ Actions contain info on vehicle, cargo(container) status(pending, loading, compl
 
 pending and loading actions have a button to interact with and progress the action. Once an action is completed, the interactable object is removed and the info of the action is added to a completed action log
 '''
+from actionItem import ActionItem
 from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal
 from PySide6.QtWidgets import QGridLayout, QAbstractItemView, QPushButton, QListView, QLabel, QWidget, QStyledItemDelegate
 import datetime as dt
-
-
-class ActionItem():
-    '''
-    Class to store data for individual items in model
-    This allows for in place data modification, and display functions to be attached to the data item
-    '''
-
-    def __init__(self, vehicle=None, cargo=None, actionPoint=None):
-        super().__init__()
-        self.vehicle = vehicle
-        self.cargo = cargo
-        self.actionPoint = actionPoint
-        self.actionID = None # actionID
-        self.next_action = None
-        self.prev_action = None
-
-        self.status = "Pending"
-        self.timeRequested = dt.datetime.now()
-        self.timeCompleted = None
-
-    def completedActionDisplay(self):
-        text = 'Vehicle: {} \t\t Cargo: {} \t\t ActionID: {} \t Requested Time: {} \t Completed Time: {}'.format(self.vehicle, self.cargo, self.actionID, self.timeRequested, self.timeCompleted)
-        return text
-
 
 class PDLoadingWidget(QWidget):
     '''
