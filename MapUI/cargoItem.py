@@ -46,6 +46,12 @@ class CargoItemModel(QAbstractListModel):
 
         return True
 
+    def insertRow(self, row, value):
+        self.cargoItems.insert(row, value)
+        index = self.index(row, 0)
+        self.dataChanged.emit(index, index)
+        return index
+
     def flags(self, index):
         flags = super().flags(index)
         # flags |= Qt.ItemFlag.ItemIsEditable
