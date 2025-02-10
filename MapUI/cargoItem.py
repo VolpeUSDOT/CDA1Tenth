@@ -8,7 +8,7 @@ class CargoItem():
         self.cargo_uuid = cargo_uuid
 
     def textDisplay(self):
-        return "Display function not yet implemented"
+        return f"Cargo Name: {self.name} \t\t Cargo UUID: {self.cargo_uuid}"
 
 
 class CargoItemModel(QAbstractListModel):
