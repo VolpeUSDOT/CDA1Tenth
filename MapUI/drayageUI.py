@@ -1,11 +1,12 @@
 # from PySide6.QtCore import
 from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget
-from MapWidget.mapwidget import MapWidget, ActionPoint
 from actioninfobox import ActionInfoBoxWidget
 from aporderbox import APOrderBoxWidget
+from apWindow import APWindow
 from PortDrayageInteractiveTabs.pdTabs import PDTabs
 from tabBar import TabBar
 from MysqlDataPull import Database
+from cargoWindow import CargoWindow
 from sqlalchemy import text
 import json
 import sys
@@ -19,31 +20,23 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Port Drayage UI")
         self.setMinimumSize(800,600)
-
-        self.interactiveMap = MapWidget()
-        self.apOrderBox = APOrderBoxWidget("Change order of Action Points")
-        self.apInfoBox = ActionInfoBoxWidget("Action Point Info")
         self.tabBar = TabBar()
 
+        self.apWindow = APWindow()
+        # Prep action Point Widget
         # Get action points from SQL and populate widgets with them
         self.SQLdb = Database('port_drayage')
-        self._readSQLActionPoints()
+        actionData = self.SQLdb.getData()
+        self.apWindow.readSQLActionPoints(actionData)
 
-        layout = QGridLayout()
-
-        layout.addWidget(self.apInfoBox, 0, 0)
-        layout.addWidget(self.interactiveMap, 0, 1)
-        layout.addWidget(self.apOrderBox, 0, 2)
-
-        self.window = QWidget()
-        self.window.setLayout(layout)
-
-        #
+        # create and stack widgets
         self.pdTabs = PDTabs()
+        self.cargoWindow = CargoWindow()
         self.stackedWidget = QStackedWidget()
-        self.stackedWidget.addWidget(self.window)
+        self.stackedWidget.addWidget(self.apWindow)
+        self.stackedWidget.addWidget(self.cargoWindow)
         self.stackedWidget.addWidget(self.pdTabs)
-
+        # self.stackedWidget.addWidget()
 
         self.setCentralWidget(self.stackedWidget)
         self.setMenuWidget(self.tabBar)
@@ -51,13 +44,13 @@ class MainWindow(QMainWindow):
         # selection Change Events
         # self.interactiveMap.scene.selectionChanged.connect(self.showAPInfo)
         self.selectionUpdating = False
-        self.interactiveMap.selectionUpdate.connect(self.showAPInfo)
-        self.apOrderBox.selectionUpdate.connect(self.showAPInfo)
+        # self.interactiveMap.selectionUpdate.connect(self.showAPInfo)
+        # self.apOrderBox.selectionUpdate.connect(self.showAPInfo)
 
         # Add / remove AP button events
         # self.apOrderBox.addAPButton.clicked.connect()
-        self.apOrderBox.removeSelectedAP.clicked.connect(self.deleteActionPoint)
-        self.apOrderBox.updateSQLServerButton.clicked.connect(self.updateSQLServer)
+        # self.apOrderBox.removeSelectedAP.clicked.connect(self.deleteActionPoint)
+        # self.apOrderBox.updateSQLServerButton.clicked.connect(self.updateSQLServer)
         self.tabBar.currentChanged.connect(self.changeTab)
 
     def changeTab(self):
@@ -67,12 +60,7 @@ class MainWindow(QMainWindow):
         NOTE: PySide6 Documentation of setCurrentIndex is incorrect. It works as you would expect
         '''
         tabIndex = self.tabBar.currentIndex()
-        if tabIndex == 0:
-            self.stackedWidget.setCurrentIndex(0)
-        elif tabIndex == 1:
-            self.stackedWidget.setCurrentIndex(1)
-        else:
-            self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(tabIndex)
 
     def deleteActionPoint(self):
         '''
@@ -142,24 +130,14 @@ class MainWindow(QMainWindow):
             # Allow runs again
             self.selectionUpdating = False
 
-    def _readSQLActionPoints(self):
-        '''
-        Pull action points from SQL and add them to map and list
-        '''
-        actionData = self.SQLdb.getData()
-        for _, actionPointData in actionData.iterrows():
-            ap_dict = actionPointData.to_dict()
-            self.interactiveMap.addActionPoint(ap_dict)
-            self.apOrderBox.addActionPoint(ap_dict)
-
-    def updateSQLServer(self):
-        '''
-        Connect to sql server and update with new action point information
-        TODO: Connect to sql in docker container of v2x hub
-        '''
-        ap_df = self.apOrderBox.convertToDataframe()
-        # engine = self.SQLdb.dbconn
-        ap_df.to_sql('freight', con=self.SQLdb.engine, if_exists='replace', index=False, schema='port_drayage',)
+    # def updateSQLServer(self):
+    #     '''
+    #     Connect to sql server and update with new action point information
+    #     TODO: Connect to sql in docker container of v2x hub
+    #     '''
+    #     ap_df = self.apOrderBox.convertToDataframe()
+    #     # engine = self.SQLdb.dbconn
+    #     ap_df.to_sql('freight', con=self.SQLdb.engine, if_exists='replace', index=False, schema='port_drayage',)
 
 class App(QApplication):
     def __init__(self, args):

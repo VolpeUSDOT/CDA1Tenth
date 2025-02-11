@@ -1,7 +1,8 @@
-from PySide6.QtCore import QSize, Signal
-from PySide6.QtWidgets import QWidget, QGridLayout, QGraphicsView
+from PySide6.QtCore import QSize, Signal, Qt
+from PySide6.QtWidgets import QWidget, QGridLayout, QGraphicsView, QGraphicsLineItem
+from PySide6.QtGui import QPen
 from MapWidget.vgraphicsscene import ViewGraphicsScene
-from MapWidget.mapitems import createRoadLink, ActionPoint
+from MapWidget.mapitems import ActionPointGI
 import geopandas as gpd
 import yaml
 
@@ -9,9 +10,11 @@ pgm_map = './MapUI/PortDrayageData/garage.pgm'
 map_info = './MapUI/PortDrayageData/garage.yaml'
 graph = './MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
 
+roadLinkPen = QPen(Qt.white, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+
 # Subclass QMainWindow to customize your application's main window
 class MapWidget(QWidget):
-    selectionUpdate = Signal()
+    selectionUpdate = Signal(ActionPointGI)
 
     def __init__(self, pgm_map_fp = pgm_map, map_info_fp = map_info, graph_fp = graph):
         super().__init__()
@@ -39,9 +42,12 @@ class MapWidget(QWidget):
         # Add QGraphicsView to main window
         mapWidgetLayout = QGridLayout()
         mapWidgetLayout.addWidget(self.view, 0, 0)
-
         self.setLayout(mapWidgetLayout)
 
+        self.ap_list = []
+
+        # Update map by redrawing whenever model changes
+        #
         # Handle Scene event
         self.scene.selectionChanged.connect(self._compactedSignal)
 
@@ -53,7 +59,7 @@ class MapWidget(QWidget):
         if not selected_ap_list: return #List isn't empty
         # Multiple can be selected, but we should only ever have one selected
         if len(selected_ap_list) == 1:
-            self.selectionUpdate.emit()
+            self.selectionUpdate.emit(selected_ap_list[0])
         else:
             print("Error, multiple ap were selected in map which shouldn't be possible")
 
@@ -91,12 +97,18 @@ class MapWidget(QWidget):
         points['adjusted_y'] = nearest * round(points['adjusted_y']/nearest)
         return points
 
-    def addActionPoint(self, ap_dict):
+    def clearActionPoints(self):
+        for ap in self.ap_list:
+            self.scene.removeItem(ap)
+        self.ap_list = []
+
+    def addActionPoint(self, lat, long):
         '''
         Takes an action point dictionary and adds the action point to the map
         '''
-        x, y = self._convertCoords(ap_dict['destination_long'], ap_dict['destination_lat'])
-        ap = ActionPoint(ap_dict, x, y, self.scene)
+        x, y = self._convertCoords(long, lat)
+        ap = ActionPointGI(x, y, self.scene)
+        self.ap_list.append(ap)
         self.scene.addItem(ap)
 
     def addActionPointList(self, ap_list):
@@ -104,16 +116,7 @@ class MapWidget(QWidget):
         Add multiple action points
         '''
         for ap_dict in ap_list:
-            self.addActionPoint(ap_dict)
-
-    # def _pullLocationActions(self, schema):
-    #     '''
-    #     Pull data from SQL and convert coords to pixel coords
-    #     '''
-    #     db = Database(schema)
-    #     actionData = db.getData()
-    #     actionData['destination_long'], actionData['destination_lat'] = self._convertCoords(actionData['destination_long'], actionData['destination_lat'])
-    #     return(actionData)
+            self.addActionPointGI(ap_dict)
 
     def _convertCoords(self, x_vals, y_vals):
         converted_y = (y_vals - self.y_origin) / self.resolution * -1
@@ -131,3 +134,8 @@ class MapWidget(QWidget):
             return
         self.view.scale(0.5, 0.5)
         self.zoomLevel -= 1
+
+def createRoadLink(x1, y1, x2, y2):
+    roadLink = QGraphicsLineItem(x1, y1, x2, y2)
+    roadLink.setPen(roadLinkPen)
+    return roadLink

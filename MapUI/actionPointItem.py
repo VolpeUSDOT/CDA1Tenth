@@ -6,10 +6,10 @@ class ActionPoint():
     This allows for in place data modification, and display functions to be attached to the data item
     '''
 
-    def __init__(self, actionID=None, next_action=None, prev_action=None, name=None, latitude=None, longitude=None):
-        self.actionID = actionID
-        self.next_action = next_action
-        self.prev_action = prev_action
+    def __init__(self, name=None, latitude=None, longitude=None):
+        self.actionID = None
+        self.next_action = None
+        self.prev_action = None
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
@@ -55,7 +55,7 @@ class ActionPointModel(QAbstractListModel):
             text = ap.completedActionPointDisplay()
             return text
 
-    def setData(self, index, value, role):
+    def setData(self, index, value, role=Qt.ItemDataRole.EditRole):
         '''
         TODO: update?
         '''
@@ -69,9 +69,58 @@ class ActionPointModel(QAbstractListModel):
 
         return True
 
+    def insertRow(self, row, value):
+        self.actionPoints.insert(row, value)
+        index = self.index(row, 0)
+        self.dataChanged.emit(index, index)
+        return index
+
+    def insertRows(self, row, count, parent = ...):
+        if parent.isValid():
+            return False
+        for i in range(count):
+            self.actionPoints.insert(row+i, ActionPoint())
+        return True
+
+    def removeRows(self, row, count, parent = ...):
+        if parent.isValid():
+            return False
+        self.beginRemoveRows(parent, row, row+count-1)
+        for i in range(count):
+            self.actionPoints.pop(row)
+        return True
+
+    def supportedDropActions(self):
+        return Qt.DropAction.MoveAction
+
+    def convertToDataframe(self):
+        '''
+        Converts list to pandas df, generating columns required for linked list calls later
+        '''
+        #  TODO :Rewrite for new structure and SQL layout
+        pass
+        # ap_list = [self.apOrderList.item(x).actionPointData for x in range(self.apOrderList.count())]
+        # ap_df = pd.DataFrame(ap_list)
+        # ap_df['action_id'] = ap_df.index
+
+        # # NOTE: List of ap info (updated SQL data columns) "id", "vehicle_name", "cargo_name", "action_id", "prev_action_id", "next_action_id", "action_name", "action_status", "longitude", "latitude", "is_notify", "created_at", "updated_at"
+
+        # isLooping = self.loopCheckBox.checkState()
+        # if isLooping:
+        #     ap_df['next_action_id'] = ap_df['action_id'].shift(1, fill_value=ap_df['action_id'].iloc[-1])
+        #     ap_df['prev_action_id'] = ap_df["action_id"].shift(-1,fill_value=ap_df['action_id'].iloc[0] )
+        # else:
+        #     #TODO: Fill vlaues -1
+        #     ap_df['next_action'] = ap_df['action_id'].shift(1)
+        #     ap_df['prev_action_id'] = ap_df["action_id"].shift(-1)
+        # return ap_df
+
     def flags(self, index):
         flags = super().flags(index)
         # if self.loadingActions[index.row()].status != "Completed":
             # |= is a special operator required to add a new flag to the list of flags
         flags |= Qt.ItemFlag.ItemIsEditable
+        flags |= Qt.ItemFlag.ItemIsDragEnabled
+        flags |= Qt.ItemFlag.ItemIsDropEnabled
+
         return flags
