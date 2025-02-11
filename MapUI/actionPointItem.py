@@ -1,4 +1,4 @@
-from PySide6.QtCore import QAbstractListModel, Qt
+from PySide6.QtCore import QAbstractListModel, Qt, QMimeData
 
 class ActionPoint():
     '''
@@ -91,6 +91,16 @@ class ActionPointModel(QAbstractListModel):
 
     def supportedDropActions(self):
         return Qt.DropAction.MoveAction
+
+    def mimeTypes(self):
+        return ActionPoint
+
+    def mimeData(self, indexes):
+        mimeData = QMimeData()
+        for index in indexes:
+            if index.isValid():
+                self.data(index, role=Qt.ItemDataRole.EditRole)
+        return super().mimeData(indexes)
 
     def convertToDataframe(self):
         '''

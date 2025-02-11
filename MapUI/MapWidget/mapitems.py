@@ -29,6 +29,14 @@ class ActionPointGI(QGraphicsItem):
         # Draw in item coords
         painter.drawPoint(0,0)
 
+    # def itemChange(self, change, value):
+    #     if change == QGraphicsItem.GraphicsItemChange.ItemPositionChange and value.isValid():
+    #         temp_pos = value.toPointF()
+    #         self.mapScene.point_group
+
+    #     else:
+    #         return super().itemChange(change, value)
+
     def hoverEnterEvent(self, event):
         '''
         Triggered byQEvent.GraphicsSceneHoverEnter
@@ -58,3 +66,11 @@ class ActionPointGI(QGraphicsItem):
         self.mapScene.clearSelection()
         self.setSelected(True)
         event.accept()
+
+
+class GraphicsPoint(QGraphicsItem):
+    def __init__(self, x, y):
+        super().__init__()
+        # Position in scene coords
+        self.setPos(x,y)
+        self.setVisible(False)

@@ -1,8 +1,8 @@
 from PySide6.QtCore import QSize, Signal, Qt
-from PySide6.QtWidgets import QWidget, QGridLayout, QGraphicsView, QGraphicsLineItem
+from PySide6.QtWidgets import QWidget, QGridLayout, QGraphicsView, QGraphicsLineItem, QGraphicsItem
 from PySide6.QtGui import QPen
 from MapWidget.vgraphicsscene import ViewGraphicsScene
-from MapWidget.mapitems import ActionPointGI
+from MapWidget.mapitems import ActionPointGI, GraphicsPoint
 import geopandas as gpd
 import yaml
 
@@ -30,7 +30,7 @@ class MapWidget(QWidget):
         self.x_origin = mapInfo['origin'][0]
         self.y_origin = mapInfo['origin'][1]
         self.resolution = mapInfo['resolution']
-        points, lines = self._readGraphFile(graph_fp, roundPixelPosition = True)
+        self.points, lines = self._readGraphFile(graph_fp, roundPixelPosition = True)
 
         # Add all road segments to scene
         road_group = self.scene.createItemGroup([])
@@ -38,6 +38,12 @@ class MapWidget(QWidget):
             roadLink = createRoadLink(line['start_x'], line['start_y'], line['end_x'], line['end_y'])
             self.scene.addItem(roadLink)
             road_group.addToGroup(roadLink)
+
+        # point_group = self.scene.createItemGroup([])
+        # for point in points.iterrows():
+        #     gp = GraphicsPoint(point['adjusted_x'], point['adjusted_y'])
+        #     self.scene.addItem(gp)
+        #     point_group.addToGroup(gp)
 
         # Add QGraphicsView to main window
         mapWidgetLayout = QGridLayout()

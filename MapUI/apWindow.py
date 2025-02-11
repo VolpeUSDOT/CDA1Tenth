@@ -1,4 +1,6 @@
 
+import sys
+import numpy as np
 from MapWidget.mapwidget import MapWidget
 from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint
 from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget, QGraphicsItem
@@ -155,6 +157,18 @@ class APItemEditor(QWidget):
     def updateLatLong(self):
         point = self.apMap.ap_list[0].pos()
         x, y = point.x(), point.y()
+
+        min_dist = sys.maxsize
+        closest_item = None
+        for i, point in self.apMap.points.iterrows():
+            distance = Distance_Formula((x, y), (point['adjusted_x'], point['adjusted_y']))
+
+            if distance < min_dist:
+                min_dist = distance
+                closest_item = i
+        x = self.apMap.points.loc[closest_item, 'adjusted_x']
+        y = self.apMap.points.loc[closest_item, 'adjusted_y']
+        self.apMap.ap_list[0].setPos(x, y)
         long, lat = self.apMap.reverseCoordConversion(x, y)
         self.m_ap.latitude = lat
         self.m_ap.longitude = long
@@ -164,6 +178,17 @@ class APItemEditor(QWidget):
 
     def isNotifyChanged(self):
         self.m_ap.is_notify = self.isNotify_editor.isChecked()
+
+def Distance_Formula(point1, point2):
+    x1 = point1[0]
+    x2 = point2[0]
+    y1 = point1[1]
+    y2 = point2[1]
+    x_diff = (x2 - x1)**2
+    y_diff = (y2 - y1)**2
+    distance = np.sqrt(x_diff + y_diff)
+    return distance
+
 
 
 if __name__ == "__main__":
