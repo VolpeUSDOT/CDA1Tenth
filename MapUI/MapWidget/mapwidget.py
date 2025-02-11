@@ -123,6 +123,12 @@ class MapWidget(QWidget):
         converted_x = (x_vals - self.x_origin) / self.resolution
         return converted_x, converted_y
 
+    def reverseCoordConversion(self, x, y):
+        # TODO Check this is working 100%
+        converted_y = self.y_origin + (y * self.resolution) * -1
+        converted_x = self.x_origin + (x * self.resolution)
+        return converted_x, converted_y
+
     def zoom_in (self):
         if self.zoomLevel >= 3:
             return

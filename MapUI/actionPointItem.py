@@ -6,7 +6,7 @@ class ActionPoint():
     This allows for in place data modification, and display functions to be attached to the data item
     '''
 
-    def __init__(self, name=None, latitude=None, longitude=None):
+    def __init__(self, name=None, latitude=0, longitude=0):
         self.actionID = None
         self.next_action = None
         self.prev_action = None
@@ -20,8 +20,7 @@ class ActionPoint():
         return AreaData(self.name, self.latitude, self.longitude, self.status, self.is_notify)
 
     def completedActionPointDisplay(self):
-        # TODO: Implement
-        return "Display function not yet implemented"
+        return f"Name: {self.name} \t\t "
 
 
 class AreaData():

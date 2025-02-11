@@ -1,7 +1,7 @@
 
 from MapWidget.mapwidget import MapWidget
 from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint
-from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget, QGraphicsItem
 from actionPointItem import ActionPoint,  ActionPointModel
 
 
@@ -132,6 +132,9 @@ class APItemEditor(QWidget):
         self.pushUpdates = QPushButton("Save Action Point")
 
         self.apMap = MapWidget()
+        self.apMap.addActionPoint(self.m_ap.latitude, self.m_ap.longitude)
+        self.apMap.ap_list[0].setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
+        self.apMap.ap_list[0].setFlag(QGraphicsItem.GraphicsItemFlag.ItemSendsGeometryChanges)
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 5)
@@ -147,14 +150,20 @@ class APItemEditor(QWidget):
         self.isNotify_editor.stateChanged.connect(self.isNotifyChanged)
         self.name_editor.textEdited.connect(self.nameChanged)
 
+        self.apMap.scene.changed.connect(self.updateLatLong)
+
+    def updateLatLong(self):
+        point = self.apMap.ap_list[0].pos()
+        x, y = point.x(), point.y()
+        long, lat = self.apMap.reverseCoordConversion(x, y)
+        self.m_ap.latitude = lat
+        self.m_ap.longitude = long
+
     def nameChanged(self):
         self.m_ap.name = self.name_editor.text()
 
     def isNotifyChanged(self):
         self.m_ap.is_notify = self.isNotify_editor.isChecked()
-
-
-
 
 
 if __name__ == "__main__":
