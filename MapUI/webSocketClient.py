@@ -3,6 +3,9 @@ from PySide6.QtWebSockets import QWebSocket
 import signal
 
 class WebSocketClient(QObject):
+    '''
+    Class used to connect to a websocket server
+    '''
     message_received = Signal(str)
     connected = Signal()
     disconnected = Signal()
@@ -18,34 +21,49 @@ class WebSocketClient(QObject):
         self.websocket.textMessageReceived.connect(self.on_message_received)
 
     def start_connection(self):
-        """Initiates the WebSocket connection."""
+        '''
+        Initiates the WebSocket connection`
+        '''
         self.websocket.open(self.url)
     
     def disconnect(self):
-        """Closes the WebSocket connection."""
+        '''
+        Closes the WebSocket connection
+        '''
         self.websocket.close()
     
     def send_message(self, message: str):
-        """Sends a message over the WebSocket connection."""
+        '''
+        Sends a message over the WebSocket connection
+        '''
         if self.websocket.isValid():
             self.websocket.sendTextMessage(message)
     
     def on_connected(self):
-        """Handles WebSocket connection establishment."""
+        '''
+        Handles WebSocket connection establishment
+        '''
         print("WebSocket connected.")
         self.connected.emit()
     
     def on_disconnected(self):
-        """Handles WebSocket disconnection."""
+        '''
+        Handles WebSocket disconnection
+        '''
         print("WebSocket disconnected.")
         self.disconnected.emit()
     
     def on_message_received(self, message: str):
-        """Handles received messages."""
+        '''
+        Handles received messages
+        '''
         print(f"Message received: {message}")
         self.message_received.emit(message)
 
     def signal_handler(self, sig, frame):
+        '''
+        Handle termination from Ctrl+C
+        '''
         print('Exiting...')
         self.on_disconnected()
         QCoreApplication.quit()
