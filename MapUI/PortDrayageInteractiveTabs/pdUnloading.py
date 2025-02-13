@@ -39,13 +39,22 @@ class PDUnloadingWidget(QWidget):
 
         self.title = QLabel('''# Port Drayage Unloading Area''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
+
+        self.pendingLabel = QLabel('''## Pending Unloading Actions''')
+        self.pendingLabel.setTextFormat(Qt.TextFormat.MarkdownText)
+
+        self.completeLabel = QLabel('''## Completed Unloading Actions''')
+        self.completeLabel.setTextFormat(Qt.TextFormat.MarkdownText)
+
         self.completedResetButton = QPushButton("Clear")
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 1)
-        layout.addWidget(self.unloadingActionView, 1, 0, 1, 1)
-        layout.addWidget(self.completedActionView, 2, 0, 1, 1)
-        layout.addWidget(self.completedResetButton, 3, 0, 1, 1)
+        layout.addWidget(self.pendingLabel, 1, 0, 1, 1)
+        layout.addWidget(self.unloadingActionView, 2, 0, 1, 1)
+        layout.addWidget(self.completeLabel, 3, 0, 1, 1)
+        layout.addWidget(self.completedActionView, 4, 0, 1, 1)
+        layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
 

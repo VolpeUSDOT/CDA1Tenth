@@ -1,10 +1,10 @@
 '''
 Widget to contain all port drayage tabs in one item
 '''
-from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QTabBar
+from PySide6.QtWidgets import QMainWindow, QStackedWidget, QTabBar
 from PortDrayageInteractiveTabs.pdLoading import PDLoadingWidget
 from PortDrayageInteractiveTabs.pdUnloading import PDUnloadingWidget
-# from PortDrayageInteractiveTabs.pdInspection import PDInspectionWidget
+from PortDrayageInteractiveTabs.pdInspection import PDInspectionWidget
 
 class PDTabs(QMainWindow):
 
@@ -13,8 +13,8 @@ class PDTabs(QMainWindow):
         super().__init__()
 
         self.loadingWidget = PDLoadingWidget()
-        self.unloadingWidget = PDUnloadingWidget() # TODO: Update once other tabs are built
-        self.inspectionWidget = PDLoadingWidget()
+        self.unloadingWidget = PDUnloadingWidget()
+        self.inspectionWidget = PDInspectionWidget()
 
         self.tabBar = QTabBar()
         self.tabBar.addTab('Loading')

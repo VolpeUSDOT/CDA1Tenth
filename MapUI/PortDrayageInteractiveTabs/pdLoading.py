@@ -37,13 +37,22 @@ class PDLoadingWidget(QWidget):
 
         self.title = QLabel('''# Port Drayage Loading Area''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
+
+        self.pendingLabel = QLabel('''## Pending Loading Actions''')
+        self.pendingLabel.setTextFormat(Qt.TextFormat.MarkdownText)
+
+        self.completeLabel = QLabel('''## Completed Loading Actions''')
+        self.completeLabel.setTextFormat(Qt.TextFormat.MarkdownText)
+
         self.completedResetButton = QPushButton("Clear")
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 1)
-        layout.addWidget(self.loadingActionView, 1, 0, 1, 1)
-        layout.addWidget(self.completedActionView, 2, 0, 1, 1)
-        layout.addWidget(self.completedResetButton, 3, 0, 1, 1)
+        layout.addWidget(self.pendingLabel, 1, 0, 1, 1)
+        layout.addWidget(self.loadingActionView, 2, 0, 1, 1)
+        layout.addWidget(self.completeLabel, 3, 0, 1, 1)
+        layout.addWidget(self.completedActionView, 4, 0, 1, 1)
+        layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
 
