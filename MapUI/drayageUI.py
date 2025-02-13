@@ -7,6 +7,8 @@ from PortDrayageInteractiveTabs.pdTabs import PDTabs
 from tabBar import TabBar
 from MysqlDataPull import Database
 from cargoWindow import CargoWindow
+from webSocketClient import WebSocketClient
+from bsmDecoder import BSMDecoder
 from sqlalchemy import text
 import json
 import sys
@@ -25,7 +27,7 @@ class MainWindow(QMainWindow):
         self.apWindow = APWindow()
         # Prep action Point Widget
         # Get action points from SQL and populate widgets with them
-        self.SQLdb = Database('port_drayage')
+        self.SQLdb = Database('PORT_DRAYAGE')
         actionData = self.SQLdb.getData()
         self.apWindow.readSQLActionPoints(actionData)
 
@@ -52,6 +54,14 @@ class MainWindow(QMainWindow):
         # self.apOrderBox.removeSelectedAP.clicked.connect(self.deleteActionPoint)
         # self.apOrderBox.updateSQLServerButton.clicked.connect(self.updateSQLServer)
         self.tabBar.currentChanged.connect(self.changeTab)
+
+        self.bsmDecoder = BSMDecoder()
+
+        self.webSocketClient = WebSocketClient()
+        # Connect signals
+        self.webSocketClient.message_received.connect(self.visualizeBSM)
+        # Start connection
+        self.webSocketClient.start_connection()
 
     def changeTab(self):
         '''
@@ -129,6 +139,11 @@ class MainWindow(QMainWindow):
                                 ap.setSelected(True)
             # Allow runs again
             self.selectionUpdating = False
+    
+    def visualizeBSM(bsm_json):
+        bsm = self.bsm_decoder.decodeBSM(bsm_json)
+        print(bsm)
+        
 
     # def updateSQLServer(self):
     #     '''

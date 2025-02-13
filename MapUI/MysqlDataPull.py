@@ -61,8 +61,8 @@ if __name__ == "__main__":
     ap_df = pd.DataFrame({'TestCol': [2,3,4,5,6,7],
                           'AP_ID': [1,2,3,4,5,6]})
 
-    SQLdb = Database('port_drayage')
+    SQLdb = Database('PORT_DRAYAGE')
 
     engine = SQLdb.createSQLEngine()
 
-    ap_df.to_sql('freight', con=engine, if_exists='replace', index=False, schema='port_drayage',)
+    ap_df.to_sql('freight', con=engine, if_exists='replace', index=False, schema='PORT_DRAYAGE',)

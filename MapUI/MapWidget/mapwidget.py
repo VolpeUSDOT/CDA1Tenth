@@ -6,9 +6,9 @@ from MapWidget.mapitems import ActionPointGI, GraphicsPoint
 import geopandas as gpd
 import yaml
 
-pgm_map = './MapUI/PortDrayageData/garage.pgm'
-map_info = './MapUI/PortDrayageData/garage.yaml'
-graph = './MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
+pgm_map = '../MapUI/PortDrayageData/garage.pgm'
+map_info = '../MapUI/PortDrayageData/garage.yaml'
+graph = '../MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
 
 roadLinkPen = QPen(Qt.white, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
