@@ -1,4 +1,5 @@
-from PySide6.QtCore import QAbstractListModel, Qt, QMimeData
+from PySide6.QtCore import QAbstractListModel, Qt, QMimeData, QMimeType, QMimeDatabase, QDataStream, QByteArray, QIODevice
+import json
 
 class ActionPoint():
     '''
@@ -22,6 +23,17 @@ class ActionPoint():
     def completedActionPointDisplay(self):
         return f"Name: {self.name} \t\t "
 
+    def convertToJSON(self):
+        json_dict = {"actionID": self.actionID,
+                     "next_action": self.next_action,
+                     "prev_action": self.prev_action,
+                     "name": self.name,
+                     "latitude": self.latitude,
+                     "longitude": self.longitude,
+                     "status": self.status,
+                     "is_notify": self.is_notify}
+        json_str = json.dumps(json_dict)
+        return json_str
 
 class AreaData():
 
@@ -54,13 +66,13 @@ class ActionPointModel(QAbstractListModel):
             text = ap.completedActionPointDisplay()
             return text
 
-    def setData(self, index, value, role=Qt.ItemDataRole.EditRole):
+    def setData(self, index, value, role):
         '''
         TODO: update?
         '''
-        if role != Qt.ItemDataRole.EditRole:
-            print("Not editable")
-            return False
+        # if role != Qt.ItemDataRole.EditRole:
+        #     print("Not editable")
+        #     return False
 
 
         self.actionPoints[index.row()] = value
@@ -89,18 +101,87 @@ class ActionPointModel(QAbstractListModel):
             self.actionPoints.pop(row)
         return True
 
+    def updateItemOrder(self, index_list):
+        '''
+        Reorder elements in model based off index_list
+        '''
+        if len(index_list) != self.rowCount(None):
+            return False
+        self.actionPoints = [self.actionPoints[i] for i in index_list]
+        return True
+
+
     def supportedDropActions(self):
         return Qt.DropAction.MoveAction
 
     def mimeTypes(self):
-        return ActionPoint
+        types = ['application/vnd.text.list']
+        return types
 
     def mimeData(self, indexes):
         mimeData = QMimeData()
+        encodedData = QByteArray()
+        stream = QDataStream(encodedData, QIODevice.OpenModeFlag.WriteOnly)
+        json_list = []
         for index in indexes:
             if index.isValid():
-                self.data(index, role=Qt.ItemDataRole.EditRole)
-        return super().mimeData(indexes)
+                data = self.data(index, role=Qt.ItemDataRole.EditRole)
+                json_str = data.convertToJSON()
+                json_list.append(json_str)
+
+        stream.writeQStringList(json_list)
+        mimeData.setData('application/vnd.text.list', encodedData)
+        return mimeData
+
+    # def canDropMimeData(self, data, action, row, column, parent):
+    #     if column > 0:
+    #         return False
+    #     return True
+    #     # return super().canDropMimeData(data, action, row, column, parent)
+
+    def dropMimeData(self, data, action, row, column, parent):
+        # if not self.canDropMimeData(data, action, row, column, parent):
+        #     return False
+
+        if column > 0:
+            return False
+
+        if action == Qt.DropAction.IgnoreAction:
+            return True
+
+        if row != -1:
+            beginRow = row
+        elif parent.isValid():
+            beginRow = parent.row()
+        else:
+            beginRow = self.rowCount()
+
+        encodedData = data.data('application/vnd.text.list')
+        stream = QDataStream(encodedData, QIODevice.OpenModeFlag.ReadOnly)
+
+        self.insertRows(beginRow, count=1, parent=parent)
+
+        #json_list = json.load(stream.readQStringList())
+
+
+        for json_str in stream.readQStringList():
+            index = self.index(beginRow, 0, parent)
+            ap_data = json.loads(json_str)
+            ap = ActionPoint()
+            ap.actionID = ap_data['actionID']
+            ap.next_action = ap_data['next_action']
+            ap.prev_action = ap_data['prev_action']
+            ap.name = ap_data['name']
+            ap.latitude = ap_data['latitude']
+            ap.longitude = ap_data['longitude']
+            ap.status = ap_data['status']
+            ap.is_notify = ap_data['is_notify']
+            self.setData(index, ap, role=Qt.ItemDataRole.EditRole)
+            beginRow+=1
+
+
+        return True
+        #return super().dropMimeData(data, action, row, column, parent)
 
     def convertToDataframe(self):
         '''
@@ -129,7 +210,9 @@ class ActionPointModel(QAbstractListModel):
         # if self.loadingActions[index.row()].status != "Completed":
             # |= is a special operator required to add a new flag to the list of flags
         flags |= Qt.ItemFlag.ItemIsEditable
-        flags |= Qt.ItemFlag.ItemIsDragEnabled
-        flags |= Qt.ItemFlag.ItemIsDropEnabled
 
+        if index.isValid():
+            flags |= Qt.ItemFlag.ItemIsDragEnabled
+
+        flags |= Qt.ItemFlag.ItemIsDropEnabled
         return flags
