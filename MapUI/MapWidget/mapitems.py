@@ -4,6 +4,7 @@ from PySide6.QtWidgets import QApplication, QGraphicsItem, QGraphicsLineItem
 
 
 actionPointPen = QPen(Qt.red, 6, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+vehiclePen = QPen(Qt.blue, 6, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
 
 class ActionPointGI(QGraphicsItem):
@@ -74,3 +75,24 @@ class GraphicsPoint(QGraphicsItem):
         # Position in scene coords
         self.setPos(x,y)
         self.setVisible(False)
+
+
+class VehicleGI(QGraphicsItem):
+
+    def __init__(self, x, y, mapScene):
+        super().__init__()
+        self.pen = vehiclePen
+
+        self.mapScene = mapScene
+
+        # Position in scene coords
+        self.setPos(x,y)
+
+    def boundingRect(self):
+        penWidth = self.pen.width()
+        return QRectF(- penWidth / 2, - penWidth / 2, penWidth,  penWidth)
+
+    def paint(self, painter, option, widget):
+        painter.setPen(actionPointPen)
+        # Draw in item coords
+        painter.drawPoint(0,0)

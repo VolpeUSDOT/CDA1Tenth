@@ -2,7 +2,7 @@ from PySide6.QtCore import QSize, Signal, Qt
 from PySide6.QtWidgets import QWidget, QGridLayout, QGraphicsView, QGraphicsLineItem, QGraphicsItem
 from PySide6.QtGui import QPen
 from MapWidget.vgraphicsscene import ViewGraphicsScene
-from MapWidget.mapitems import ActionPointGI, GraphicsPoint
+from MapWidget.mapitems import ActionPointGI, VehicleGI
 import geopandas as gpd
 import yaml
 
@@ -51,6 +51,7 @@ class MapWidget(QWidget):
         self.setLayout(mapWidgetLayout)
 
         self.ap_list = []
+        self.vehicle_position = None
 
         # Update map by redrawing whenever model changes
         #
@@ -108,6 +109,11 @@ class MapWidget(QWidget):
             self.scene.removeItem(ap)
         self.ap_list = []
 
+    def clearVehiclePosition(self):
+        if self.vehicle_position is not None:
+            self.scene.removeItem(self.vehicle_position)
+            self.vehicle_position = None
+
     def addActionPoint(self, lat, long):
         '''
         Takes an action point dictionary and adds the action point to the map
@@ -123,6 +129,16 @@ class MapWidget(QWidget):
         '''
         for ap_dict in ap_list:
             self.addActionPointGI(ap_dict)
+
+    def addVehiclePosition(self, lat, long):
+        '''
+        Adds the vehicle position to the map
+        '''
+        self.clearVehiclePosition()
+        x, y = self._convertCoords(long, lat)
+        vehicle = VehicleGI(x, y, self.scene)
+        self.vehicle_position = vehicle
+        self.scene.addItem(vehicle)
 
     def _convertCoords(self, x_vals, y_vals):
         converted_y = (y_vals - self.y_origin) / self.resolution * -1
