@@ -55,8 +55,6 @@ class APWindow(QWidget):
         # Start connection
         self.webSocketClient.start_connection()
 
-    def propagateMapSelection(self, mapItem):
-
         # When a list widget item is selected, update the selection
         # self.apListWidget.itemSelectionChanged.connect(self.propagateListSelection)
 
@@ -109,7 +107,6 @@ class APWindow(QWidget):
     def updateView(self):
         self.updateMap()
         # self.updateListView()
-
     def updateVehiclePose(self, bsm_json):
         bsm = self.bsm_decoder.decodeBSM(bsm_json)
         self.apMap.clearVehiclePosition()
