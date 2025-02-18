@@ -57,7 +57,6 @@ class WebSocketClient(QObject):
         '''
         Handles received messages
         '''
-        print(f"Message received: {message}")
         self.message_received.emit(message)
 
     def signal_handler(self, sig, frame):

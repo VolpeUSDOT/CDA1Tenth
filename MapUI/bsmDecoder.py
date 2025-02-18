@@ -8,8 +8,8 @@ class BSM:
         self.heading = heading
 
     def __str__(self):
-        return ("Latitude: " + self.latitude + "\n"
-        + "Longitude: " + self.longitude + "\n"
+        return ("Latitude: " + str(self.latitude) + "\n"
+        + "Longitude: " + str(self.longitude) + "\n"
         + "Speed: " + self.speed + "\n"
         + "Heading: " + self.heading)
 
@@ -30,8 +30,8 @@ class BSMDecoder:
         """
         bsm_dict = json.loads(bsm_json)
         # Extract the relevant data from the nested dictionary structure
-        latitude = bsm_dict['BasicSafetyMessage']['coreData'].get('lat', None)
-        longitude = bsm_dict['BasicSafetyMessage']['coreData'].get('long', None)
+        latitude = float(bsm_dict['BasicSafetyMessage']['coreData'].get('lat', None)) * 1e-7
+        longitude = float(bsm_dict['BasicSafetyMessage']['coreData'].get('long', None)) * 1e-7
         speed = bsm_dict['BasicSafetyMessage']['coreData'].get('speed', None)
         heading = bsm_dict['BasicSafetyMessage']['coreData'].get('heading', None)
         bsm = BSM(latitude, longitude, speed, heading)

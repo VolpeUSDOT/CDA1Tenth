@@ -108,7 +108,7 @@ class APWindow(QWidget):
         self.updateMap()
         # self.updateListView()
     def updateVehiclePose(self, bsm_json):
-        bsm = self.bsm_decoder.decodeBSM(bsm_json)
+        bsm = self.bsmDecoder.decodeBSM(bsm_json)
         self.apMap.clearVehiclePosition()
         self.apMap.addVehiclePosition(bsm.latitude, bsm.longitude)
 
