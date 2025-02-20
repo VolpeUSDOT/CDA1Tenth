@@ -52,7 +52,7 @@ class MessageDecoder:
         action_point = ActionPoint(longitude=destination_long, latitude=destination_lat)
         vehicle_item = VehicleItem(veh_id=vehicle)
         cargo_item = CargoItem(name=cargo_name, cargo_uuid=cargo_id)
-        mom = ActionItem(vehicle=vehicle_item, cargo=cargo_item, action=action, actionPoint=action_point)
+        mom = ActionItem(vehicle=vehicle_item, cargo=cargo_item, actionPoint=action_point)
         return mom
 
 
