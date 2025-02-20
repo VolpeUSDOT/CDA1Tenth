@@ -109,10 +109,6 @@ class APWindow(QWidget):
     def updateView(self):
         self.updateMap()
         # self.updateListView()
-<<<<<<< HEAD
-    def updateVehiclePose(self, bsm_json):
-        bsm = self.bsmDecoder.decodeBSM(bsm_json)
-=======
 
     def handleIncomingMessage(self, message):
         decoded_message = self.messageDecoder.decodeMessage(message)
@@ -123,7 +119,6 @@ class APWindow(QWidget):
 
 
     def updateVehiclePose(self, bsm):
->>>>>>> 5cbb7dd (added support for mom processing)
         self.apMap.clearVehiclePosition()
         self.apMap.addVehiclePosition(bsm.latitude, bsm.longitude)
 
