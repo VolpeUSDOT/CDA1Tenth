@@ -64,7 +64,7 @@ class WebSocketClient(QObject):
         Handle termination from Ctrl+C
         '''
         print('Exiting...')
-        self.on_disconnected()
+        self.disconnect()
         QCoreApplication.quit()
 
 if __name__ == '__main__':

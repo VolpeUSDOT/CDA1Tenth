@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from MapWidget.mapwidget import MapWidget
 from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint, QItemSelectionModel
-from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget, QListWidgetItem, QGraphicsItem
+from PySide6.QtWidgets import QMessageBox, QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget, QListWidgetItem, QGraphicsItem
 from actionPointItem import ActionPoint,  ActionPointModel
 from webSocketClient import WebSocketClient
 from bsmDecoder import BSMDecoder
