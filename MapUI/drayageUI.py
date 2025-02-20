@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
         self.apWindow = APWindow()
         # Prep action Point Widget
         # Get action points from SQL and populate widgets with them
-        self.SQLdb = Database('port_drayage')
+        self.SQLdb = Database('PORT_DRAYAGE')
         actionData = self.SQLdb.getData()
         self.apWindow.readSQLActionPoints(actionData)
 
@@ -129,6 +129,8 @@ class MainWindow(QMainWindow):
                                 ap.setSelected(True)
             # Allow runs again
             self.selectionUpdating = False
+    
+        
 
     # def updateSQLServer(self):
     #     '''

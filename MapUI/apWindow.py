@@ -3,8 +3,10 @@ import sys
 import numpy as np
 from MapWidget.mapwidget import MapWidget
 from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint, QItemSelectionModel
-from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget, QListWidgetItem, QGraphicsItem
+from PySide6.QtWidgets import QMessageBox, QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget, QListWidgetItem, QGraphicsItem
 from actionPointItem import ActionPoint,  ActionPointModel
+from webSocketClient import WebSocketClient
+from bsmDecoder import BSMDecoder
 
 
 class APWindow(QWidget):
@@ -45,6 +47,13 @@ class APWindow(QWidget):
         # when list widget is reordered, update model to match
         # self.apListWidget.itemDropped.connect(self.propagateListReorder)
         # self.apListWidget.indexesMoved().connect(self.propagateListReorder)
+        self.bsmDecoder = BSMDecoder()
+
+        self.webSocketClient = WebSocketClient()
+        # Connect signals
+        self.webSocketClient.message_received.connect(self.updateVehiclePose)
+        # Start connection
+        self.webSocketClient.start_connection()
 
         # When a list widget item is selected, update the selection
         # self.apListWidget.itemSelectionChanged.connect(self.propagateListSelection)
@@ -98,6 +107,10 @@ class APWindow(QWidget):
     def updateView(self):
         self.updateMap()
         # self.updateListView()
+    def updateVehiclePose(self, bsm_json):
+        bsm = self.bsmDecoder.decodeBSM(bsm_json)
+        self.apMap.clearVehiclePosition()
+        self.apMap.addVehiclePosition(bsm.latitude, bsm.longitude)
 
     def launchNewAPEditor(self):
         index = self.apModel.insertRow(0, ActionPoint())
