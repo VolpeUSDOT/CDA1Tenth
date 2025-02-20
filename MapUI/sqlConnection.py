@@ -11,7 +11,7 @@ import json
 
 
 con = QSqlDatabase.addDatabase(QSqlDriver)
-con.setDatabaseName("port_drayage.freight")
+con.setDatabaseName("PORT_DRAYAGE.action")
 
 with open("secrets.json") as f:
     secrets = json.load(f)

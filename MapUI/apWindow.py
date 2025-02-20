@@ -156,7 +156,7 @@ class APWindow(QWidget):
         '''
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
-            ap = ActionPoint(name=ap_dict['operation'], latitude=ap_dict['destination_lat'], longitude=ap_dict['destination_long'])
+            ap = ActionPoint(name=ap_dict['area_name'], latitude=ap_dict['area_lat'], longitude=ap_dict['area_long'])
             self.apModel.insertRow(0, ap)
 
 
