@@ -6,7 +6,9 @@ from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyMod
 from PySide6.QtWidgets import QMessageBox, QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget, QListWidgetItem, QGraphicsItem
 from actionPointItem import ActionPoint,  ActionPointModel
 from webSocketClient import WebSocketClient
-from bsmDecoder import BSMDecoder
+from messageDecoder import MessageDecoder
+from bsmItem import BSMItem
+from actionItem import ActionItem
 
 
 class APWindow(QWidget):
@@ -47,11 +49,11 @@ class APWindow(QWidget):
         # when list widget is reordered, update model to match
         # self.apListWidget.itemDropped.connect(self.propagateListReorder)
         # self.apListWidget.indexesMoved().connect(self.propagateListReorder)
-        self.bsmDecoder = BSMDecoder()
+        self.messageDecoder = MessageDecoder()
 
         self.webSocketClient = WebSocketClient()
         # Connect signals
-        self.webSocketClient.message_received.connect(self.updateVehiclePose)
+        self.webSocketClient.message_received.connect(self.handleIncomingMessage)
         # Start connection
         self.webSocketClient.start_connection()
 
@@ -107,8 +109,16 @@ class APWindow(QWidget):
     def updateView(self):
         self.updateMap()
         # self.updateListView()
-    def updateVehiclePose(self, bsm_json):
-        bsm = self.bsmDecoder.decodeBSM(bsm_json)
+
+    def handleIncomingMessage(self, message):
+        decoded_message = self.messageDecoder.decodeMessage(message)
+        if type(decoded_message) is BSMItem:
+            self.updateVehiclePose(decoded_message)
+        elif type(decoded_message) is ActionItem:
+            print(decoded_message)
+
+
+    def updateVehiclePose(self, bsm):
         self.apMap.clearVehiclePosition()
         self.apMap.addVehiclePosition(bsm.latitude, bsm.longitude)
 
@@ -146,7 +156,7 @@ class APWindow(QWidget):
         '''
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
-            ap = ActionPoint(name=ap_dict['operation'], latitude=ap_dict['destination_lat'], longitude=ap_dict['destination_long'])
+            ap = ActionPoint(name=ap_dict['area_name'], latitude=ap_dict['area_lat'], longitude=ap_dict['area_long'])
             self.apModel.insertRow(0, ap)
 
 

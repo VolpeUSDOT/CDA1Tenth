@@ -42,7 +42,7 @@ class Database():
 
     def _GetActionData(self):
         warnings.simplefilter(action='ignore', category=UserWarning)
-        actionsQuery = f'''SELECT * FROM `{self.schema}`.`freight`;'''
+        actionsQuery = f'''SELECT * FROM `{self.schema}`.`action`;'''
         action_data = pd.read_sql(actionsQuery, con=self.engine)
         return action_data
 
@@ -65,4 +65,4 @@ if __name__ == "__main__":
 
     engine = SQLdb.createSQLEngine()
 
-    ap_df.to_sql('freight', con=engine, if_exists='replace', index=False, schema='PORT_DRAYAGE',)
+    ap_df.to_sql('action', con=engine, if_exists='replace', index=False, schema='PORT_DRAYAGE',)
