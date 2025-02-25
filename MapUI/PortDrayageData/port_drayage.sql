@@ -42,7 +42,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 INSERT INTO `action` (`action_id`, `prev_action_id`, `next_action_id`, `veh_id`, `veh_name`, `cargo_name`, `cargo_uuid`, `area_lat`, `area_long`, `area_name`, `area_status`, `area_is_notify`) VALUES
-(0, -1, 1, 'DOT-101', 'Truck A', '', uuid(), 37.774929, -74.419418, 'ENTER_STAGING_AREA', 'OPEN', 0),
-(1, 0, 2, 'DOT-101', 'Truck A', 'Cargo X', uuid(), 34.052235, -74.243683, 'PICKUP', 'OPEN', 1),
-(2, 1, -1, 'DOT-101', 'Truck A', 'Cargo X', uuid(), 40.712776, -74.005974, 'EXIT_STAGING_AREA', 'OPEN', 0);
+(0, -1, 1, 'DOT-101', 'Truck A', '', uuid(), -2.45, 0.55, 'ENTER_STAGING_AREA', 'OPEN', 0),
+(1, 0, 2, 'DOT-101', 'Truck A', 'Cargo X', uuid(), -3.45, -1.45, 'PICKUP', 'OPEN', 1),
+(2, 1, -1, 'DOT-101', 'Truck A', 'Cargo X', uuid(), -3.45, -4.45, 'EXIT_STAGING_AREA', 'OPEN', 0);
 UNLOCK TABLES;
