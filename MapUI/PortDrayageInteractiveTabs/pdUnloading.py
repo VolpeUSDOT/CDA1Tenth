@@ -13,6 +13,7 @@ from actionItem import ActionItem
 from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal
 from PySide6.QtWidgets import QGridLayout, QAbstractItemView, QPushButton, QListView, QLabel, QWidget, QStyledItemDelegate
 import datetime as dt
+from webSocketClient import WebSocketClient
 
 
 class PDUnloadingWidget(QWidget):
@@ -281,6 +282,9 @@ class ActionEditor(QWidget):
 
         self.progressButton.clicked.connect(self.progressStatus)
 
+        self.webSocketClient = WebSocketClient()
+        self.webSocketClient.start_connection()
+
     def progressStatus(self):
         if self.m_action_data.status == "Pending":
             self.m_action_data.status = "Unloading"
@@ -288,7 +292,8 @@ class ActionEditor(QWidget):
         elif self.m_action_data.status == "Unloading":
             self.m_action_data.status = "Completed"
             self.m_action_data.timeCompleted = dt.datetime.now()
-            # self.actionCompleted.emit()
+            m_action_json = self.m_action_data.convertToJSON()
+            self.webSocketClient.send_message(m_action_json)
         else:
             print("Action Already Completed")
         self.statusLabel.setText(f"Status: {self.m_action_data.status}")
