@@ -9,6 +9,8 @@ from webSocketClient import WebSocketClient
 from messageDecoder import MessageDecoder
 from bsmItem import BSMItem
 from actionItem import ActionItem
+from vehicleItem import VehicleItem
+from cargoItem import CargoItem
 
 
 class APWindow(QWidget):
@@ -104,7 +106,7 @@ class APWindow(QWidget):
         self.apMap.clearActionPoints()
         for i in range(self.apModel.rowCount(None)):
             ap_data = self.apModel.data(self.apModel.index(i,0), role=Qt.ItemDataRole.EditRole)
-            self.apMap.addActionPoint(ap_data.latitude, ap_data.longitude)
+            self.apMap.addActionPoint(ap_data.areaData.latitude, ap_data.areaData.longitude)
 
     def updateView(self):
         self.updateMap()
@@ -115,7 +117,10 @@ class APWindow(QWidget):
         if type(decoded_message) is BSMItem:
             self.updateVehiclePose(decoded_message)
         elif type(decoded_message) is ActionItem:
-            print(decoded_message)
+            next_action = self.apModel.getNextAction(int(decoded_message.actionID))
+            if next_action is not None:
+                mom_json = next_action.convertToJSON()
+                self.webSocketClient.send_message(mom_json)
 
 
     def updateVehiclePose(self, bsm):
@@ -156,8 +161,12 @@ class APWindow(QWidget):
         '''
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
-            ap = ActionPoint(name=ap_dict['area_name'], latitude=ap_dict['area_lat'], longitude=ap_dict['area_long'])
-            self.apModel.insertRow(0, ap)
+            ap = ActionPoint(actionID=ap_dict['action_id'], next_action=ap_dict['next_action_id'], prev_action=ap_dict['prev_action_id'], name=ap_dict['area_name'], latitude=ap_dict['area_lat'], longitude=ap_dict['area_long'])
+            vehicle = VehicleItem(name=ap_dict['veh_name'], veh_id=ap_dict['veh_id'])
+            cargo = CargoItem(name=ap_dict['cargo_name'], cargo_uuid=ap_dict['cargo_uuid'])
+            action = ActionItem(vehicle=vehicle, cargo=cargo, actionPoint=ap)
+            self.apModel.insertRow(0, action)
+        self.apModel.createActionLookup()
 
 
 # class APListWidget(QListWidget):

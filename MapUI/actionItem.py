@@ -17,6 +17,7 @@ class ActionItem():
         self.actionID = actionPoint.actionID
         self.next_action = actionPoint.next_action
         self.prev_action = actionPoint.prev_action
+        self.actionPoint = actionPoint
 
         # These are used for display in the UI and are not part of the JSON Message
         self.status = "Pending"
@@ -29,7 +30,7 @@ class ActionItem():
 
     def convertToJSON(self):
         json_dict = dict()
-        json_dict["MobilityOperationMessage"] = {"action_id": self.next_action,
+        json_dict["MobilityOperationMessage"] = {"action_id": self.actionID,
                      "operation": self.areaData.name,
                      "cmv_id": self.vehicle.veh_id,
                      "cargo_name": self.cargo.name,
@@ -41,5 +42,4 @@ class ActionItem():
                         }
                      }
         json_str = json.dumps(json_dict)
-        print(json_str)
         return json_str

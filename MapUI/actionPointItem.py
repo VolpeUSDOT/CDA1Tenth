@@ -7,10 +7,10 @@ class ActionPoint():
     This allows for in place data modification, and display functions to be attached to the data item
     '''
 
-    def __init__(self, name=None, latitude=0, longitude=0):
-        self.actionID = None
-        self.next_action = None
-        self.prev_action = None
+    def __init__(self, actionID=None, next_action=None, prev_action=None, name=None, latitude=None, longitude=None):
+        self.actionID = actionID
+        self.next_action = next_action
+        self.prev_action = prev_action
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
@@ -49,21 +49,21 @@ class ActionPointModel(QAbstractListModel):
     '''
     Model that stores Action Point data for the project
     '''
-    def __init__(self, *args, actionPoints=None, **kwargs):
+    def __init__(self, *args, actions=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.actionPoints = actionPoints or []
+        self.actions = actions or []
 
     def rowCount(self, index):
-        return len(self.actionPoints)
+        return len(self.actions)
 
     def data(self, index, role):
-        ap = self.actionPoints[index.row()]
+        ap = self.actions[index.row()]
 
         if role == Qt.ItemDataRole.EditRole:
             return ap
 
         if role == Qt.ItemDataRole.DisplayRole: # Completed list display
-            text = ap.completedActionPointDisplay()
+            text = ap.actionPoint.completedActionPointDisplay()
             return text
 
     def setData(self, index, value, role):
@@ -75,13 +75,13 @@ class ActionPointModel(QAbstractListModel):
         #     return False
 
 
-        self.actionPoints[index.row()] = value
+        self.actions[index.row()] = value
         self.dataChanged.emit(index, index)
 
         return True
 
     def insertRow(self, row, value):
-        self.actionPoints.insert(row, value)
+        self.actions.insert(row, value)
         index = self.index(row, 0)
         self.dataChanged.emit(index, index)
         return index
@@ -90,7 +90,7 @@ class ActionPointModel(QAbstractListModel):
         if parent.isValid():
             return False
         for i in range(count):
-            self.actionPoints.insert(row+i, ActionPoint())
+            self.actions.insert(row+i, ActionPoint())
         return True
 
     def removeRows(self, row, count, parent = ...):
@@ -98,7 +98,7 @@ class ActionPointModel(QAbstractListModel):
             return False
         self.beginRemoveRows(parent, row, row+count-1)
         for i in range(count):
-            self.actionPoints.pop(row)
+            self.actions.pop(row)
         return True
 
     def updateItemOrder(self, index_list):
@@ -107,7 +107,7 @@ class ActionPointModel(QAbstractListModel):
         '''
         if len(index_list) != self.rowCount(None):
             return False
-        self.actionPoints = [self.actionPoints[i] for i in index_list]
+        self.actions = [self.actions[i] for i in index_list]
         return True
 
 
@@ -182,6 +182,30 @@ class ActionPointModel(QAbstractListModel):
 
         return True
         #return super().dropMimeData(data, action, row, column, parent)
+
+    def createActionLookup(self):
+        if not self.actions:
+            return {}
+
+        # Step 1: Create a lookup dictionary {actionID: actionPoint}
+        obj_map = {ap.actionID: ap for ap in self.actions}
+
+        # Step 2: Find the head (starting node) where prev_action == -1
+        first_action = next(ap for ap in self.actions if ap.prev_action == -1)
+
+        # Step 3: Construct the lookup map
+        self.action_map = {}
+        current_obj = first_action
+        while current_obj.next_action in obj_map:
+            next_obj = obj_map[current_obj.next_action]
+            self.action_map[current_obj.actionID] = next_obj
+            current_obj = next_obj  # Move to the next action
+
+        # Ensure the last action points to None
+        self.action_map[current_obj.actionID] = None
+
+    def getNextAction(self, next_action_id):
+        return self.action_map.get(next_action_id, None)
 
     def convertToDataframe(self):
         '''

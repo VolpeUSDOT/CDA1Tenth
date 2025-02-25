@@ -43,14 +43,14 @@ class MessageDecoder:
         """
         mom_dict = json.loads(mom_json)
         # Extract the relevant data from the nested dictionary structure
-        action = mom_dict['MobilityOperationMessage']['action_id']
+        actionID = mom_dict['MobilityOperationMessage']['action_id']
         vehicle = mom_dict['MobilityOperationMessage']['cmv_id']
         cargo_name = mom_dict['MobilityOperationMessage']['cargo_name']
         cargo_id = mom_dict['MobilityOperationMessage']['cargo_id']
         destination_long = mom_dict['MobilityOperationMessage']['destination']['longitude']
         destination_lat = mom_dict['MobilityOperationMessage']['destination']['latitude']
-        opreation = mom_dict['MobilityOperationMessage']['operation']
-        action_point = ActionPoint(name=operation, longitude=destination_long, latitude=destination_lat)
+        operation = mom_dict['MobilityOperationMessage']['operation']
+        action_point = ActionPoint(actionID=actionID, name=operation, longitude=destination_long, latitude=destination_lat)
         vehicle_item = VehicleItem(veh_id=vehicle)
         cargo_item = CargoItem(name=cargo_name, cargo_uuid=cargo_id)
         mom = ActionItem(vehicle=vehicle_item, cargo=cargo_item, actionPoint=action_point)
@@ -72,7 +72,6 @@ class MessageDecoder:
         if "BasicSafetyMessage" in data:
             decoded_data = self._decodeBSM(json_str)
         elif "MobilityOperationMessage" in data:
-            print(json_str)
             decoded_data = self._decodeMOM(json_str)
         else:
             raise Exception("Unknown message type")
