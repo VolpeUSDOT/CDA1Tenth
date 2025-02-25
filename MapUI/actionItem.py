@@ -28,11 +28,18 @@ class ActionItem():
         return text
 
     def convertToJSON(self):
-        json_dict = {"actionID": self.actionID,
-                     "next_action": self.next_action,
-                     "prev_action": self.prev_action,
-                     "area": self.areaData,
-                     "cargo": self.cargo,
-                     "vehicle": self.vehicle}
+        json_dict = dict()
+        json_dict["MobilityOperationMessage"] = {"action_id": self.next_action,
+                     "operation": self.areaData.name,
+                     "cmv_id": self.vehicle.veh_id,
+                     "cargo_name": self.cargo.name,
+                     "cargo_id": self.cargo.cargo_uuid,
+                     "destination": 
+                        {
+                            "latitude": self.areaData.latitude,
+                            "longitude": self.areaData.longitude
+                        }
+                     }
         json_str = json.dumps(json_dict)
+        print(json_str)
         return json_str
