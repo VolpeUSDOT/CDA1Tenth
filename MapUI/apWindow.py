@@ -117,10 +117,12 @@ class APWindow(QWidget):
         if type(decoded_message) is BSMItem:
             self.updateVehiclePose(decoded_message)
         elif type(decoded_message) is ActionItem:
-            next_action = self.apModel.getNextAction(int(decoded_message.actionID))
-            if next_action is not None:
-                mom_json = next_action.convertToJSON()
-                self.webSocketClient.send_message(mom_json)
+            response = decoded_message.convertToJSON()
+            if decoded_message.actionPoint.name == "PICKUP" or decoded_message.actionPoint.name == "DROPOFF":
+                # TODO: Will need to wait for pickup or dropoff to be completed in pdTabs.py before sending MOM
+                # Currently we will just send it immediately and resolve this in a later PR
+                pass
+            self.webSocketClient.send_message(response)
 
 
     def updateVehiclePose(self, bsm):

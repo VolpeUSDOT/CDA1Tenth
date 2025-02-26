@@ -183,30 +183,6 @@ class ActionPointModel(QAbstractListModel):
         return True
         #return super().dropMimeData(data, action, row, column, parent)
 
-    def createActionLookup(self):
-        if not self.actions:
-            return {}
-
-        # Step 1: Create a lookup dictionary {actionID: actionPoint}
-        obj_map = {ap.actionID: ap for ap in self.actions}
-
-        # Step 2: Find the head (starting node) where prev_action == -1
-        first_action = next(ap for ap in self.actions if ap.prev_action == -1)
-
-        # Step 3: Construct the lookup map
-        self.action_map = {}
-        current_obj = first_action
-        while current_obj.next_action in obj_map:
-            next_obj = obj_map[current_obj.next_action]
-            self.action_map[current_obj.actionID] = next_obj
-            current_obj = next_obj  # Move to the next action
-
-        # Ensure the last action points to None
-        self.action_map[current_obj.actionID] = None
-
-    def getNextAction(self, next_action_id):
-        return self.action_map.get(next_action_id, None)
-
     def convertToDataframe(self):
         '''
         Converts list to pandas df, generating columns required for linked list calls later
