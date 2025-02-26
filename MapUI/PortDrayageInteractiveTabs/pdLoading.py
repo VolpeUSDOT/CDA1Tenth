@@ -230,10 +230,11 @@ class ActionDelegate(QStyledItemDelegate):
         return editor
 
     def setEditorData(self, editor, index):
-        editor.action_data = index.data(role=Qt.ItemDataRole.EditRole)
+        editor.setValue(index.data(role=Qt.ItemDataRole.EditRole))
+        editor.actionDataChanged.connect(self.commit_from_editor) # TODO Might need to lose this line
 
     def setModelData(self, editor, model, index):
-        model.setData(index, editor.action_data)
+        model.setData(index, editor.m_action_data)
 
     def commit_from_editor(self):
         '''
@@ -267,13 +268,13 @@ class ActionEditor(QWidget):
         self.statusLabel = QLabel(f"Status: {self.m_action_data.status}")
 
         # Layout widgets
-        layout = QGridLayout()
-        layout.addWidget(self.vehicleLabel, 0, 0, 1, 1)
-        layout.addWidget(self.cargoLabel, 0, 1, 1, 1)
-        layout.addWidget(self.statusLabel, 1, 0, 1, 1)
-        layout.addWidget(self.progressButton, 2, 0, 1, 2)
-        layout.addWidget(self.portArea, 0, 2, 3, 2)
-        self.setLayout(layout)
+        self.layout = QGridLayout()
+        self.layout.addWidget(self.vehicleLabel, 0, 0, 1, 1)
+        self.layout.addWidget(self.cargoLabel, 0, 1, 1, 1)
+        self.layout.addWidget(self.statusLabel, 1, 0, 1, 1)
+        self.layout.addWidget(self.progressButton, 2, 0, 1, 2)
+        self.layout.addWidget(self.portArea, 0, 2, 3, 2)
+        self.setLayout(self.layout)
 
         self.progressButton.clicked.connect(self.progressStatus)
 

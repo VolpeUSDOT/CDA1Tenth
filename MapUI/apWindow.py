@@ -18,7 +18,7 @@ class APWindow(QWidget):
 
     '''
 
-    def __init__(self, loading_signal, unloading_signal):
+    def __init__(self, loading_signal, unloading_signal, inspection_signal):
         super().__init__()
         self.title = QLabel('''# Action Points''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -32,6 +32,7 @@ class APWindow(QWidget):
         self.activeEditor = None
         self.loading_signal = loading_signal
         self.unloading_signal = unloading_signal
+        self.inspection_signal = inspection_signal
 
 
         layout = QGridLayout()
@@ -123,12 +124,8 @@ class APWindow(QWidget):
                 self.loading_signal.emit(decoded_message)
             elif decoded_message.actionPoint.name == "DROPOFF":
                 self.unloading_signal.emit(decoded_message)
-            elif decoded_message.actionPoint.name == "PORT_CHECKPOINT":
-                # TODO
-                pass
-            elif decoded_message.actionPoint.name == "HOLDING_AREA":
-                # TODO
-                pass
+            elif decoded_message.actionPoint.name == "PORT_CHECKPOINT" or decoded_message.actionPoint.name == "HOLDING_AREA":
+                self.inspection_signal.emit(decoded_message)
 
 
 
