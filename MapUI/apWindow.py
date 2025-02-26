@@ -168,8 +168,6 @@ class APWindow(QWidget):
             cargo = CargoItem(name=ap_dict['cargo_name'], cargo_uuid=ap_dict['cargo_uuid'])
             action = ActionItem(vehicle=vehicle, cargo=cargo, actionPoint=ap)
             self.apModel.insertRow(0, action)
-        self.apModel.createActionLookup()
-
 
 # class APListWidget(QListWidget):
 #     itemSelectionDropped = Signal()
