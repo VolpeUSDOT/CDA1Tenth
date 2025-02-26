@@ -9,11 +9,11 @@ from PortDrayageInteractiveTabs.pdInspection import PDInspectionWidget
 class PDTabs(QMainWindow):
 
 
-    def __init__(self):
+    def __init__(self, loading_signal, unloading_signal):
         super().__init__()
 
-        self.loadingWidget = PDLoadingWidget()
-        self.unloadingWidget = PDUnloadingWidget()
+        self.loadingWidget = PDLoadingWidget(loading_signal)
+        self.unloadingWidget = PDUnloadingWidget(unloading_signal)
         self.inspectionWidget = PDInspectionWidget()
 
         self.tabBar = QTabBar()

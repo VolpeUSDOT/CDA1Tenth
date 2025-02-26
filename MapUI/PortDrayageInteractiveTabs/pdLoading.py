@@ -10,7 +10,7 @@ Actions contain info on vehicle, cargo(container) status(pending, loading, compl
 pending and loading actions have a button to interact with and progress the action. Once an action is completed, the interactable object is removed and the info of the action is added to a completed action log
 '''
 from actionItem import ActionItem
-from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal
+from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, Slot
 from PySide6.QtWidgets import QGridLayout, QAbstractItemView, QPushButton, QListView, QLabel, QWidget, QStyledItemDelegate
 import datetime as dt
 from webSocketClient import WebSocketClient
@@ -19,9 +19,9 @@ class PDLoadingWidget(QWidget):
     '''
     Main Widget for the loading display to be referenced outside this file
     '''
-    def __init__(self):
+    def __init__(self, loading_signal):
         super().__init__()
-        self.model = LoadingActionList(loadingActions=[ActionItem()])
+        self.model = LoadingActionList(loadingActions=[])
         self.loadingActionView = PendingActionView()
         self.completedActionView = CompletedActionView()
         self.inProgressFilterProxyModel = InProgressActionListProxyModel()
@@ -31,10 +31,6 @@ class PDLoadingWidget(QWidget):
 
         self.loadingActionView.setModel(self.inProgressFilterProxyModel)
         self.completedActionView.setModel(self.completedFilterProxyModel)
-
-        self.loadingActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(0,0)) # TODO: Remove later when items appear based on received MOMs
-
-
 
         self.title = QLabel('''# Port Drayage Loading Area''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -56,10 +52,11 @@ class PDLoadingWidget(QWidget):
         layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
+        loading_signal.connect(self.addLoadingAction)
 
-    def addLoadingAction(self):
-
-        self.model.loadingActions.append(ActionItem())
+    @Slot()
+    def addLoadingAction(self, action):
+        self.model.loadingActions.append(action)
         i = self.model.rowCount()
         self.loadingActionView.openPersistentEditor(self.model.index(i,0))
         self.model.layoutChanged.emit()
@@ -180,7 +177,7 @@ class LoadingActionList(QAbstractListModel):
         super().__init__(*args, **kwargs)
         self.loadingActions = loadingActions or []
 
-    def rowCount(self, index):
+    def rowCount(self, index=None):
         return len(self.loadingActions)
 
     def data(self, index, role):

@@ -18,7 +18,7 @@ class APWindow(QWidget):
 
     '''
 
-    def __init__(self):
+    def __init__(self, loading_signal, unloading_signal):
         super().__init__()
         self.title = QLabel('''# Action Points''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -30,6 +30,8 @@ class APWindow(QWidget):
         self.addAPButton = QPushButton("Add Action Point")
         self.editAPButton = QPushButton("Edit Action Point")
         self.activeEditor = None
+        self.loading_signal = loading_signal
+        self.unloading_signal = unloading_signal
 
 
         layout = QGridLayout()
@@ -117,12 +119,17 @@ class APWindow(QWidget):
         if type(decoded_message) is BSMItem:
             self.updateVehiclePose(decoded_message)
         elif type(decoded_message) is ActionItem:
-            response = decoded_message.convertToJSON()
-            if decoded_message.actionPoint.name == "PICKUP" or decoded_message.actionPoint.name == "DROPOFF":
-                # TODO: Will need to wait for pickup or dropoff to be completed in pdTabs.py before sending MOM
-                # Currently we will just send it immediately and resolve this in a later PR
+            if decoded_message.actionPoint.name == "PICKUP":
+                self.loading_signal.emit(decoded_message)
+            elif decoded_message.actionPoint.name == "DROPOFF":
+                self.unloading_signal.emit(decoded_message)
+            elif decoded_message.actionPoint.name == "PORT_CHECKPOINT":
+                # TODO
                 pass
-            self.webSocketClient.send_message(response)
+            elif decoded_message.actionPoint.name == "HOLDING_AREA":
+                # TODO
+                pass
+
 
 
     def updateVehiclePose(self, bsm):

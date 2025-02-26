@@ -10,7 +10,7 @@ Actions contain info on vehicle, cargo(container) status(pending, unloading, com
 pending and unloading actions have a button to interact with and progress the action. Once an action is completed, the interactable object is removed and the info of the action is added to a completed action log
 '''
 from actionItem import ActionItem
-from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal
+from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, Slot
 from PySide6.QtWidgets import QGridLayout, QAbstractItemView, QPushButton, QListView, QLabel, QWidget, QStyledItemDelegate
 import datetime as dt
 from webSocketClient import WebSocketClient
@@ -20,9 +20,9 @@ class PDUnloadingWidget(QWidget):
     '''
     Main Widget for the unloading display to be referenced outside this file
     '''
-    def __init__(self):
+    def __init__(self, unloading_signal):
         super().__init__()
-        self.model = UnloadingActionList(unloadingActions=[ActionItem(), ActionItem()])
+        self.model = UnloadingActionList(unloadingActions=[])
         self.unloadingActionView = PendingActionView()
         self.completedActionView = CompletedActionView()
         self.inProgressFilterProxyModel = InProgressActionListProxyModel()
@@ -32,11 +32,6 @@ class PDUnloadingWidget(QWidget):
 
         self.unloadingActionView.setModel(self.inProgressFilterProxyModel)
         self.completedActionView.setModel(self.completedFilterProxyModel)
-
-        self.unloadingActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(0,0)) # TODO: Remove later when items appear based on received MOMs
-        self.unloadingActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(1,0)) # TODO: Remove later when items appear based on received MOMs
-
-
 
         self.title = QLabel('''# Port Drayage Unloading Area''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -58,10 +53,12 @@ class PDUnloadingWidget(QWidget):
         layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
+        unloading_signal.connect(self.addUnloadingAction)
 
-    def addLoadingAction(self):
+    @Slot()
+    def addUnloadingAction(self, action):
 
-        self.model.unloadingActions.append(ActionItem())
+        self.model.unloadingActions.append(action)
         i = self.model.rowCount()
         self.unloadingActionView.openPersistentEditor(self.model.index(i,0))
         self.model.layoutChanged.emit()
@@ -182,7 +179,7 @@ class UnloadingActionList(QAbstractListModel):
         super().__init__(*args, **kwargs)
         self.unloadingActions = unloadingActions or []
 
-    def rowCount(self, index):
+    def rowCount(self, index=None):
         return len(self.unloadingActions)
 
     def data(self, index, role):

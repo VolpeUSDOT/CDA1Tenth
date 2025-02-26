@@ -1,5 +1,6 @@
 # from PySide6.QtCore import
 from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget
+from PySide6.QtCore import Signal
 from actioninfobox import ActionInfoBoxWidget
 from aporderbox import APOrderBoxWidget
 from apWindow import APWindow
@@ -7,6 +8,7 @@ from PortDrayageInteractiveTabs.pdTabs import PDTabs
 from tabBar import TabBar
 from MysqlDataPull import Database
 from cargoWindow import CargoWindow
+from actionItem import ActionItem
 from sqlalchemy import text
 import json
 import sys
@@ -14,7 +16,8 @@ import sys
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
-
+    loading_signal = Signal(ActionItem)
+    unloading_signal = Signal(ActionItem)
     def __init__(self):
         super().__init__()
 
@@ -22,7 +25,7 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(800,600)
         self.tabBar = TabBar()
 
-        self.apWindow = APWindow()
+        self.apWindow = APWindow(self.loading_signal, self.unloading_signal)
         # Prep action Point Widget
         # Get action points from SQL and populate widgets with them
         self.SQLdb = Database('PORT_DRAYAGE')
@@ -30,7 +33,7 @@ class MainWindow(QMainWindow):
         self.apWindow.readSQLActionPoints(actionData)
 
         # create and stack widgets
-        self.pdTabs = PDTabs()
+        self.pdTabs = PDTabs(self.loading_signal, self.unloading_signal)
         self.cargoWindow = CargoWindow()
         self.stackedWidget = QStackedWidget()
         self.stackedWidget.addWidget(self.apWindow)
