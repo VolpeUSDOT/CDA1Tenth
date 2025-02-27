@@ -118,6 +118,8 @@ class MapWidget(QWidget):
         '''
         Takes an action point dictionary and adds the action point to the map
         '''
+        if long is None or lat is None:
+            return
         x, y = self._convertCoords(long, lat)
         ap = ActionPointGI(x, y, self.scene)
         self.ap_list.append(ap)
@@ -135,7 +137,7 @@ class MapWidget(QWidget):
         Adds the vehicle position to the map
         '''
         self.clearVehiclePosition()
-        x, y = self._convertCoords(long, lat)
+        x, y = self._convertCoords(float(long), float(lat))
         vehicle = VehicleGI(x, y, self.scene)
         self.vehicle_position = vehicle
         self.scene.addItem(vehicle)

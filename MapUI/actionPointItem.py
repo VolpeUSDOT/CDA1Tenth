@@ -63,7 +63,10 @@ class ActionPointModel(QAbstractListModel):
             return ap
 
         if role == Qt.ItemDataRole.DisplayRole: # Completed list display
-            text = ap.actionPoint.completedActionPointDisplay()
+            if hasattr(ap, "actionPoint"):
+                text = ap.actionPoint.completedActionPointDisplay()
+            else:
+                text = ap.completedActionPointDisplay()
             return text
 
     def setData(self, index, value, role):
@@ -73,7 +76,6 @@ class ActionPointModel(QAbstractListModel):
         # if role != Qt.ItemDataRole.EditRole:
         #     print("Not editable")
         #     return False
-
 
         self.actions[index.row()] = value
         self.dataChanged.emit(index, index)
@@ -109,7 +111,6 @@ class ActionPointModel(QAbstractListModel):
             return False
         self.actions = [self.actions[i] for i in index_list]
         return True
-
 
     def supportedDropActions(self):
         return Qt.DropAction.MoveAction
@@ -161,8 +162,7 @@ class ActionPointModel(QAbstractListModel):
 
         self.insertRows(beginRow, count=1, parent=parent)
 
-        #json_list = json.load(stream.readQStringList())
-
+        # json_list = json.load(stream.readQStringList())
 
         for json_str in stream.readQStringList():
             index = self.index(beginRow, 0, parent)
@@ -179,9 +179,8 @@ class ActionPointModel(QAbstractListModel):
             self.setData(index, ap, role=Qt.ItemDataRole.EditRole)
             beginRow+=1
 
-
         return True
-        #return super().dropMimeData(data, action, row, column, parent)
+        # return super().dropMimeData(data, action, row, column, parent)
 
     def convertToDataframe(self):
         '''
@@ -208,7 +207,7 @@ class ActionPointModel(QAbstractListModel):
     def flags(self, index):
         flags = super().flags(index)
         # if self.loadingActions[index.row()].status != "Completed":
-            # |= is a special operator required to add a new flag to the list of flags
+        # |= is a special operator required to add a new flag to the list of flags
         flags |= Qt.ItemFlag.ItemIsEditable
 
         if index.isValid():
