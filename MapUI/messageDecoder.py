@@ -50,8 +50,8 @@ class MessageDecoder:
         destination_long = mom_dict['MobilityOperationMessage']['destination']['longitude']
         destination_lat = mom_dict['MobilityOperationMessage']['destination']['latitude']
         operation = mom_dict['MobilityOperationMessage']['operation']
-        action_point = ActionPoint(actionID=actionID, name=operation, longitude=destination_long, latitude=destination_lat)
-        vehicle_item = VehicleItem(veh_id=vehicle)
+        action_point = ActionPoint(actionID=int(actionID), name=operation, longitude=float(destination_long), latitude=float(destination_lat))
+        vehicle_item = VehicleItem(veh_id=vehicle, name="TRUCK A")
         cargo_item = CargoItem(name=cargo_name, cargo_uuid=cargo_id)
         mom = ActionItem(vehicle=vehicle_item, cargo=cargo_item, actionPoint=action_point)
         return mom

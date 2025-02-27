@@ -43,3 +43,21 @@ class ActionItem():
                      }
         json_str = json.dumps(json_dict)
         return json_str
+
+    def convertToSQLDict(self):
+        sql_dict = dict()
+        sql_dict["action_id"] = self.actionID
+        sql_dict["prev_action_id"] = self.prev_action
+        sql_dict["next_action_id"] = self.next_action
+        sql_dict["veh_id"] = self.vehicle.veh_id
+        sql_dict["veh_name"] = self.vehicle.name
+        sql_dict["cargo_name"] = self.cargo.name
+        sql_dict["cargo_uuid"] = self.cargo.cargo_uuid
+        sql_dict["area_lat"] = self.areaData.latitude
+        sql_dict["area_long"] = self.areaData.longitude
+        sql_dict["area_name"] = self.areaData.name
+        sql_dict["area_status"] = "OPEN"
+        sql_dict["area_is_notify"] = 1 if (self.areaData.name in {"PICKUP", "DROPOFF", "PORT_CHECKPOINT", "HOLDING_AREA"}) else 0
+        sql_dict["created_at"] = self.timeRequested
+        sql_dict["updated_at"] = dt.datetime.now()
+        return sql_dict
