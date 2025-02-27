@@ -57,7 +57,6 @@ class WebSocketClient(QObject):
         '''
         Handles received messages
         '''
-        print(f"Message received: {message}")
         self.message_received.emit(message)
 
     def signal_handler(self, sig, frame):
@@ -65,7 +64,7 @@ class WebSocketClient(QObject):
         Handle termination from Ctrl+C
         '''
         print('Exiting...')
-        self.on_disconnected()
+        self.disconnect()
         QCoreApplication.quit()
 
 if __name__ == '__main__':
