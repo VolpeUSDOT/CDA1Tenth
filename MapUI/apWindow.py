@@ -176,7 +176,6 @@ class APWindow(QWidget):
         SQLdb = Database("PORT_DRAYAGE")
         # Update database
         isDBUpdate = False
-        print(selectedRow.__dict__)
         if hasattr(selectedRow, "actionPoint") or selectedRow.actionID is not None:
             """Update existing action point"""
             actionPoint = (
