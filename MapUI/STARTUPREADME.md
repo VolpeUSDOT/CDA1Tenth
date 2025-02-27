@@ -28,5 +28,8 @@ mysql -u root -p port_drayage < path/to/your/port_drayage_lane2 1.sql
 
 # Secrets.json notes
 leave host as is
-port is selected when installing MariaDB - match secrets.json with install setting if unsure of port type "@Hostname;" in mysql
+
+port is selected when installing MariaDB - match secrets.json with install setting if unsure of port type below in MySQL:
+SHOW VARIABLES WHERE Variable_name = 'port';
+
 Choose MySQL password chosen during install
