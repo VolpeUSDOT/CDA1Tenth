@@ -1,8 +1,8 @@
 import pandas as pd
 
 # import mysql.connector
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
+from sqlalchemy import create_engine, text
+import datetime as dt
 import warnings
 import json
 from sqlalchemy import text
@@ -65,118 +65,38 @@ class Database:
         )
         return engine
 
-    def updateActionNotify(self, action_id, area_is_notify):
-        """
-        Update the action data in the database
-        """
-        area_is_notify = 1 if area_is_notify else 0
-        actionsQuery = (
-            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
-        )
-        action = pd.read_sql(actionsQuery, con=self.engine)
-        if not action.empty:
-            action.at[0, "area_is_notify"] = area_is_notify
-            update_query = text(
-                f"UPDATE `{self.schema}`.`action` SET area_is_notify = :area_is_notify WHERE action_id = :action_id"
-            )
-            with Session(self.engine) as session:
-                session.execute(
-                    update_query,
-                    {"area_is_notify": area_is_notify, "action_id": action_id},
-                )
-                session.commit()
-            logging.info(
-                "Action(id=%s) area_is_notify updated to %s", action_id, area_is_notify
-            )
-        else:
-            logging.info("Action(id=%s) not found", action_id)
-        return action
+    def insertHoldingAction(self, engine, holding_action):
+        with engine.connect() as conn:
+            trans = conn.begin()
+            try: 
+                new_action_query = text(f"""
+                    INSERT INTO `{self.schema}`.`action` ({', '.join(holding_action.keys())})
+                    VALUES ({', '.join(f':{k}' for k in holding_action)})
+                """)
 
-    def updateActionAreaName(self, action_id, area_name):
-        """
-        Update the area name of action data in the database
-        """
-        actionsQuery = (
-            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
-        )
-        action = pd.read_sql(actionsQuery, con=self.engine)
-        if not action.empty:
-            action.at[0, "area_name"] = area_name
-            update_query = text(
-                f"UPDATE `{self.schema}`.`action` SET area_name = :area_name WHERE action_id = :action_id"
-            )
-            with Session(self.engine) as session:
-                session.execute(
-                    update_query,
-                    {"area_name": area_name, "action_id": action_id},
-                )
-                session.commit()
-            logging.info("Action(id=%s) area_name updated to %s", action_id, area_name)
-        else:
-            logging.info("Action(id=%s) not found", action_id)
+                conn.execute(new_action_query, holding_action)
 
-    def updateNextActionId(self, action_id, next_action_id):
-        """
-        Update the next action id of action data in the database
-        """
-        actionsQuery = (
-            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
-        )
-        action = pd.read_sql(actionsQuery, con=self.engine)
-        if not action.empty:
-            action.at[0, "next_action_id"] = next_action_id
-            update_query = text(
-                f"UPDATE `{self.schema}`.`action` SET next_action_id = :next_action_id WHERE action_id = :action_id"
-            )
-            with Session(self.engine) as session:
-                session.execute(
-                    update_query,
-                    {"next_action_id": next_action_id, "action_id": action_id},
-                )
-                session.commit()
+                # Update the previous next_action_id to point to the new action
+                conn.execute(text(f"""
+                    UPDATE `{self.schema}`.`action`
+                    SET next_action_id = :new_action
+                    WHERE action_id = :current_action
+                """), {"new_action": holding_action["action_id"], "current_action": holding_action["prev_action_id"]})
 
-    def getLastActionId(self):
-        """
-        Get the last action id from the database
-        """
-        actionsQuery = f"""SELECT * FROM `{self.schema}`.`action` ORDER BY action_id DESC LIMIT 1;"""
-        action = pd.read_sql(actionsQuery, con=self.engine)
-        if not action.empty:
-            return action.at[0, "action_id"]
-        else:
-            return -1
+                # Update the next action's prev_action_id
+                conn.execute(text(f"""
+                    UPDATE `{self.schema}`.`action`
+                    SET prev_action_id = :new_action
+                    WHERE action_id = :next_action_id
+                """), {"new_action": holding_action["action_id"], "next_action_id": holding_action["next_action_id"]})
 
-    def insertNewActionPoint(self, actionPoint):
-        """
-        Insert new action point into the database
-        """
-        last_action_id = self.getLastActionId()
-        actionPoint.actionID = last_action_id + 1
-        actionPoint.prev_action = last_action_id
-        actionPoint.next_action = -1
-        insert_query = text(
-            f"INSERT INTO `{self.schema}`.`action` (action_id, prev_action_id, next_action_id, area_name, area_lat, area_long, area_is_notify, area_status) VALUES (:action_id, :prev_action_id, :next_action_id, :area_name, :area_latitude, :area_longitude, :area_is_notify, :area_status)"
-        )
-        with Session(self.engine) as session:
-            session.execute(
-                insert_query,
-                {
-                    "action_id": actionPoint.actionID,
-                    "prev_action_id": actionPoint.prev_action,
-                    "next_action_id": actionPoint.next_action,
-                    "area_name": actionPoint.name,
-                    "area_latitude": actionPoint.latitude,
-                    "area_longitude": actionPoint.longitude,
-                    "area_is_notify": actionPoint.is_notify,
-                    "area_status": "OPEN" if actionPoint.status else "CLOSED",
-                },
-            )
-            session.commit()
-            logging.info("New action point inserted")
+                trans.commit()
+                return
 
-        # After insert new action, update the previous last action's next action id to the new action id
-        self.updateNextActionId(last_action_id, actionPoint.actionID)
-        return actionPoint.actionID
+            except Exception as e:
+                trans.rollback()
+                raise e
+
 
 
 if __name__ == "__main__":
