@@ -118,6 +118,8 @@ class MapWidget(QWidget):
         '''
         Takes an action point dictionary and adds the action point to the map
         '''
+        if long is None or lat is None:
+            return
         x, y = self._convertCoords(long, lat)
         ap = ActionPointGI(x, y, self.scene)
         self.ap_list.append(ap)
