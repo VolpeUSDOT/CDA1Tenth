@@ -1,6 +1,7 @@
 import pandas as pd
 # import mysql.connector
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
+import datetime as dt
 import warnings
 import json
 
@@ -53,6 +54,38 @@ class Database():
         #mysqlconnector
         engine = create_engine(f"mysql+pymysql://{secrets['user']}:{secrets['password']}@{secrets['host']}:{secrets['port']}/{self.schema}")
         return engine
+
+    def insertHoldingAction(self, engine, holding_action):
+        with engine.connect() as conn:
+            trans = conn.begin()
+            try: 
+                new_action_query = text(f"""
+                    INSERT INTO `{self.schema}`.`action` ({', '.join(holding_action.keys())})
+                    VALUES ({', '.join(f':{k}' for k in holding_action)})
+                """)
+
+                conn.execute(new_action_query, holding_action)
+
+                # Update the previous next_action_id to point to the new action
+                conn.execute(text(f"""
+                    UPDATE `{self.schema}`.`action`
+                    SET next_action_id = :new_action
+                    WHERE action_id = :current_action
+                """), {"new_action": holding_action["action_id"], "current_action": holding_action["prev_action_id"]})
+
+                # Update the next action's prev_action_id
+                conn.execute(text(f"""
+                    UPDATE `{self.schema}`.`action`
+                    SET prev_action_id = :new_action
+                    WHERE action_id = :next_action_id
+                """), {"new_action": holding_action["action_id"], "next_action_id": holding_action["next_action_id"]})
+
+                trans.commit()
+                return
+
+            except Exception as e:
+                trans.rollback()
+                raise e
 
 
 

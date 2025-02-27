@@ -10,18 +10,19 @@ Actions contain info on vehicle, cargo(container) status(pending, in inspection,
 pending and inspection actions have a button to interact with and progress the action. Once an action is completed, the interactable object is removed and the info of the action is added to a completed action log
 '''
 from actionItem import ActionItem
-from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal
+from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, Slot
 from PySide6.QtWidgets import QGridLayout, QAbstractItemView, QPushButton, QListView, QLabel, QWidget, QStyledItemDelegate
 import datetime as dt
+from webSocketClient import WebSocketClient
 
 class PDInspectionWidget(QWidget):
     '''
     Main Widget for the inspection display to be referenced outside this file
     '''
-    def __init__(self):
+    def __init__(self, inspection_signal, holding_signal):
         super().__init__()
-        self.model = InspectionActionList(inspectionActions=[ActionItem()])
-        self.inspectionActionView = PendingActionView()
+        self.model = InspectionActionList(inspectionActions=[])
+        self.inspectionActionView = PendingActionView(holding_signal)
         self.completedActionView = CompletedActionView()
         self.inProgressFilterProxyModel = InProgressActionListProxyModel()
         self.inProgressFilterProxyModel.setSourceModel(self.model)
@@ -30,10 +31,6 @@ class PDInspectionWidget(QWidget):
 
         self.inspectionActionView.setModel(self.inProgressFilterProxyModel)
         self.completedActionView.setModel(self.completedFilterProxyModel)
-
-        self.inspectionActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(0,0)) # TODO: Remove later when items appear based on received MOMs
-
-
 
         self.title = QLabel('''# Port Drayage Inspection Area''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -55,10 +52,12 @@ class PDInspectionWidget(QWidget):
         layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
+        inspection_signal.connect(self.addInspectionAction)
+        self.holding_signal = holding_signal
 
-    def addInspectionAction(self):
-
-        self.model.inspectionActions.append(ActionItem())
+    @Slot()
+    def addInspectionAction(self, action):
+        self.model.inspectionActions.append(action)
         i = self.model.rowCount()
         self.inspectionActionView.openPersistentEditor(self.model.index(i,0))
         self.model.layoutChanged.emit()
@@ -79,11 +78,11 @@ class PendingActionView(QListView):
     '''
     Subclass of list view for showing a list of editable action items
     '''
-    def __init__(self):
+    def __init__(self, holding_signal):
         super().__init__()
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setUniformItemSizes(True)
-        self.setItemDelegate(ActionDelegate())
+        self.setItemDelegate(ActionDelegate(holding_signal))
         # self.setEditTriggers(QAbstractItemView.DoubleClicked | QAbstractItemView.SelectedClicked)
         self.setEditTriggers(QAbstractItemView.EditTrigger.AllEditTriggers)
 
@@ -179,7 +178,7 @@ class InspectionActionList(QAbstractListModel):
         super().__init__(*args, **kwargs)
         self.inspectionActions = inspectionActions or []
 
-    def rowCount(self, index):
+    def rowCount(self, index=None):
         return len(self.inspectionActions)
 
     def data(self, index, role):
@@ -218,24 +217,26 @@ class ActionDelegate(QStyledItemDelegate):
     '''
     Creates an alternate, interactable and editable view for items in the model and connects the data in the temporary editor with the model
     '''
-    def __init__(self, parent=None):
+    def __init__(self, holding_signal, parent=None):
         super().__init__(parent)
+        self.holding_signal = holding_signal
 
     def sizeHint(self, option, index):
-        editor = ActionEditor(None)
+        editor = ActionEditor(None, self.holding_signal)
         return editor.sizeHint()
 
     def createEditor(self, parent, option, index):
-        editor = ActionEditor(parent)
+        editor = ActionEditor(parent, self.holding_signal)
         # Connect the dataChanged signal from each item to update the backend model data
         editor.actionDataChanged.connect(self.commit_from_editor) # TODO Might need to lose this line
         return editor
 
     def setEditorData(self, editor, index):
-        editor.action_data = index.data(role=Qt.ItemDataRole.EditRole)
+        editor.setValue(index.data(role=Qt.ItemDataRole.EditRole))
+        editor.actionDataChanged.connect(self.commit_from_editor)
 
     def setModelData(self, editor, model, index):
-        model.setData(index, editor.action_data)
+        model.setData(index, editor.m_action_data)
 
     def commit_from_editor(self):
         '''
@@ -257,27 +258,49 @@ class ActionEditor(QWidget):
     '''
     actionDataChanged = Signal()
 
-    def __init__(self, parent):
+    def __init__(self, parent, holding_signal):
         super().__init__(parent)
         self.m_action_data = ActionItem()
+        self.holding_signal = holding_signal
 
         # Internal widgets
         self.progressButton = QPushButton("Start Inspection")
+        self.requestInspectionButton = QPushButton("Request Further Inspection")
+        self.completeInspectionButton = QPushButton("Complete Inspection")
         self.portArea = QWidget() # Placeholder b/c I have no clue what is intended to be in that box
         self.vehicleLabel = QLabel("Vehicle: ")
         self.cargoLabel = QLabel("With Cargo: ")
         self.statusLabel = QLabel(f"Status: {self.m_action_data.status}")
 
         # Layout widgets
-        layout = QGridLayout()
-        layout.addWidget(self.vehicleLabel, 0, 0, 1, 1)
-        layout.addWidget(self.cargoLabel, 0, 1, 1, 1)
-        layout.addWidget(self.statusLabel, 1, 0, 1, 1)
-        layout.addWidget(self.progressButton, 2, 0, 1, 2)
-        layout.addWidget(self.portArea, 0, 2, 3, 2)
-        self.setLayout(layout)
+        self.layout = QGridLayout()
+        self.layout.addWidget(self.vehicleLabel, 0, 0, 1, 1)
+        self.layout.addWidget(self.cargoLabel, 0, 1, 1, 1)
+        self.layout.addWidget(self.statusLabel, 1, 0, 1, 1)
+        self.layout.addWidget(self.portArea, 0, 2, 3, 2)
+        self.setLayout(self.layout)
 
         self.progressButton.clicked.connect(self.progressStatus)
+        self.completeInspectionButton.clicked.connect(self.completeInspection)
+        self.requestInspectionButton.clicked.connect(self.requestInspection)
+
+        self.webSocketClient = WebSocketClient()
+        self.webSocketClient.start_connection()
+    
+    def completeInspection(self):
+        self.m_action_data.status = "Completed"
+        self.m_action_data.timeCompleted = dt.datetime.now()
+        m_action_json = self.m_action_data.convertToJSON()
+        self.webSocketClient.send_message(m_action_json)
+        self.statusLabel.setText(f"Status: {self.m_action_data.status}")
+        self.actionDataChanged.emit()
+
+    def requestInspection(self):
+        self.m_action_data.status = "Completed"
+        self.m_action_data.timeCompleted = dt.datetime.now()
+        self.statusLabel.setText(f"Status: {self.m_action_data.status}")
+        self.holding_signal.emit(self.m_action_data)
+        self.actionDataChanged.emit()
 
     def progressStatus(self):
         if self.m_action_data.status == "Pending":
@@ -286,7 +309,8 @@ class ActionEditor(QWidget):
         elif self.m_action_data.status == "In Inspection":
             self.m_action_data.status = "Completed"
             self.m_action_data.timeCompleted = dt.datetime.now()
-            # self.actionCompleted.emit()
+            m_action_json = self.m_action_data.convertToJSON()
+            self.webSocketClient.send_message(m_action_json)
         else:
             print("Action Already Completed")
         self.statusLabel.setText(f"Status: {self.m_action_data.status}")
@@ -294,6 +318,13 @@ class ActionEditor(QWidget):
 
     def setValue(self, value):
         self.m_action_data = value
+        if self.m_action_data is not None:
+            if self.m_action_data.actionPoint.name == "PORT_CHECKPOINT":
+                self.layout.addWidget(self.completeInspectionButton, 2, 0, 1, 2)
+                self.layout.addWidget(self.requestInspectionButton, 2, 2, 1, 2)
+            elif self.m_action_data.actionPoint.name == "HOLDING_AREA":
+                self.layout.addWidget(self.progressButton, 2, 0, 1, 2)
+
 
     def value(self):
         return self.m_action_data

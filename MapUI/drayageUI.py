@@ -1,12 +1,14 @@
 # from PySide6.QtCore import
 from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget
-from actioninfobox import ActionInfoBoxWidget
+from PySide6.QtCore import Signal
 from aporderbox import APOrderBoxWidget
 from apWindow import APWindow
 from PortDrayageInteractiveTabs.pdTabs import PDTabs
 from tabBar import TabBar
 from MysqlDataPull import Database
 from cargoWindow import CargoWindow
+from actionItem import ActionItem
+from actionPointItem import ActionPoint
 from sqlalchemy import text
 import json
 import sys
@@ -14,7 +16,10 @@ import sys
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
-
+    loading_signal = Signal(ActionItem)
+    unloading_signal = Signal(ActionItem)
+    inspection_signal = Signal(ActionItem)
+    holding_signal = Signal(ActionItem)
     def __init__(self):
         super().__init__()
 
@@ -22,7 +27,7 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(800,600)
         self.tabBar = TabBar()
 
-        self.apWindow = APWindow()
+        self.apWindow = APWindow(self.loading_signal, self.unloading_signal, self.inspection_signal)
         # Prep action Point Widget
         # Get action points from SQL and populate widgets with them
         self.SQLdb = Database('PORT_DRAYAGE')
@@ -30,7 +35,7 @@ class MainWindow(QMainWindow):
         self.apWindow.readSQLActionPoints(actionData)
 
         # create and stack widgets
-        self.pdTabs = PDTabs()
+        self.pdTabs = PDTabs(self.loading_signal, self.unloading_signal, self.inspection_signal, self.holding_signal)
         self.cargoWindow = CargoWindow()
         self.stackedWidget = QStackedWidget()
         self.stackedWidget.addWidget(self.apWindow)
@@ -52,6 +57,9 @@ class MainWindow(QMainWindow):
         # self.apOrderBox.removeSelectedAP.clicked.connect(self.deleteActionPoint)
         # self.apOrderBox.updateSQLServerButton.clicked.connect(self.updateSQLServer)
         self.tabBar.currentChanged.connect(self.changeTab)
+        self.holding_latitude = -1.45
+        self.holding_longitude = -3.45
+        self.holding_signal.connect(self.requestFurtherInspection)
 
     def changeTab(self):
         '''
@@ -82,6 +90,10 @@ class MainWindow(QMainWindow):
         self.apOrderBox.apOrderList.takeItem(self.apOrderBox.apOrderList.row(ap)) #remove it from list
         del ap # Delete from memory (Yes, memory management in python!)
 
+    def requestFurtherInspection(self, inspection_action):
+        holding_action = ActionItem(inspection_action.vehicle, inspection_action.cargo, ActionPoint(actionID=999, next_action=inspection_action.actionID+1, prev_action=inspection_action.actionID, name="HOLDING_AREA", latitude=self.holding_latitude, longitude=self.holding_longitude))
+        self.SQLdb.insertHoldingAction(self.SQLdb.createSQLEngine(), holding_action.convertToSQLDict())
+        self.apWindow.webSocketClient.send_message(holding_action.convertToJSON())
 
     def showAPInfo(self):
         '''

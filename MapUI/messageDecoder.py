@@ -43,14 +43,15 @@ class MessageDecoder:
         """
         mom_dict = json.loads(mom_json)
         # Extract the relevant data from the nested dictionary structure
-        action = mom_dict['MobilityOperationMessage']['action_id']
+        actionID = mom_dict['MobilityOperationMessage']['action_id']
         vehicle = mom_dict['MobilityOperationMessage']['cmv_id']
         cargo_name = mom_dict['MobilityOperationMessage']['cargo_name']
         cargo_id = mom_dict['MobilityOperationMessage']['cargo_id']
         destination_long = mom_dict['MobilityOperationMessage']['destination']['longitude']
         destination_lat = mom_dict['MobilityOperationMessage']['destination']['latitude']
-        action_point = ActionPoint(longitude=destination_long, latitude=destination_lat)
-        vehicle_item = VehicleItem(veh_id=vehicle)
+        operation = mom_dict['MobilityOperationMessage']['operation']
+        action_point = ActionPoint(actionID=int(actionID), name=operation, longitude=float(destination_long), latitude=float(destination_lat))
+        vehicle_item = VehicleItem(veh_id=vehicle, name="TRUCK A")
         cargo_item = CargoItem(name=cargo_name, cargo_uuid=cargo_id)
         mom = ActionItem(vehicle=vehicle_item, cargo=cargo_item, actionPoint=action_point)
         return mom
