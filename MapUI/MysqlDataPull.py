@@ -54,7 +54,6 @@ class Database():
         #mysqlconnector
         engine = create_engine(f"mysql+pymysql://{secrets['user']}:{secrets['password']}@{secrets['host']}:{secrets['port']}/{self.schema}")
         return engine
-    from sqlalchemy import text
 
     def insertHoldingAction(self, engine, holding_action):
         with engine.connect() as conn:
