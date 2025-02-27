@@ -135,7 +135,7 @@ class MapWidget(QWidget):
         Adds the vehicle position to the map
         '''
         self.clearVehiclePosition()
-        x, y = self._convertCoords(long, lat)
+        x, y = self._convertCoords(float(long), float(lat))
         vehicle = VehicleGI(x, y, self.scene)
         self.vehicle_position = vehicle
         self.scene.addItem(vehicle)
