@@ -35,6 +35,13 @@ class ActionPoint():
         json_str = json.dumps(json_dict)
         return json_str
 
+    def setIsNotify(self, is_notify):
+        self.is_notify = is_notify
+
+    def setStatus(self, status):
+        self.status = status
+
+
 class AreaData():
 
     def __init__(self, name, latitude, longitude, status, is_notify):

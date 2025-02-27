@@ -10,6 +10,7 @@ from bsmItem import BSMItem
 from actionItem import ActionItem
 from vehicleItem import VehicleItem
 from cargoItem import CargoItem
+from MysqlDataPull import Database
 
 
 class APWindow(QWidget):
@@ -133,14 +134,29 @@ class APWindow(QWidget):
 
     def launchNewAPEditor(self):
         index = self.apModel.insertRow(0, ActionPoint())
+        self.apListView.selectionModel().clearSelection()
         self.apListView.selectionModel().setCurrentIndex(index, QItemSelectionModel.SelectionFlag.Select)
         index = self.apListView.selectedIndexes()[0]
 
         # self.apListWidget.clearSelection()
         # self.apListWidget.item(0).setSelected()
-        self.activeEditor = APItemEditor(ActionPoint())
+        self.activeEditor = APItemEditor(index.data(role=Qt.ItemDataRole.EditRole))
         self.activeEditor.pushUpdates.clicked.connect(self.closeEditorAndUpdate)
+        self.activeEditor.closeEvent = self.close_editor
         self.activeEditor.show()
+
+    def close_editor(self, event):
+        """Closed the editor without creating a new action point, remove the empty point from the list."""
+        index = self.apListView.selectedIndexes()[0]
+        selectedRow = index.data(role=Qt.ItemDataRole.EditRole)
+        if (
+            hasattr(selectedRow, "actionID")
+            and selectedRow.actionID is None
+            and hasattr(selectedRow, "name")
+            and selectedRow.name is None
+        ):
+            # Ensure it only applies to create new action point, but no data is entered
+            self.apModel.removeRow(index.row())
 
     def launchAPEditor(self):
         # i = self.apListWidget.selectedItems()[0].real_index
@@ -155,11 +171,52 @@ class APWindow(QWidget):
         # i = self.apListWidget.selectedItems()[0].real_index
         # self.apModel.setData(self.apModel.index(i,0), value = self.activeEditor.m_ap, role=Qt.ItemDataRole.EditRole)
         index = self.apListView.selectedIndexes()[0]
-        self.activeEditor = APItemEditor(index.data(role=Qt.ItemDataRole.EditRole))
-        self.activeEditor.close()
-        self.activeEditor = None
-        self.updateMap()
+        selectedRow = index.data(role=Qt.ItemDataRole.EditRole)
+        clickedNewPoint = self.activeEditor.apMap.clickedNewPoint
+        SQLdb = Database("PORT_DRAYAGE")
+        # Update database
+        isDBUpdate = False
+        print(selectedRow.__dict__)
+        if hasattr(selectedRow, "actionPoint") or selectedRow.actionID is not None:
+            """Update existing action point"""
+            actionPoint = (
+                selectedRow.actionPoint
+                if hasattr(selectedRow, "actionPoint")
+                else selectedRow
+            )
+            SQLdb.updateActionNotify(actionPoint.actionID, actionPoint.is_notify)
+            SQLdb.updateActionAreaName(actionPoint.actionID, actionPoint.name)
+            isDBUpdate = True
+        elif (
+            clickedNewPoint is not None
+            and hasattr(selectedRow, "name")
+            and selectedRow.name is not None
+        ):
+            """Create new action point"""
+            actionPoint = selectedRow
+            clickedNewPointLat, clickedNewPointLong = (
+                self.activeEditor.apMap.reverseCoordConversion(
+                    clickedNewPoint.x(), clickedNewPoint.y()
+                )
+            )
+            actionPoint.latitude = clickedNewPointLat
+            actionPoint.longitude = clickedNewPointLong
+            SQLdb.insertNewActionPoint(actionPoint)
+            # Update the main action point map after it is saved to DB
+            self.apMap.addActionPoint(clickedNewPointLat, clickedNewPointLong)
+            isDBUpdate = True
 
+        if isDBUpdate:
+            self.activeEditor = APItemEditor(selectedRow)
+            self.activeEditor.close()
+            self.activeEditor = None
+            self.updateMap()
+        else:
+            QMessageBox.warning(
+                self,
+                "Invalid Action Point",
+                "No valid coordinates selected or name is empty for the new action point.",
+            )
     def readSQLActionPoints(self, actionData):
         '''
         Pull action points from SQL and add them to map and list
@@ -167,7 +224,16 @@ class APWindow(QWidget):
         '''
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
-            ap = ActionPoint(actionID=ap_dict['action_id'], next_action=ap_dict['next_action_id'], prev_action=ap_dict['prev_action_id'], name=ap_dict['area_name'], latitude=ap_dict['area_lat'], longitude=ap_dict['area_long'])
+            ap = ActionPoint(
+                actionID=ap_dict["action_id"],
+                next_action=ap_dict["next_action_id"],
+                prev_action=ap_dict["prev_action_id"],
+                name=ap_dict["area_name"],
+                latitude=ap_dict["area_lat"],
+                longitude=ap_dict["area_long"],
+            )
+            ap.setIsNotify(ap_dict["area_is_notify"])
+            ap.setStatus(ap_dict["area_status"])
             vehicle = VehicleItem(name=ap_dict['veh_name'], veh_id=ap_dict['veh_id'])
             cargo = CargoItem(name=ap_dict['cargo_name'], cargo_uuid=ap_dict['cargo_uuid'])
             action = ActionItem(vehicle=vehicle, cargo=cargo, actionPoint=ap)
