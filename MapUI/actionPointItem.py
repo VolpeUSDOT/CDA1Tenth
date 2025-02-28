@@ -14,7 +14,7 @@ class ActionPoint():
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
-        self.status = False
+        self.status = True
         self.is_notify = False
 
     def actionItemDataFilter(self):

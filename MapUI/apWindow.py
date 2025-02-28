@@ -193,7 +193,7 @@ class APWindow(QWidget):
         ):
             """Create new action point"""
             actionPoint = selectedRow
-            clickedNewPointLat, clickedNewPointLong = (
+            clickedNewPointLong, clickedNewPointLat = (
                 self.activeEditor.apMap.reverseCoordConversion(
                     clickedNewPoint.x(), clickedNewPoint.y()
                 )
