@@ -238,7 +238,7 @@ class Database:
         actionPoint.prev_action = last_action_id
         actionPoint.next_action = -1
         insert_query = text(
-            f"INSERT INTO `{self.schema}`.`action` (action_id, prev_action_id, next_action_id, area_name, area_lat, area_long, area_is_notify, area_status, veh_id, cargo_name) VALUES (:action_id, :prev_action_id, :next_action_id, :area_name, :area_latitude, :area_longitude, :area_is_notify, :area_status, :veh_id, :cargo_name)"
+            f"INSERT INTO `{self.schema}`.`action` (action_id, prev_action_id, next_action_id, area_name, area_lat, area_long, area_is_notify, area_status, veh_id, cargo_name) VALUES (:action_id, :prev_action_id, :next_action_id, :area_name, :area_latitude, :area_longitude, :area_is_notify, :area_status, :veh_id, :veh_name, :cargo_name)"
         )
         with Session(self.engine) as session:
             session.execute(
