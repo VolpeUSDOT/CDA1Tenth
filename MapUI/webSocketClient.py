@@ -4,55 +4,63 @@ import signal
 
 class WebSocketClient(QObject):
     '''
-    Class used to connect to a websocket server
+    Singleton class to connect to a WebSocket server
     '''
+    _instance = None
+
     message_received = Signal(str)
     connected = Signal()
     disconnected = Signal()
 
+    def __new__(cls, url: str = "ws://localhost:9002"):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def __init__(self, url: str = "ws://localhost:9002"):
-        super().__init__()
-        self.url = QUrl(url)
-        self.websocket = QWebSocket()
-        
-        # Connect signals
-        self.websocket.connected.connect(self.on_connected)
-        self.websocket.disconnected.connect(self.on_disconnected)
-        self.websocket.textMessageReceived.connect(self.on_message_received)
+        if not hasattr(self, 'initialized'):  # Prevent re-initialization
+            super().__init__()
+            self.url = QUrl(url)
+            self.websocket = QWebSocket()
+
+            # Connect signals
+            self.websocket.connected.connect(self.on_connected)
+            self.websocket.disconnected.connect(self.on_disconnected)
+            self.websocket.textMessageReceived.connect(self.on_message_received)
+
+            self.initialized = True  # Mark as initialized
 
     def start_connection(self):
         '''
-        Initiates the WebSocket connection`
+        Initiates the WebSocket connection
         '''
         self.websocket.open(self.url)
-    
+
     def disconnect(self):
         '''
         Closes the WebSocket connection
         '''
         self.websocket.close()
-    
+
     def send_message(self, message: str):
         '''
         Sends a message over the WebSocket connection
         '''
         if self.websocket.isValid():
             self.websocket.sendTextMessage(message)
-    
+
     def on_connected(self):
         '''
         Handles WebSocket connection establishment
         '''
-        print("WebSocket connected.")
         self.connected.emit()
-    
+
     def on_disconnected(self):
         '''
         Handles WebSocket disconnection
         '''
-        print("WebSocket disconnected.")
         self.disconnected.emit()
-    
+
     def on_message_received(self, message: str):
         '''
         Handles received messages

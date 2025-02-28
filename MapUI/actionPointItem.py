@@ -7,10 +7,10 @@ class ActionPoint():
     This allows for in place data modification, and display functions to be attached to the data item
     '''
 
-    def __init__(self, name=None, latitude=0, longitude=0):
-        self.actionID = None
-        self.next_action = None
-        self.prev_action = None
+    def __init__(self, actionID=None, next_action=None, prev_action=None, name=None, latitude=None, longitude=None):
+        self.actionID = actionID
+        self.next_action = next_action
+        self.prev_action = prev_action
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
@@ -49,21 +49,24 @@ class ActionPointModel(QAbstractListModel):
     '''
     Model that stores Action Point data for the project
     '''
-    def __init__(self, *args, actionPoints=None, **kwargs):
+    def __init__(self, *args, actions=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.actionPoints = actionPoints or []
+        self.actions = actions or []
 
     def rowCount(self, index):
-        return len(self.actionPoints)
+        return len(self.actions)
 
     def data(self, index, role):
-        ap = self.actionPoints[index.row()]
+        ap = self.actions[index.row()]
 
         if role == Qt.ItemDataRole.EditRole:
             return ap
 
         if role == Qt.ItemDataRole.DisplayRole: # Completed list display
-            text = ap.completedActionPointDisplay()
+            if hasattr(ap, "actionPoint"):
+                text = ap.actionPoint.completedActionPointDisplay()
+            else:
+                text = ap.completedActionPointDisplay()
             return text
 
     def setData(self, index, value, role):
@@ -74,14 +77,13 @@ class ActionPointModel(QAbstractListModel):
         #     print("Not editable")
         #     return False
 
-
-        self.actionPoints[index.row()] = value
+        self.actions[index.row()] = value
         self.dataChanged.emit(index, index)
 
         return True
 
     def insertRow(self, row, value):
-        self.actionPoints.insert(row, value)
+        self.actions.insert(row, value)
         index = self.index(row, 0)
         self.dataChanged.emit(index, index)
         return index
@@ -90,7 +92,7 @@ class ActionPointModel(QAbstractListModel):
         if parent.isValid():
             return False
         for i in range(count):
-            self.actionPoints.insert(row+i, ActionPoint())
+            self.actions.insert(row+i, ActionPoint())
         return True
 
     def removeRows(self, row, count, parent = ...):
@@ -98,7 +100,7 @@ class ActionPointModel(QAbstractListModel):
             return False
         self.beginRemoveRows(parent, row, row+count-1)
         for i in range(count):
-            self.actionPoints.pop(row)
+            self.actions.pop(row)
         return True
 
     def updateItemOrder(self, index_list):
@@ -107,9 +109,8 @@ class ActionPointModel(QAbstractListModel):
         '''
         if len(index_list) != self.rowCount(None):
             return False
-        self.actionPoints = [self.actionPoints[i] for i in index_list]
+        self.actions = [self.actions[i] for i in index_list]
         return True
-
 
     def supportedDropActions(self):
         return Qt.DropAction.MoveAction
@@ -161,8 +162,7 @@ class ActionPointModel(QAbstractListModel):
 
         self.insertRows(beginRow, count=1, parent=parent)
 
-        #json_list = json.load(stream.readQStringList())
-
+        # json_list = json.load(stream.readQStringList())
 
         for json_str in stream.readQStringList():
             index = self.index(beginRow, 0, parent)
@@ -179,9 +179,8 @@ class ActionPointModel(QAbstractListModel):
             self.setData(index, ap, role=Qt.ItemDataRole.EditRole)
             beginRow+=1
 
-
         return True
-        #return super().dropMimeData(data, action, row, column, parent)
+        # return super().dropMimeData(data, action, row, column, parent)
 
     def convertToDataframe(self):
         '''
@@ -208,7 +207,7 @@ class ActionPointModel(QAbstractListModel):
     def flags(self, index):
         flags = super().flags(index)
         # if self.loadingActions[index.row()].status != "Completed":
-            # |= is a special operator required to add a new flag to the list of flags
+        # |= is a special operator required to add a new flag to the list of flags
         flags |= Qt.ItemFlag.ItemIsEditable
 
         if index.isValid():

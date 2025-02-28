@@ -1,4 +1,3 @@
-
 import sys
 import numpy as np
 from MapWidget.mapwidget import MapWidget
@@ -9,6 +8,8 @@ from webSocketClient import WebSocketClient
 from messageDecoder import MessageDecoder
 from bsmItem import BSMItem
 from actionItem import ActionItem
+from vehicleItem import VehicleItem
+from cargoItem import CargoItem
 
 
 class APWindow(QWidget):
@@ -16,7 +17,7 @@ class APWindow(QWidget):
 
     '''
 
-    def __init__(self):
+    def __init__(self, loading_signal, unloading_signal, inspection_signal):
         super().__init__()
         self.title = QLabel('''# Action Points''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -25,10 +26,13 @@ class APWindow(QWidget):
         self.apListView = APListView()
         self.apListView.setModel(self.apModel)
         self.apMap = MapWidget()
+        self.apMap.setStyleSheet("background-color: grey;")
         self.addAPButton = QPushButton("Add Action Point")
         self.editAPButton = QPushButton("Edit Action Point")
         self.activeEditor = None
-
+        self.loading_signal = loading_signal
+        self.unloading_signal = unloading_signal
+        self.inspection_signal = inspection_signal
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 5)
@@ -78,7 +82,6 @@ class APWindow(QWidget):
     #     self.apModel.updateItemOrder(index_list)
     #     # self.apListWidget.clearSelection()
 
-
     def propagateMapSelection(self, mapItem):
         '''
         map selections will be passed to the list widget
@@ -104,6 +107,8 @@ class APWindow(QWidget):
         self.apMap.clearActionPoints()
         for i in range(self.apModel.rowCount(None)):
             ap_data = self.apModel.data(self.apModel.index(i,0), role=Qt.ItemDataRole.EditRole)
+            if hasattr(ap_data, "actionPoint"):
+                ap_data = ap_data.actionPoint
             self.apMap.addActionPoint(ap_data.latitude, ap_data.longitude)
 
     def updateView(self):
@@ -115,8 +120,12 @@ class APWindow(QWidget):
         if type(decoded_message) is BSMItem:
             self.updateVehiclePose(decoded_message)
         elif type(decoded_message) is ActionItem:
-            print(decoded_message)
-
+            if decoded_message.actionPoint.name == "PICKUP":
+                self.loading_signal.emit(decoded_message)
+            elif decoded_message.actionPoint.name == "DROPOFF":
+                self.unloading_signal.emit(decoded_message)
+            elif decoded_message.actionPoint.name == "PORT_CHECKPOINT" or decoded_message.actionPoint.name == "HOLDING_AREA":
+                self.inspection_signal.emit(decoded_message)
 
     def updateVehiclePose(self, bsm):
         self.apMap.clearVehiclePosition()
@@ -135,6 +144,8 @@ class APWindow(QWidget):
 
     def launchAPEditor(self):
         # i = self.apListWidget.selectedItems()[0].real_index
+        if len(self.apListView.selectedIndexes()) < 1:
+            return
         index = self.apListView.selectedIndexes()[0]
         self.activeEditor = APItemEditor(index.data(role=Qt.ItemDataRole.EditRole))
         self.activeEditor.pushUpdates.clicked.connect(self.closeEditorAndUpdate)
@@ -156,9 +167,11 @@ class APWindow(QWidget):
         '''
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
-            ap = ActionPoint(name=ap_dict['area_name'], latitude=ap_dict['area_lat'], longitude=ap_dict['area_long'])
-            self.apModel.insertRow(0, ap)
-
+            ap = ActionPoint(actionID=ap_dict['action_id'], next_action=ap_dict['next_action_id'], prev_action=ap_dict['prev_action_id'], name=ap_dict['area_name'], latitude=ap_dict['area_lat'], longitude=ap_dict['area_long'])
+            vehicle = VehicleItem(name=ap_dict['veh_name'], veh_id=ap_dict['veh_id'])
+            cargo = CargoItem(name=ap_dict['cargo_name'], cargo_uuid=ap_dict['cargo_uuid'])
+            action = ActionItem(vehicle=vehicle, cargo=cargo, actionPoint=ap)
+            self.apModel.insertRow(0, action)
 
 # class APListWidget(QListWidget):
 #     itemSelectionDropped = Signal()
@@ -233,21 +246,28 @@ class APItemEditor(QWidget):
         '''
         self.m_ap = actionPoint
         self.title = QLabel('''## Create Action Point''')
-        if self.m_ap.name:
+        if hasattr(self.m_ap, "actionPoint") and self.m_ap.actionPoint is not None:
             self.title.setText('''## Edit Action Point''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
         self.notifyLabel = QLabel("Is Notify:")
         self.nameLabel = QLabel("Name:")
         self.isNotify_editor = QCheckBox("")
+        self.m_ap = (
+            self.m_ap.actionPoint if hasattr(self.m_ap, "actionPoint") else self.m_ap
+        )
         self.isNotify_editor.setChecked(self.m_ap.is_notify)
         self.name_editor = QLineEdit()
         self.name_editor.setText(self.m_ap.name)
         self.pushUpdates = QPushButton("Save Action Point")
 
         self.apMap = MapWidget()
+        self.apMap.setStyleSheet("background-color: grey;")
         self.apMap.addActionPoint(self.m_ap.latitude, self.m_ap.longitude)
-        self.apMap.ap_list[0].setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
-        self.apMap.ap_list[0].setFlag(QGraphicsItem.GraphicsItemFlag.ItemSendsGeometryChanges)
+        if len(self.apMap.ap_list) > 0:
+            self.apMap.ap_list[0].setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
+            self.apMap.ap_list[0].setFlag(
+                QGraphicsItem.GraphicsItemFlag.ItemSendsGeometryChanges
+            )
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 5)
@@ -266,6 +286,8 @@ class APItemEditor(QWidget):
         self.apMap.scene.changed.connect(self.updateLatLong)
 
     def updateLatLong(self):
+        if len(self.apMap.ap_list) < 1:
+            return
         point = self.apMap.ap_list[0].pos()
         x, y = point.x(), point.y()
 
@@ -299,7 +321,6 @@ def Distance_Formula(point1, point2):
     y_diff = (y2 - y1)**2
     distance = np.sqrt(x_diff + y_diff)
     return distance
-
 
 
 if __name__ == "__main__":

@@ -10,18 +10,19 @@ Actions contain info on vehicle, cargo(container) status(pending, unloading, com
 pending and unloading actions have a button to interact with and progress the action. Once an action is completed, the interactable object is removed and the info of the action is added to a completed action log
 '''
 from actionItem import ActionItem
-from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal
+from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, Slot
 from PySide6.QtWidgets import QGridLayout, QAbstractItemView, QPushButton, QListView, QLabel, QWidget, QStyledItemDelegate
 import datetime as dt
+from webSocketClient import WebSocketClient
 
 
 class PDUnloadingWidget(QWidget):
     '''
     Main Widget for the unloading display to be referenced outside this file
     '''
-    def __init__(self):
+    def __init__(self, unloading_signal):
         super().__init__()
-        self.model = UnloadingActionList(unloadingActions=[ActionItem(), ActionItem()])
+        self.model = UnloadingActionList(unloadingActions=[])
         self.unloadingActionView = PendingActionView()
         self.completedActionView = CompletedActionView()
         self.inProgressFilterProxyModel = InProgressActionListProxyModel()
@@ -31,11 +32,6 @@ class PDUnloadingWidget(QWidget):
 
         self.unloadingActionView.setModel(self.inProgressFilterProxyModel)
         self.completedActionView.setModel(self.completedFilterProxyModel)
-
-        self.unloadingActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(0,0)) # TODO: Remove later when items appear based on received MOMs
-        self.unloadingActionView.openPersistentEditor(self.inProgressFilterProxyModel.index(1,0)) # TODO: Remove later when items appear based on received MOMs
-
-
 
         self.title = QLabel('''# Port Drayage Unloading Area''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -57,10 +53,12 @@ class PDUnloadingWidget(QWidget):
         layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
+        unloading_signal.connect(self.addUnloadingAction)
 
-    def addLoadingAction(self):
+    @Slot()
+    def addUnloadingAction(self, action):
 
-        self.model.unloadingActions.append(ActionItem())
+        self.model.unloadingActions.append(action)
         i = self.model.rowCount()
         self.unloadingActionView.openPersistentEditor(self.model.index(i,0))
         self.model.layoutChanged.emit()
@@ -181,7 +179,7 @@ class UnloadingActionList(QAbstractListModel):
         super().__init__(*args, **kwargs)
         self.unloadingActions = unloadingActions or []
 
-    def rowCount(self, index):
+    def rowCount(self, index=None):
         return len(self.unloadingActions)
 
     def data(self, index, role):
@@ -234,10 +232,10 @@ class ActionDelegate(QStyledItemDelegate):
         return editor
 
     def setEditorData(self, editor, index):
-        editor.action_data = index.data(role=Qt.ItemDataRole.EditRole)
+        editor.setValue(index.data(role=Qt.ItemDataRole.EditRole))
 
     def setModelData(self, editor, model, index):
-        model.setData(index, editor.action_data)
+        model.setData(index, editor.m_action_data)
 
     def commit_from_editor(self):
         '''
@@ -271,15 +269,18 @@ class ActionEditor(QWidget):
         self.statusLabel = QLabel(f"Status: {self.m_action_data.status}")
 
         # Layout widgets
-        layout = QGridLayout()
-        layout.addWidget(self.vehicleLabel, 0, 0, 1, 1)
-        layout.addWidget(self.cargoLabel, 0, 1, 1, 1)
-        layout.addWidget(self.statusLabel, 1, 0, 1, 1)
-        layout.addWidget(self.progressButton, 2, 0, 1, 2)
-        layout.addWidget(self.portArea, 0, 2, 3, 2)
-        self.setLayout(layout)
+        self.layout = QGridLayout()
+        self.layout.addWidget(self.vehicleLabel, 0, 0, 1, 1)
+        self.layout.addWidget(self.cargoLabel, 0, 1, 1, 1)
+        self.layout.addWidget(self.statusLabel, 1, 0, 1, 1)
+        self.layout.addWidget(self.progressButton, 2, 0, 1, 2)
+        self.layout.addWidget(self.portArea, 0, 2, 3, 2)
+        self.setLayout(self.layout)
 
         self.progressButton.clicked.connect(self.progressStatus)
+
+        self.webSocketClient = WebSocketClient()
+        self.webSocketClient.start_connection()
 
     def progressStatus(self):
         if self.m_action_data.status == "Pending":
@@ -288,7 +289,8 @@ class ActionEditor(QWidget):
         elif self.m_action_data.status == "Unloading":
             self.m_action_data.status = "Completed"
             self.m_action_data.timeCompleted = dt.datetime.now()
-            # self.actionCompleted.emit()
+            m_action_json = self.m_action_data.convertToJSON()
+            self.webSocketClient.send_message(m_action_json)
         else:
             print("Action Already Completed")
         self.statusLabel.setText(f"Status: {self.m_action_data.status}")
