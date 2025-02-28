@@ -18,7 +18,7 @@ map_info = '../MapUI/PortDrayageData/garage.yaml'
 graph = '../MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
 
 roadLinkPen = QPen(Qt.white, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
-
+DEGREE_TO_TENTH_MICRO = 10000000
 # Subclass QMainWindow to customize your application's main window
 class MapWidget(QWidget):
     selectionUpdate = Signal(ActionPointGI)
@@ -149,7 +149,9 @@ class MapWidget(QWidget):
         Adds the vehicle position to the map
         '''
         self.clearVehiclePosition()
-        x, y = self._convertCoords(float(long), float(lat))
+        x, y = self._convertCoords(
+            float(long) / DEGREE_TO_TENTH_MICRO, float(lat) / DEGREE_TO_TENTH_MICRO
+        )
         vehicle = VehicleGI(x, y, self.scene)
         self.vehicle_position = vehicle
         self.scene.addItem(vehicle)
@@ -185,6 +187,10 @@ class MapWidget(QWidget):
 
         nearest_point = self._get_nearest_point_on_lines(self._get_lines(), click_pos)
         self.clickedNewPoint = nearest_point
+        lon, lat = self.reverseCoordConversion(
+            self.clickedNewPoint.x(), self.clickedNewPoint.y()
+        )
+        print(f"Latitude: {lat}, Longitude: {lon}")
         existing_points = self._get_points()
         if self.isAddActionPoint:
             # Remove added new point when user tries to create new point
