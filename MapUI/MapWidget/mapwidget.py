@@ -19,7 +19,7 @@ graph = '../MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
 
 roadLinkPen = QPen(Qt.white, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
-# Received latitude and longitude from vehicle is assumed following J2735 BSM standard and it in unit of measure 1/10 microdegree
+# Received latitude and longitude from vehicle is assumed following J2735 BSM standard and is in unit of measure 1/10 microdegree
 DEGREE_TO_TENTH_MICRO = 10000000
 
 # Subclass QMainWindow to customize your application's main window
