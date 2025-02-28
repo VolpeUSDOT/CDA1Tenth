@@ -187,10 +187,6 @@ class MapWidget(QWidget):
 
         nearest_point = self._get_nearest_point_on_lines(self._get_lines(), click_pos)
         self.clickedNewPoint = nearest_point
-        lon, lat = self.reverseCoordConversion(
-            self.clickedNewPoint.x(), self.clickedNewPoint.y()
-        )
-        print(f"Latitude: {lat}, Longitude: {lon}")
         existing_points = self._get_points()
         if self.isAddActionPoint:
             # Remove added new point when user tries to create new point
