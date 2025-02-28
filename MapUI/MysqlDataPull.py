@@ -168,6 +168,56 @@ class Database:
                 )
                 session.commit()
 
+    def updateCargoName(self, action_id, cargo_name):
+        """
+        Update the cargo name of action data in the database
+        """
+        actionsQuery = (
+            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
+        )
+        action = pd.read_sql(actionsQuery, con=self.engine)
+        if not action.empty:
+            action.at[0, "cargo_name"] = cargo_name
+            update_query = text(
+                f"UPDATE `{self.schema}`.`action` SET cargo_name = :cargo_name WHERE action_id = :action_id"
+            )
+            with Session(self.engine) as session:
+                session.execute(
+                    update_query,
+                    {"cargo_name": cargo_name, "action_id": action_id},
+                )
+                session.commit()
+            logging.info(
+                "Action(id=%s) cargo_name updated to %s", action_id, cargo_name
+            )
+        else:
+            logging.info("Action(id=%s) not found", action_id)
+
+    def updateVehicleId(self, action_id, vehicle_id):
+        """
+        Update the vehicle id of action data in the database
+        """
+        actionsQuery = (
+            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
+        )
+        action = pd.read_sql(actionsQuery, con=self.engine)
+        if not action.empty:
+            action.at[0, "veh_id"] = vehicle_id
+            update_query = text(
+                f"UPDATE `{self.schema}`.`action` SET veh_id = :veh_id WHERE action_id = :action_id"
+            )
+            with Session(self.engine) as session:
+                session.execute(
+                    update_query,
+                    {"veh_id": vehicle_id, "action_id": action_id},
+                )
+                session.commit()
+            logging.info(
+                "Action(id=%s) vehicle_id updated to %s", action_id, vehicle_id
+            )
+        else:
+            logging.info("Action(id=%s) not found", action_id)
+
     def getLastActionId(self):
         """
         Get the last action id from the database
@@ -188,7 +238,7 @@ class Database:
         actionPoint.prev_action = last_action_id
         actionPoint.next_action = -1
         insert_query = text(
-            f"INSERT INTO `{self.schema}`.`action` (action_id, prev_action_id, next_action_id, area_name, area_lat, area_long, area_is_notify, area_status) VALUES (:action_id, :prev_action_id, :next_action_id, :area_name, :area_latitude, :area_longitude, :area_is_notify, :area_status)"
+            f"INSERT INTO `{self.schema}`.`action` (action_id, prev_action_id, next_action_id, area_name, area_lat, area_long, area_is_notify, area_status, veh_id, cargo_name) VALUES (:action_id, :prev_action_id, :next_action_id, :area_name, :area_latitude, :area_longitude, :area_is_notify, :area_status, :veh_id, :cargo_name)"
         )
         with Session(self.engine) as session:
             session.execute(
@@ -202,6 +252,9 @@ class Database:
                     "area_longitude": actionPoint.longitude,
                     "area_is_notify": actionPoint.is_notify,
                     "area_status": "OPEN" if actionPoint.status else "CLOSED",
+                    "veh_id": actionPoint.vehicle_id,
+                    "veh_name": "NA",
+                    "cargo_name": actionPoint.cargo_name,
                 },
             )
             session.commit()
