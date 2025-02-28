@@ -195,14 +195,16 @@ class ActionPointModel(QAbstractListModel):
             ap = ActionPoint()
             print(f"ap_data: {ap_data}")
 
-            ap.actionID = ap_data["actionID"]
-            ap.next_action = ap_data["next_action"]
-            ap.prev_action = ap_data["prev_action"]
-            ap.name = ap_data["name"]
-            ap.latitude = ap_data["latitude"]
-            ap.longitude = ap_data["longitude"]
-            ap.status = ap_data["status"]
-            ap.is_notify = ap_data["is_notify"]
+            ap.actionID = ap_data["MobilityOperationMessage"]["action_id"]
+            # ap.next_action = ap_data["MobilityOperationMessage"]["next_action"]
+            # ap.prev_action = ap_data["MobilityOperationMessage"]["prev_action"]
+            ap.name = ap_data["MobilityOperationMessage"]["operation"]
+            ap.latitude = ap_data["MobilityOperationMessage"]["destination"]["latitude"]
+            ap.longitude = ap_data["MobilityOperationMessage"]["destination"][
+                "longitude"
+            ]
+            # ap.status = ap_data["status"]
+            # ap.is_notify = ap_data["is_notify"]
 
             self.setData(index, ap, role=Qt.ItemDataRole.EditRole)
             beginRow += 1
