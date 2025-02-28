@@ -1,5 +1,5 @@
 vehicles: 
-  - id: "DOT-101"
+  - id: "RED-TRUCK"
     name: "Vehicle Name 1"
 cargos:
   - uuid: "NA"
