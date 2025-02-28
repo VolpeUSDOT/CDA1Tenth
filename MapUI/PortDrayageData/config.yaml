@@ -1,0 +1,8 @@
+vehicles: 
+  - id: "DOT-101"
+    name: "Vehicle Name 1"
+cargos:
+  - uuid: "NA"
+    name: "CARGO_X"
+  - uuid: "NA"
+    name: "CARGO_Y"
