@@ -93,7 +93,7 @@ class MainWindow(QMainWindow):
     def requestFurtherInspection(self, inspection_action):
         holding_action = ActionItem(inspection_action.vehicle, inspection_action.cargo, ActionPoint(actionID=999, next_action=inspection_action.actionID+1, prev_action=inspection_action.actionID, name="HOLDING_AREA", latitude=self.holding_latitude, longitude=self.holding_longitude))
         self.SQLdb.insertHoldingAction(self.SQLdb.createSQLEngine(), holding_action.convertToSQLDict())
-        self.apWindow.webSocketClient.send_message(holding_action.convertToJSON())
+        self.apWindow.webSocketClient.send_message(inspection_action.convertToJSON())
 
     def showAPInfo(self):
         '''
