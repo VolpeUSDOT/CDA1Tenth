@@ -2,7 +2,24 @@ import sys
 import numpy as np
 from MapWidget.mapwidget import MapWidget
 from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint, QItemSelectionModel
-from PySide6.QtWidgets import QMessageBox, QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget, QPushButton, QAbstractItemView, QListView, QLineEdit, QCheckBox, QListWidget, QListWidgetItem, QGraphicsItem
+from PySide6.QtWidgets import (
+    QComboBox,
+    QMessageBox,
+    QApplication,
+    QMainWindow,
+    QGridLayout,
+    QLabel,
+    QWidget,
+    QStackedWidget,
+    QPushButton,
+    QAbstractItemView,
+    QListView,
+    QLineEdit,
+    QCheckBox,
+    QListWidget,
+    QListWidgetItem,
+    QGraphicsItem,
+)
 from actionPointItem import ActionPoint,  ActionPointModel
 from webSocketClient import WebSocketClient
 from messageDecoder import MessageDecoder
@@ -10,7 +27,8 @@ from bsmItem import BSMItem
 from actionItem import ActionItem
 from vehicleItem import VehicleItem
 from cargoItem import CargoItem
-
+from MysqlDataPull import Database
+from config import Config
 
 class APWindow(QWidget):
     '''
@@ -133,14 +151,29 @@ class APWindow(QWidget):
 
     def launchNewAPEditor(self):
         index = self.apModel.insertRow(0, ActionPoint())
+        self.apListView.selectionModel().clearSelection()
         self.apListView.selectionModel().setCurrentIndex(index, QItemSelectionModel.SelectionFlag.Select)
         index = self.apListView.selectedIndexes()[0]
 
         # self.apListWidget.clearSelection()
         # self.apListWidget.item(0).setSelected()
-        self.activeEditor = APItemEditor(ActionPoint())
+        self.activeEditor = APItemEditor(index.data(role=Qt.ItemDataRole.EditRole))
         self.activeEditor.pushUpdates.clicked.connect(self.closeEditorAndUpdate)
+        self.activeEditor.closeEvent = self.close_editor
         self.activeEditor.show()
+
+    def close_editor(self, event):
+        """Closed the editor without creating a new action point, remove the empty point from the list."""
+        index = self.apListView.selectedIndexes()[0]
+        selectedRow = index.data(role=Qt.ItemDataRole.EditRole)
+        if (
+            hasattr(selectedRow, "actionID")
+            and selectedRow.actionID is None
+            and hasattr(selectedRow, "name")
+            and selectedRow.name is None
+        ):
+            # Ensure it only applies to create new action point, but no data is entered
+            self.apModel.removeRow(index.row())
 
     def launchAPEditor(self):
         # i = self.apListWidget.selectedItems()[0].real_index
@@ -155,11 +188,58 @@ class APWindow(QWidget):
         # i = self.apListWidget.selectedItems()[0].real_index
         # self.apModel.setData(self.apModel.index(i,0), value = self.activeEditor.m_ap, role=Qt.ItemDataRole.EditRole)
         index = self.apListView.selectedIndexes()[0]
-        self.activeEditor = APItemEditor(index.data(role=Qt.ItemDataRole.EditRole))
-        self.activeEditor.close()
-        self.activeEditor = None
-        self.updateMap()
+        selectedRow = index.data(role=Qt.ItemDataRole.EditRole)
+        clickedNewPoint = self.activeEditor.apMap.clickedNewPoint
+        SQLdb = Database("PORT_DRAYAGE")
+        # Update database
+        isDBUpdate = False
+        if hasattr(selectedRow, "actionPoint") or selectedRow.actionID is not None:
+            """Update existing action point"""
+            actionPoint = (
+                selectedRow.actionPoint
+                if hasattr(selectedRow, "actionPoint")
+                else selectedRow
+            )
+            SQLdb.updateActionNotify(actionPoint.actionID, actionPoint.is_notify)
+            SQLdb.updateActionAreaName(actionPoint.actionID, actionPoint.name)
+            SQLdb.updateCargoName(actionPoint.actionID, actionPoint.cargo_name)
+            SQLdb.updateVehicleId(actionPoint.actionID, actionPoint.vehicle_id)
+            isDBUpdate = True
+        elif (
+            clickedNewPoint is not None
+            and hasattr(selectedRow, "name")
+            and selectedRow.name is not None
+            and hasattr(selectedRow, "vehicle_id")
+            and selectedRow.vehicle_id is not None
+            and hasattr(selectedRow, "cargo_name")
+            and selectedRow.cargo_name is not None
+        ):
+            """Create new action point"""
+            actionPoint = selectedRow
+            clickedNewPointLong, clickedNewPointLat = (
+                self.activeEditor.apMap.reverseCoordConversion(
+                    clickedNewPoint.x(), clickedNewPoint.y()
+                )
+            )
+            actionPoint.latitude = clickedNewPointLat
+            actionPoint.longitude = clickedNewPointLong
+            SQLdb.insertNewActionPoint(actionPoint)
+            # Update the main action point map after it is saved to DB
+            self.apMap.addActionPoint(clickedNewPointLat, clickedNewPointLong)
+            isDBUpdate = True
 
+        if isDBUpdate:
+            self.activeEditor = APItemEditor(selectedRow)
+            self.activeEditor.close()
+            self.activeEditor = None
+            self.updateMap()
+        else:
+            QMessageBox.warning(
+                self,
+                "Invalid Action Point",
+                "No valid coordinates selected, or area name, vehicle id, cardo name are empty for the new action point.",
+            )
+            self.apModel.removeRow(index.row())
     def readSQLActionPoints(self, actionData):
         '''
         Pull action points from SQL and add them to map and list
@@ -167,7 +247,18 @@ class APWindow(QWidget):
         '''
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
-            ap = ActionPoint(actionID=ap_dict['action_id'], next_action=ap_dict['next_action_id'], prev_action=ap_dict['prev_action_id'], name=ap_dict['area_name'], latitude=ap_dict['area_lat'], longitude=ap_dict['area_long'])
+            ap = ActionPoint(
+                actionID=ap_dict["action_id"],
+                next_action=ap_dict["next_action_id"],
+                prev_action=ap_dict["prev_action_id"],
+                name=ap_dict["area_name"],
+                latitude=ap_dict["area_lat"],
+                longitude=ap_dict["area_long"],
+                vehicle_id=ap_dict["veh_id"],
+                cargo_name=ap_dict["cargo_name"],
+            )
+            ap.setIsNotify(ap_dict["area_is_notify"])
+            ap.setStatus(ap_dict["area_status"])
             vehicle = VehicleItem(name=ap_dict['veh_name'], veh_id=ap_dict['veh_id'])
             cargo = CargoItem(name=ap_dict['cargo_name'], cargo_uuid=ap_dict['cargo_uuid'])
             action = ActionItem(vehicle=vehicle, cargo=cargo, actionPoint=ap)
@@ -250,7 +341,9 @@ class APItemEditor(QWidget):
             self.title.setText('''## Edit Action Point''')
         self.title.setTextFormat(Qt.TextFormat.MarkdownText)
         self.notifyLabel = QLabel("Is Notify:")
-        self.nameLabel = QLabel("Name:")
+        self.nameLabel = QLabel("Area Name:")
+        self.vehicleIdLabel = QLabel("Vehicle Id:")
+        self.cargoNameLabel = QLabel("Cargo Name:")
         self.isNotify_editor = QCheckBox("")
         self.m_ap = (
             self.m_ap.actionPoint if hasattr(self.m_ap, "actionPoint") else self.m_ap
@@ -258,6 +351,30 @@ class APItemEditor(QWidget):
         self.isNotify_editor.setChecked(self.m_ap.is_notify)
         self.name_editor = QLineEdit()
         self.name_editor.setText(self.m_ap.name)
+
+        vehicle_ids = [vehicle["id"] for vehicle in Config().get("vehicles")]
+        self.vehicle_dropdown = QComboBox()
+        self.vehicle_dropdown.addItems(vehicle_ids)
+        cargo_names = [cargo["name"] for cargo in Config().get("cargos")]
+        self.cargo_dropdown = QComboBox()
+        self.cargo_dropdown.addItems(cargo_names)
+        self.vehicle_dropdown.currentTextChanged.connect(self.vehicleChanged)
+        self.cargo_dropdown.currentTextChanged.connect(self.cargoChanged)
+        if hasattr(self.m_ap, "vehicle") and self.m_ap.vehicle is not None:
+            self.vehicle_dropdown.setCurrentText(self.m_ap.vehicle.id)
+        elif hasattr(self.m_ap, "vehicle_id") and self.m_ap.vehicle_id is not None:
+            self.vehicle_dropdown.setCurrentText(self.m_ap.vehicle_id)
+        else:
+            self.vehicle_dropdown.setCurrentText(vehicle_ids[0])
+            self.m_ap.vehicle_id = vehicle_ids[0]
+        if hasattr(self.m_ap, "cargo") and self.m_ap.cargo is not None:
+            self.cargo_dropdown.setCurrentText(self.m_ap.cargo.name)
+        elif hasattr(self.m_ap, "cargo_name") and self.m_ap.cargo_name is not None:
+            self.cargo_dropdown.setCurrentText(self.m_ap.cargo_name)
+        else:
+            self.cargo_dropdown.setCurrentText(cargo_names[0])
+            self.m_ap.cargo_name = cargo_names[0]
+
         self.pushUpdates = QPushButton("Save Action Point")
 
         self.apMap = MapWidget()
@@ -271,12 +388,16 @@ class APItemEditor(QWidget):
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 5)
-        layout.addWidget(self.apMap, 1, 0, 4, 3)
+        layout.addWidget(self.apMap, 1, 0, 5, 3)
         layout.addWidget(self.notifyLabel, 1, 3, 1, 1)
-        layout.addWidget(self.nameLabel, 1, 4, 1, 1)
-        layout.addWidget(self.isNotify_editor, 2, 3, 1, 1)
+        layout.addWidget(self.isNotify_editor, 1, 4, 1, 1)
+        layout.addWidget(self.nameLabel, 2, 3, 1, 1)
         layout.addWidget(self.name_editor, 2, 4, 1, 1)
-        layout.addWidget(self.pushUpdates, 4, 3, 1, 2)
+        layout.addWidget(self.vehicleIdLabel, 3, 3, 1, 1)
+        layout.addWidget(self.vehicle_dropdown, 3, 4, 1, 1)
+        layout.addWidget(self.cargoNameLabel, 4, 3, 1, 1)
+        layout.addWidget(self.cargo_dropdown, 4, 4, 1, 1)
+        layout.addWidget(self.pushUpdates, 5, 3, 1, 2)
 
         self.setLayout(layout)
 
@@ -284,6 +405,12 @@ class APItemEditor(QWidget):
         self.name_editor.textEdited.connect(self.nameChanged)
 
         self.apMap.scene.changed.connect(self.updateLatLong)
+
+    def vehicleChanged(self):
+        self.m_ap.vehicle_id = self.vehicle_dropdown.currentText()
+
+    def cargoChanged(self):
+        self.m_ap.cargo_name = self.cargo_dropdown.currentText()
 
     def updateLatLong(self):
         if len(self.apMap.ap_list) < 1:

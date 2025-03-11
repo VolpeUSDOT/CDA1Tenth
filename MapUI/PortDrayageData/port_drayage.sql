@@ -21,7 +21,7 @@ CREATE TABLE `action` (
     `prev_action_id` INT NOT NULL,
     `next_action_id` INT NOT NULL,
     `veh_id` varchar(20) NOT NULL,
-    `veh_name` varchar(45) NOT NULL,
+    `veh_name` varchar(45) DEFAULT NULL,
     `cargo_name` varchar(20) DEFAULT NULL,
     `cargo_uuid` varchar(45) DEFAULT NULL,
     `area_lat` decimal(9,7) NOT NULL,

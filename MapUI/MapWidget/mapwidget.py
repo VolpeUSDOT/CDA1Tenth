@@ -1,16 +1,26 @@
 from PySide6.QtCore import QSize, Signal, Qt
-from PySide6.QtWidgets import QWidget, QGridLayout, QGraphicsView, QGraphicsLineItem, QGraphicsItem
+from PySide6.QtWidgets import (
+    QWidget,
+    QGridLayout,
+    QGraphicsView,
+    QGraphicsLineItem,
+    QGraphicsItem,
+)
 from PySide6.QtGui import QPen
 from MapWidget.vgraphicsscene import ViewGraphicsScene
 from MapWidget.mapitems import ActionPointGI, VehicleGI
 import geopandas as gpd
 import yaml
+from PySide6.QtCore import Qt, QPointF, QLineF
 
 pgm_map = '../MapUI/PortDrayageData/garage.pgm'
 map_info = '../MapUI/PortDrayageData/garage.yaml'
 graph = '../MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
 
 roadLinkPen = QPen(Qt.white, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+
+# Received latitude and longitude from vehicle is assumed following J2735 BSM standard and is in unit of measure 1/10 microdegree
+DEGREE_TO_TENTH_MICRO = 10000000
 
 # Subclass QMainWindow to customize your application's main window
 class MapWidget(QWidget):
@@ -21,8 +31,13 @@ class MapWidget(QWidget):
         self.setMinimumSize(QSize(600,400))
         self.zoomLevel = 0
 
+        # Used when create a new action point
+        self.clickedNewPoint = None
+        self.isAddActionPoint = False
+
         # Create QGraphicsScene and QGraphicsView
         self.scene = ViewGraphicsScene(self)
+        self.scene.mousePressEvent = self._mouse_press_event
         self.view = QGraphicsView(self.scene)
 
         # Process data from port drayage
@@ -137,7 +152,9 @@ class MapWidget(QWidget):
         Adds the vehicle position to the map
         '''
         self.clearVehiclePosition()
-        x, y = self._convertCoords(float(long), float(lat))
+        x, y = self._convertCoords(
+            float(long) / DEGREE_TO_TENTH_MICRO, float(lat) / DEGREE_TO_TENTH_MICRO
+        )
         vehicle = VehicleGI(x, y, self.scene)
         self.vehicle_position = vehicle
         self.scene.addItem(vehicle)
@@ -164,6 +181,80 @@ class MapWidget(QWidget):
             return
         self.view.scale(0.5, 0.5)
         self.zoomLevel -= 1
+
+    def _mouse_press_event(self, event):
+        click_pos = event.scenePos()
+        lines = self._get_lines()
+        if not lines:
+            return
+
+        nearest_point = self._get_nearest_point_on_lines(self._get_lines(), click_pos)
+        self.clickedNewPoint = nearest_point
+        existing_points = self._get_points()
+        if self.isAddActionPoint:
+            # Remove added new point when user tries to create new point
+            for point in existing_points:
+                self.scene.removeItem(point)
+                # Reset existing points
+                existing_points = []
+        if len(existing_points) == 0:
+            # Assuming when map is used for creating an action point, there is no point item on the map
+            self.isAddActionPoint = True
+            self._add_clicked_point_to_map()
+
+        # Call the base class mousePressEvent to ensure default behavior
+        super(ViewGraphicsScene, self.scene).mousePressEvent(event)
+
+    def _add_clicked_point_to_map(self):
+        if self.clickedNewPoint is None:
+            return
+
+        newActionPoint = ActionPointGI(
+            self.clickedNewPoint.x(), self.clickedNewPoint.y(), self.scene
+        )
+        self.scene.addItem(newActionPoint)
+
+    def _get_nearest_point_on_lines(self, lines, click_pos):
+        nearest_line = min(
+            lines, key=lambda line: self._distance_to_line(line, click_pos)
+        )
+        nearest_point = self._get_nearest_point_on_line(nearest_line, click_pos)
+        return nearest_point
+
+    def _get_nearest_point_on_line(self, line, click_pos):
+        """Finds the closest point on a given line segment to the click position."""
+        line_f = line.line()
+        p1, p2 = line_f.p1(), line_f.p2()  # Line endpoints
+
+        # Vector math to compute closest point
+        v_line = p2 - p1
+        v_click = click_pos - p1
+
+        # Projection formula
+        t = (v_click.x() * v_line.x() + v_click.y() * v_line.y()) / (
+            v_line.x() ** 2 + v_line.y() ** 2
+        )
+        t = max(0, min(1, t))  # Clamp t to stay within the segment
+
+        # Compute the closest point coordinates
+        nearest_x = p1.x() + t * v_line.x()
+        nearest_y = p1.y() + t * v_line.y()
+
+        return QPointF(nearest_x, nearest_y)
+
+    def _distance_to_line(self, line, point):
+        """Calculates the perpendicular distance from a point to a line segment."""
+        nearest_point = self._get_nearest_point_on_line(line, point)
+        return (nearest_point - point).manhattanLength()  # Approximate distance
+
+    def _get_lines(self):
+        return [
+            item for item in self.scene.items() if isinstance(item, QGraphicsLineItem)
+        ]
+
+    def _get_points(self):
+        return [item for item in self.scene.items() if isinstance(item, ActionPointGI)]
+
 
 def createRoadLink(x1, y1, x2, y2):
     roadLink = QGraphicsLineItem(x1, y1, x2, y2)

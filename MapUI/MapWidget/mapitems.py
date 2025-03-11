@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt, QRectF, QEvent
-from PySide6.QtGui import QPen
+from PySide6.QtGui import QPen, QColor
 from PySide6.QtWidgets import QApplication, QGraphicsItem, QGraphicsLineItem
 
 
@@ -26,7 +26,7 @@ class ActionPointGI(QGraphicsItem):
         return QRectF(- penWidth / 2, - penWidth / 2, penWidth,  penWidth)
 
     def paint(self, painter, option, widget):
-        painter.setPen(actionPointPen)
+        painter.setPen(self.pen)
         # Draw in item coords
         painter.drawPoint(0,0)
 

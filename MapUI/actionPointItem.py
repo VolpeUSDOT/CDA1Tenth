@@ -26,14 +26,18 @@ class ActionPoint:
         name=None,
         latitude=None,
         longitude=None,
+        vehicle_id=None,
+        cargo_name=None,
     ):
         self.actionID = actionID
         self.next_action = next_action
         self.prev_action = prev_action
         self.name = name
+        self.vehicle_id = vehicle_id
+        self.cargo_name = cargo_name
         self.latitude = latitude
         self.longitude = longitude
-        self.status = False
+        self.status = True
         self.is_notify = False
 
     def actionItemDataFilter(self):
@@ -53,10 +57,18 @@ class ActionPoint:
             "latitude": self.latitude,
             "longitude": self.longitude,
             "status": self.status,
+            "vehicle_id": self.vehicle_id,
+            "cargo_name": self.cargo_name,
             "is_notify": self.is_notify,
         }
         json_str = json.dumps(json_dict)
         return json_str
+
+    def setIsNotify(self, is_notify):
+        self.is_notify = is_notify
+
+    def setStatus(self, status):
+        self.status = status
 
 
 class AreaData:

@@ -141,8 +141,6 @@ class MainWindow(QMainWindow):
                                 ap.setSelected(True)
             # Allow runs again
             self.selectionUpdating = False
-    
-        
 
     # def updateSQLServer(self):
     #     '''
@@ -152,6 +150,7 @@ class MainWindow(QMainWindow):
     #     ap_df = self.apOrderBox.convertToDataframe()
     #     # engine = self.SQLdb.dbconn
     #     ap_df.to_sql('freight', con=self.SQLdb.engine, if_exists='replace', index=False, schema='port_drayage',)
+
 
 class App(QApplication):
     def __init__(self, args):
