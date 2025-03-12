@@ -140,6 +140,7 @@ class ActionPointModel(QAbstractListModel):
             self.actions.pop(row)
         return True
 
+    # TODO: See if this is correct and how it syncs with database etc.
     def updateItemOrder(self, index_list):
         """
         Reorder elements in model based off index_list
@@ -196,16 +197,14 @@ class ActionPointModel(QAbstractListModel):
 
         encodedData = data.data("application/vnd.text.list")
         stream = QDataStream(encodedData, QIODevice.OpenModeFlag.ReadOnly)
-
         self.insertRows(beginRow, count=1, parent=parent)
 
         # json_list = json.load(stream.readQStringList())
-
         for json_str in stream.readQStringList():
+
             index = self.index(beginRow, 0, parent)
             ap_data = json.loads(json_str)
             ap = ActionPoint()
-            print(f"ap_data: {ap_data}")
 
             ap.actionID = ap_data["MobilityOperationMessage"]["action_id"]
             # ap.next_action = ap_data["MobilityOperationMessage"]["next_action"]
