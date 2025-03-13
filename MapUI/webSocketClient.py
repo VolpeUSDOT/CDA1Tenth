@@ -85,7 +85,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     # Enable terminating the application with Ctrl+C
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    ws_client = WebSocketClient("wss://echo.websocket.org")
+    ws_client = WebSocketClient("wss://echo.websocket.events")
 
     # Connect signals
     ws_client.message_received.connect(on_message)
