@@ -18,8 +18,6 @@ class ActionPointGI(QGraphicsItem):
         self.text.setVisible(False)
         self.text.setPos(2, - 2.25*self.pen.width())
 
-
-
         self.mapScene = mapScene
 
         # Position in scene coords
@@ -51,6 +49,7 @@ class ActionPointGI(QGraphicsItem):
         self.setScale(1.5)
         self.setCursor(Qt.PointingHandCursor)
         self.text.setVisible(True)
+        self.text.setScale(0.75)
         event.accept() # accepting event here ensures event does not get propogated to parent widget
 
     def hoverLeaveEvent(self, event):
@@ -62,6 +61,7 @@ class ActionPointGI(QGraphicsItem):
         self.setScale(1)
         self.setCursor(Qt.ArrowCursor)
         self.text.setVisible(False)
+        self.text.setScale(1.5)
         event.accept()
 
     def mousePressEvent(self, event):
@@ -85,7 +85,7 @@ class GraphicsPoint(QGraphicsItem):
 
 class VehicleGI(QGraphicsItem):
 
-    def __init__(self, x, y, mapScene):
+    def __init__(self, x, y, description, mapScene):
         super().__init__()
         self.pen = vehiclePen
         self.loc = (x, y)
@@ -93,7 +93,7 @@ class VehicleGI(QGraphicsItem):
 
         # Position in scene coords
         self.setPos(x,y)
-        self.text = QGraphicsTextItem(f"BSM Data - Long: {round(x, 2)}, Lat: {round(y, 2)}", parent=self)
+        self.text = QGraphicsTextItem(description, parent=self)
         self.text.setPos(2, - 2.25*self.pen.width())
 
     def boundingRect(self):
