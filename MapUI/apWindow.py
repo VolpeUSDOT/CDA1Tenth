@@ -127,13 +127,14 @@ class APWindow(QWidget):
             ap_data = self.apModel.data(self.apModel.index(i,0), role=Qt.ItemDataRole.EditRole)
             if hasattr(ap_data, "actionPoint"):
                 ap_data = ap_data.actionPoint
-            self.apMap.addActionPoint(ap_data.latitude, ap_data.longitude)
+            self.apMap.addActionPoint(ap_data.latitude, ap_data.longitude, ap_data.name)
 
     def updateView(self):
         self.updateMap()
         # self.updateListView()
 
     def handleIncomingMessage(self, message):
+        #print(message)
         decoded_message = self.messageDecoder.decodeMessage(message)
         if type(decoded_message) is BSMItem:
             self.updateVehiclePose(decoded_message)
