@@ -5,19 +5,21 @@ from PySide6.QtWidgets import (
     QGraphicsView,
     QGraphicsLineItem,
     QGraphicsItem,
+    QGraphicsPixmapItem,
 )
-from PySide6.QtGui import QPen
+from PySide6.QtGui import QPen, QBrush, QPixmap, QColor
 from MapWidget.vgraphicsscene import ViewGraphicsScene
 from MapWidget.mapitems import ActionPointGI, VehicleGI
 import geopandas as gpd
 import yaml
 from PySide6.QtCore import Qt, QPointF, QLineF
 
+png_map = '../MapUI/PortDrayageData/roadmap_pd_1.png'
 pgm_map = '../MapUI/PortDrayageData/garage.pgm'
 map_info = '../MapUI/PortDrayageData/garage.yaml'
 graph = '../MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
 
-roadLinkPen = QPen(Qt.white, 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+roadLinkPen = QPen(Qt.yellow, 1, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
 # Received latitude and longitude from vehicle is assumed following J2735 BSM standard and is in unit of measure 1/10 microdegree
 DEGREE_TO_TENTH_MICRO = 10000000
@@ -26,7 +28,7 @@ DEGREE_TO_TENTH_MICRO = 10000000
 class MapWidget(QWidget):
     selectionUpdate = Signal(ActionPointGI)
 
-    def __init__(self, pgm_map_fp = pgm_map, map_info_fp = map_info, graph_fp = graph):
+    def __init__(self, png_map_fp = png_map, pgm_map_fp = pgm_map, map_info_fp = map_info, graph_fp = graph):
         super().__init__()
         self.setMinimumSize(QSize(600,400))
         self.zoomLevel = 0
@@ -39,6 +41,22 @@ class MapWidget(QWidget):
         self.scene = ViewGraphicsScene(self)
         self.scene.mousePressEvent = self._mouse_press_event
         self.view = QGraphicsView(self.scene)
+
+
+        # Scale starting view to fit port drayage
+        self.view.scale(3, 3)
+
+        # Set background color
+        background_color = QColor(0, 0, 0)  # Black Background
+        self.scene.setBackgroundBrush(QBrush(background_color))
+
+        # Load image and add it to the scene
+        # Custom alignment to fit port drayage map with road links
+        self.scale_factor = .23
+        self.x_offset = -9.2
+        self.y_offset = -174.8
+        self.bg_image_item = self.load_bg_image(png_map_fp)
+        self.scene.addItem(self.bg_image_item)
 
         # Process data from port drayage
         mapInfo = self._readMapInfo(map_info_fp)
@@ -254,9 +272,16 @@ class MapWidget(QWidget):
 
     def _get_points(self):
         return [item for item in self.scene.items() if isinstance(item, ActionPointGI)]
-
+    
+    def load_bg_image(self, image_path):
+        pixmap = QPixmap(image_path)
+        pixmap_item = QGraphicsPixmapItem(pixmap)
+        pixmap_item.setScale(self.scale_factor)  # image scaling
+        pixmap_item.setPos(self.x_offset, self.y_offset)  # x,y offsets
+        return pixmap_item
 
 def createRoadLink(x1, y1, x2, y2):
     roadLink = QGraphicsLineItem(x1, y1, x2, y2)
     roadLink.setPen(roadLinkPen)
+    roadLink.setVisible(False) # Hides road links from displaying
     return roadLink
