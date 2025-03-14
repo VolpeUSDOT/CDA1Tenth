@@ -205,12 +205,12 @@ class MapWidget(QWidget):
         # Call the base class mousePressEvent to ensure default behavior
         super(ViewGraphicsScene, self.scene).mousePressEvent(event)
 
-    def _add_clicked_point_to_map(self):
+    def _add_clicked_point_to_map(self, description="No Description"):
         if self.clickedNewPoint is None:
             return
 
         newActionPoint = ActionPointGI(
-            self.clickedNewPoint.x(), self.clickedNewPoint.y(), self.scene
+            self.clickedNewPoint.x(), self.clickedNewPoint.y(), description, self.scene
         )
         self.scene.addItem(newActionPoint)
 
