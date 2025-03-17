@@ -76,6 +76,11 @@ class MainWindow(QMainWindow):
         self.holding_longitude = -3.45
         self.holding_signal.connect(self.requestFurtherInspection)
 
+        # set tab tooltips
+        self.tabBar.setTabToolTip(0, 'View the road network and modify the actions performed by the truck.')
+        self.tabBar.setTabToolTip(1, 'Add or modify existing cargo items.')
+        self.tabBar.setTabToolTip(2, 'Complete pending port interactions and view completed interactions.')
+
     def changeTab(self):
         """
         Changes the visible widget in the central stacked widget based on selected tab.
