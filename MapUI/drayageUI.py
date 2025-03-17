@@ -77,9 +77,13 @@ class MainWindow(QMainWindow):
         self.holding_signal.connect(self.requestFurtherInspection)
 
         # set tab tooltips
-        self.tabBar.setTabToolTip(0, 'View the road network and modify the actions performed by the truck.')
-        self.tabBar.setTabToolTip(1, 'Add or modify existing cargo items.')
-        self.tabBar.setTabToolTip(2, 'Complete pending port interactions and view completed interactions.')
+        self.tabBar.setTabToolTip(
+            0, "View the road network and modify the actions performed by the truck."
+        )
+        self.tabBar.setTabToolTip(1, "Add or modify existing cargo items.")
+        self.tabBar.setTabToolTip(
+            2, "Complete pending port interactions and view completed interactions."
+        )
 
     def changeTab(self):
         """
@@ -132,7 +136,7 @@ class MainWindow(QMainWindow):
         )
         self.apWindow.webSocketClient.send_message(holding_action.convertToJSON())
         self.apWindow.apMap.addActionPoint(
-            self, self.holding_latitude, self.holding_longitude
+            self, self.holding_latitude, self.holding_longitude, "HOLDING_AREA"
         )  # Add action pt to map
 
     def showAPInfo(self):
