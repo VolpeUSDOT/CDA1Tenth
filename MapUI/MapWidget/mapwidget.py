@@ -17,7 +17,7 @@ from PySide6.QtCore import Qt, QPointF, QLineF
 png_map = '../MapUI/PortDrayageData/pdroadmap.png'
 pgm_map = '../MapUI/PortDrayageData/garage.pgm'
 map_info = '../MapUI/PortDrayageData/garage.yaml'
-graph = '../MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
+graph = '../MapUI/PortDrayageData/garage_center_line.geojson'
 
 roadLinkPen = QPen(Qt.yellow, 1, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
