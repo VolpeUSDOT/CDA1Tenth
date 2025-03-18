@@ -78,6 +78,7 @@ class APWindow(QWidget):
         self.webSocketClient.message_received.connect(self.handleIncomingMessage)
         # Start connection
         self.webSocketClient.start_connection()
+        self.webSocketClient.connected.connect(lambda: print("webSocket connected"))
 
         # When a list widget item is selected, update the selection
         # self.apListWidget.itemSelectionChanged.connect(self.propagateListSelection)
