@@ -98,6 +98,7 @@ class VehicleGI(QGraphicsItem):
         # Position in scene coords
         self.setPos(x,y)
         self.text = QGraphicsTextItem(description, parent=self)
+        self.text.setDefaultTextColor(Qt.white)
         self.text.setPos(2, - 2.25*self.pen.width())
 
     def boundingRect(self):
