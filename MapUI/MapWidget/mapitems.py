@@ -89,7 +89,7 @@ class GraphicsPoint(QGraphicsItem):
 
 class VehicleGI(QGraphicsItem):
 
-    def __init__(self, x, y, mapScene):
+    def __init__(self, x, y, description, mapScene):
         super().__init__()
         self.pen = vehiclePen
         self.loc = (x, y)
@@ -97,7 +97,7 @@ class VehicleGI(QGraphicsItem):
 
         # Position in scene coords
         self.setPos(x,y)
-        self.text = QGraphicsTextItem(f"BSM Data - Long: {round(x, 2)}, Lat: {round(y, 2)}", parent=self)
+        self.text = QGraphicsTextItem(description, parent=self)
         self.text.setPos(2, - 2.25*self.pen.width())
 
     def boundingRect(self):

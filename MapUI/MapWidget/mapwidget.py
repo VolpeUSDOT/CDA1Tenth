@@ -185,7 +185,7 @@ class MapWidget(QWidget):
         x, y = self._convertCoords(
             float(long) / DEGREE_TO_TENTH_MICRO, float(lat) / DEGREE_TO_TENTH_MICRO
         )
-        vehicle = VehicleGI(x, y, self.scene)
+        vehicle = VehicleGI(x, y, f'BSM - Lat: {lat}, Long: {long}', self.scene)
         self.vehicle_position = vehicle
         self.scene.addItem(vehicle)
 
