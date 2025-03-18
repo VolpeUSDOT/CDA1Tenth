@@ -1,5 +1,12 @@
 # from PySide6.QtCore import
-from PySide6.QtWidgets import QApplication, QMainWindow, QGridLayout, QLabel, QWidget, QStackedWidget
+from PySide6.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QGridLayout,
+    QLabel,
+    QWidget,
+    QStackedWidget,
+)
 from PySide6.QtCore import Signal
 from aporderbox import APOrderBoxWidget
 from apWindow import APWindow
@@ -20,22 +27,30 @@ class MainWindow(QMainWindow):
     unloading_signal = Signal(ActionItem)
     inspection_signal = Signal(ActionItem)
     holding_signal = Signal(ActionItem)
+
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Port Drayage UI")
-        self.setMinimumSize(800,600)
+        self.setMinimumSize(800, 600)
         self.tabBar = TabBar()
 
-        self.apWindow = APWindow(self.loading_signal, self.unloading_signal, self.inspection_signal)
+        self.apWindow = APWindow(
+            self.loading_signal, self.unloading_signal, self.inspection_signal
+        )
         # Prep action Point Widget
         # Get action points from SQL and populate widgets with them
-        self.SQLdb = Database('PORT_DRAYAGE')
+        self.SQLdb = Database("PORT_DRAYAGE")
         actionData = self.SQLdb.getData()
         self.apWindow.readSQLActionPoints(actionData)
 
         # create and stack widgets
-        self.pdTabs = PDTabs(self.loading_signal, self.unloading_signal, self.inspection_signal, self.holding_signal)
+        self.pdTabs = PDTabs(
+            self.loading_signal,
+            self.unloading_signal,
+            self.inspection_signal,
+            self.holding_signal,
+        )
         self.cargoWindow = CargoWindow()
         self.stackedWidget = QStackedWidget()
         self.stackedWidget.addWidget(self.apWindow)
@@ -62,48 +77,72 @@ class MainWindow(QMainWindow):
         self.holding_signal.connect(self.requestFurtherInspection)
 
         # set tab tooltips
-        self.tabBar.setTabToolTip(0, 'View the road network and modify the actions performed by the truck.')
-        self.tabBar.setTabToolTip(1, 'Add or modify existing cargo items.')
-        self.tabBar.setTabToolTip(2, 'Complete pending port interactions and view completed interactions.')
+        self.tabBar.setTabToolTip(
+            0, "View the road network and modify the actions performed by the truck."
+        )
+        self.tabBar.setTabToolTip(1, "Add or modify existing cargo items.")
+        self.tabBar.setTabToolTip(
+            2, "Complete pending port interactions and view completed interactions."
+        )
 
     def changeTab(self):
-        '''
+        """
         Changes the visible widget in the central stacked widget based on selected tab.
 
         NOTE: PySide6 Documentation of setCurrentIndex is incorrect. It works as you would expect
-        '''
+        """
         tabIndex = self.tabBar.currentIndex()
         self.stackedWidget.setCurrentIndex(tabIndex)
 
     def deleteActionPoint(self):
-        '''
+        """
         Delete selected action point from both list and map
-        '''
+        """
         # Get selection
         selected_ap_list = self.interactiveMap.scene.selectedItems()
-        if not selected_ap_list: return #List isn't empty
-        ap = selected_ap_list[0] # Select 1st item (Only should have 1 item)
+        if not selected_ap_list:
+            return  # List isn't empty
+        ap = selected_ap_list[0]  # Select 1st item (Only should have 1 item)
         self.interactiveMap.scene.clearSelection()
-        self.interactiveMap.scene.removeItem(ap) # Remove it from map
-        del ap # Delete from memory
+        self.interactiveMap.scene.removeItem(ap)  # Remove it from map
+        del ap  # Delete from memory
 
         # Get selection
         selected_ap_list = self.apOrderBox.apOrderList.selectedItems()
-        if not selected_ap_list: return #List isn't empty
-        ap = selected_ap_list[0] # Select 1st item (Only should have 1 item)
+        if not selected_ap_list:
+            return  # List isn't empty
+        ap = selected_ap_list[0]  # Select 1st item (Only should have 1 item)
         self.apOrderBox.apOrderList.clearSelection()
-        self.apOrderBox.apOrderList.takeItem(self.apOrderBox.apOrderList.row(ap)) #remove it from list
-        del ap # Delete from memory (Yes, memory management in python!)
+        self.apOrderBox.apOrderList.takeItem(
+            self.apOrderBox.apOrderList.row(ap)
+        )  # remove it from list
+        del ap  # Delete from memory (Yes, memory management in python!)
 
     def requestFurtherInspection(self, inspection_action):
-        holding_action = ActionItem(inspection_action.vehicle, inspection_action.cargo, ActionPoint(actionID=999, next_action=inspection_action.actionID+1, prev_action=inspection_action.actionID, name="HOLDING_AREA", latitude=self.holding_latitude, longitude=self.holding_longitude))
-        self.SQLdb.insertHoldingAction(self.SQLdb.createSQLEngine(), holding_action.convertToSQLDict())
-        self.apWindow.webSocketClient.send_message(inspection_action.convertToJSON())
+        holding_action = ActionItem(
+            inspection_action.vehicle,
+            inspection_action.cargo,
+            ActionPoint(
+                actionID=999,
+                next_action=inspection_action.actionID + 1,
+                prev_action=inspection_action.actionID,
+                name="HOLDING_AREA",
+                latitude=self.holding_latitude,
+                longitude=self.holding_longitude,
+            ),
+        )
+        self.SQLdb.insertHoldingAction(
+            self.SQLdb.createSQLEngine(), holding_action.convertToSQLDict()
+        )
+        self.apWindow.webSocketClient.send_message(holding_action.convertToJSON())
+        self.apWindow.apMap.addActionPoint(
+            self, self.holding_latitude, self.holding_longitude, "HOLDING_AREA"
+        )  # Add action pt to map
 
     def showAPInfo(self):
-        '''
+        """
         Match selection from list and map and send data to apInfoBox
-        '''
+        """
         # Prevent loop run
         if self.selectionUpdating == True:
             return
@@ -113,7 +152,8 @@ class MainWindow(QMainWindow):
             source = self.sender()
             if source == self.interactiveMap:
                 selected_ap_list = self.interactiveMap.scene.selectedItems()
-                if not selected_ap_list: return #List isn't empty
+                if not selected_ap_list:
+                    return  # List isn't empty
                 # Multiple can be selected, but we should only ever have one selected
                 if len(selected_ap_list) >= 1:
                     selected_ap = selected_ap_list[0]
@@ -122,13 +162,17 @@ class MainWindow(QMainWindow):
                     # Match selection change to listbox
                     ap_id = selected_ap.ap_id
                     self.apOrderBox.apOrderList.clearSelection()
-                    ap_list = [self.apOrderBox.apOrderList.item(x) for x in range(self.apOrderBox.apOrderList.count())]
+                    ap_list = [
+                        self.apOrderBox.apOrderList.item(x)
+                        for x in range(self.apOrderBox.apOrderList.count())
+                    ]
                     for ap in ap_list:
                         if ap.ap_id == ap_id:
                             ap.setSelected(True)
             else:
                 selected_ap_list = self.apOrderBox.apOrderList.selectedItems()
-                if not selected_ap_list: return #List isn't empty
+                if not selected_ap_list:
+                    return  # List isn't empty
                 # Multiple can be selected, but we should only ever have one selected
                 if len(selected_ap_list) >= 1:
                     selected_ap = selected_ap_list[0]
@@ -160,6 +204,7 @@ class MainWindow(QMainWindow):
 class App(QApplication):
     def __init__(self, args):
         super().__init__()
+
 
 app = App(sys.argv)
 window = MainWindow()

@@ -1,11 +1,22 @@
-from PySide6.QtCore import QAbstractListModel, Qt, QMimeData, QMimeType, QMimeDatabase, QDataStream, QByteArray, QIODevice
+from PySide6.QtCore import (
+    QAbstractListModel,
+    Qt,
+    QMimeData,
+    QMimeType,
+    QMimeDatabase,
+    QDataStream,
+    QByteArray,
+    QIODevice,
+    QModelIndex,
+)
 import json
 
-class ActionPoint():
-    '''
+
+class ActionPoint:
+    """
     Class to store data for individual items in model
     This allows for in place data modification, and display functions to be attached to the data item
-    '''
+    """
 
     def __init__(
         self,
@@ -30,7 +41,9 @@ class ActionPoint():
         self.is_notify = False
 
     def actionItemDataFilter(self):
-        return AreaData(self.name, self.latitude, self.longitude, self.status, self.is_notify)
+        return AreaData(
+            self.name, self.latitude, self.longitude, self.status, self.is_notify
+        )
 
     def completedActionPointDisplay(self):
         return f"Name: {self.name} \t\t "
@@ -58,7 +71,7 @@ class ActionPoint():
         self.status = status
 
 
-class AreaData():
+class AreaData:
 
     def __init__(self, name, latitude, longitude, status, is_notify):
         self.name = name
@@ -69,9 +82,10 @@ class AreaData():
 
 
 class ActionPointModel(QAbstractListModel):
-    '''
+    """
     Model that stores Action Point data for the project
-    '''
+    """
+
     def __init__(self, *args, actions=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.actions = actions or []
@@ -85,7 +99,7 @@ class ActionPointModel(QAbstractListModel):
         if role == Qt.ItemDataRole.EditRole:
             return ap
 
-        if role == Qt.ItemDataRole.DisplayRole: # Completed list display
+        if role == Qt.ItemDataRole.DisplayRole:  # Completed list display
             if hasattr(ap, "actionPoint"):
                 text = ap.actionPoint.completedActionPointDisplay()
             else:
@@ -93,9 +107,9 @@ class ActionPointModel(QAbstractListModel):
             return text
 
     def setData(self, index, value, role):
-        '''
+        """
         TODO: update?
-        '''
+        """
         # if role != Qt.ItemDataRole.EditRole:
         #     print("Not editable")
         #     return False
@@ -111,25 +125,26 @@ class ActionPointModel(QAbstractListModel):
         self.dataChanged.emit(index, index)
         return index
 
-    def insertRows(self, row, count, parent = ...):
+    def insertRows(self, row, count, parent=...):
         if parent.isValid():
             return False
         for i in range(count):
-            self.actions.insert(row+i, ActionPoint())
+            self.actions.insert(row + i, ActionPoint())
         return True
 
-    def removeRows(self, row, count, parent = ...):
+    def removeRows(self, row, count, parent=...):
         if parent.isValid():
             return False
-        self.beginRemoveRows(parent, row, row+count-1)
+        self.beginRemoveRows(parent, row, row + count - 1)
         for i in range(count):
             self.actions.pop(row)
         return True
 
+    # TODO: See if this is correct and how it syncs with database etc.
     def updateItemOrder(self, index_list):
-        '''
+        """
         Reorder elements in model based off index_list
-        '''
+        """
         if len(index_list) != self.rowCount(None):
             return False
         self.actions = [self.actions[i] for i in index_list]
@@ -139,7 +154,7 @@ class ActionPointModel(QAbstractListModel):
         return Qt.DropAction.MoveAction
 
     def mimeTypes(self):
-        types = ['application/vnd.text.list']
+        types = ["application/vnd.text.list"]
         return types
 
     def mimeData(self, indexes):
@@ -154,7 +169,7 @@ class ActionPointModel(QAbstractListModel):
                 json_list.append(json_str)
 
         stream.writeQStringList(json_list)
-        mimeData.setData('application/vnd.text.list', encodedData)
+        mimeData.setData("application/vnd.text.list", encodedData)
         return mimeData
 
     # def canDropMimeData(self, data, action, row, column, parent):
@@ -178,37 +193,40 @@ class ActionPointModel(QAbstractListModel):
         elif parent.isValid():
             beginRow = parent.row()
         else:
-            beginRow = self.rowCount()
+            beginRow = self.rowCount(QModelIndex())
 
-        encodedData = data.data('application/vnd.text.list')
+        encodedData = data.data("application/vnd.text.list")
         stream = QDataStream(encodedData, QIODevice.OpenModeFlag.ReadOnly)
-
         self.insertRows(beginRow, count=1, parent=parent)
 
         # json_list = json.load(stream.readQStringList())
-
         for json_str in stream.readQStringList():
+
             index = self.index(beginRow, 0, parent)
             ap_data = json.loads(json_str)
             ap = ActionPoint()
-            ap.actionID = ap_data['actionID']
-            ap.next_action = ap_data['next_action']
-            ap.prev_action = ap_data['prev_action']
-            ap.name = ap_data['name']
-            ap.latitude = ap_data['latitude']
-            ap.longitude = ap_data['longitude']
-            ap.status = ap_data['status']
-            ap.is_notify = ap_data['is_notify']
+
+            ap.actionID = ap_data["MobilityOperationMessage"]["action_id"]
+            # ap.next_action = ap_data["MobilityOperationMessage"]["next_action"]
+            # ap.prev_action = ap_data["MobilityOperationMessage"]["prev_action"]
+            ap.name = ap_data["MobilityOperationMessage"]["operation"]
+            ap.latitude = ap_data["MobilityOperationMessage"]["destination"]["latitude"]
+            ap.longitude = ap_data["MobilityOperationMessage"]["destination"][
+                "longitude"
+            ]
+            # ap.status = ap_data["status"]
+            # ap.is_notify = ap_data["is_notify"]
+
             self.setData(index, ap, role=Qt.ItemDataRole.EditRole)
-            beginRow+=1
+            beginRow += 1
 
         return True
         # return super().dropMimeData(data, action, row, column, parent)
 
     def convertToDataframe(self):
-        '''
+        """
         Converts list to pandas df, generating columns required for linked list calls later
-        '''
+        """
         #  TODO :Rewrite for new structure and SQL layout
         pass
         # ap_list = [self.apOrderList.item(x).actionPointData for x in range(self.apOrderList.count())]
