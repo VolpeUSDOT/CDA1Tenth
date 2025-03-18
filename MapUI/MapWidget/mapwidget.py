@@ -29,16 +29,13 @@ DEGREE_TO_TENTH_MICRO = 10000000
 class MapWidget(QWidget):
     selectionUpdate = Signal(ActionPointGI)
 
-    def __init__(
-        self,
-        png_map_fp=png_map,
-        pgm_map_fp=pgm_map,
-        map_info_fp=map_info,
-        graph_fp=graph,
-    ):
+    def __init__(self, png_map_fp=png_map, pgm_map_fp=pgm_map, map_info_fp=map_info, graph_fp=graph,):
         super().__init__()
         self.setMinimumSize(QSize(550,400))
         self.zoomLevel = 0
+
+        # Create QGraphicsScene and QGraphicsView
+        self.scene = ViewGraphicsScene(self)
 
         # Used when create a new action point
         self.isAddActionPoint = False
