@@ -95,12 +95,36 @@ class VehicleGI(QGraphicsItem):
         self.loc = (x, y)
         self.mapScene = mapScene
 
+        # Fixed offset position for the text and background rectangle
+        self.fixed_x = -25
+        self.fixed_y = 5
+
         # Position in scene coords
         self.setPos(x,y)
         self.text = QGraphicsTextItem(description, parent=self)
-        self.text.setDefaultTextColor(Qt.white)
+        self.text.setDefaultTextColor(Qt.black)  # Set text color to black        
         self.text.setPos(2, - 2.25*self.pen.width())
+        self.text.setScale(.3)  # Change text scaling
+        self.text.setPos(self.fixed_x, self.fixed_y)  # Set offset position for text
+        
+        # Create a background rectangle for the text
+        self.background = QGraphicsRectItem(parent=self)
+        self.background.setBrush(QBrush(Qt.white))  # Set background to white
+        self.background.setZValue(-1)  # Send the rectangle layer back
 
+        # Set the initial position and size of the background rectangle
+        self.set_background_size()
+
+    def set_background_size(self):
+        """Adjust the background rectangle to fit the text."""
+        text_rect = self.text.boundingRect()  # Get the bounding rect of the text
+        padding = 1  # Padding around the text
+        # Set the rectangle position based on the fixed position
+        self.background.setRect(self.fixed_x - padding, 
+                                 self.fixed_y - padding,
+                                 text_rect.width() * self.text.scale() + 2 * padding, 
+                                 text_rect.height() * self.text.scale() + 2 * padding)
+                
     def boundingRect(self):
         penWidth = self.pen.width()
         return QRectF(- penWidth / 2, - penWidth / 2, penWidth,  penWidth)
