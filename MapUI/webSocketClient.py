@@ -48,6 +48,8 @@ class WebSocketClient(QObject):
         '''
         if self.websocket.isValid():
             self.websocket.sendTextMessage(message)
+        else:
+            raise RuntimeError("Websocket is not in valid state")
 
     def on_connected(self):
         '''
@@ -81,17 +83,19 @@ if __name__ == '__main__':
 
     def on_message(message: str):
         print(f"Received message: {message}")
-
+    def send_message(message: str, conn: WebSocketClient):
+        conn.send_message(message)
+    
     app = QApplication(sys.argv)
     # Enable terminating the application with Ctrl+C
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    ws_client = WebSocketClient("wss://echo.websocket.events")
+    ws_client = WebSocketClient("ws://localhost:8765")
 
     # Connect signals
     ws_client.message_received.connect(on_message)
 
     # Connect and send a message
     ws_client.start_connection()
-    ws_client.send_message("Hello, WebSocket!")
+    ws_client.connected.connect(lambda: send_message("Hello, WebSocket!", ws_client))
 
     app.exec()

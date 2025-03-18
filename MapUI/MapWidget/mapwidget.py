@@ -24,24 +24,26 @@ roadLinkPen = QPen(Qt.yellow, 1, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 # Received latitude and longitude from vehicle is assumed following J2735 BSM standard and is in unit of measure 1/10 microdegree
 DEGREE_TO_TENTH_MICRO = 10000000
 
+
 # Subclass QMainWindow to customize your application's main window
 class MapWidget(QWidget):
     selectionUpdate = Signal(ActionPointGI)
 
-    def __init__(self, png_map_fp = png_map, pgm_map_fp = pgm_map, map_info_fp = map_info, graph_fp = graph):
+    def __init__(
+        self,
+        png_map_fp=png_map,
+        pgm_map_fp=pgm_map,
+        map_info_fp=map_info,
+        graph_fp=graph,
+    ):
         super().__init__()
         self.setMinimumSize(QSize(550,400))
         self.zoomLevel = 0
 
         # Used when create a new action point
-        self.clickedNewPoint = None
         self.isAddActionPoint = False
-
-        # Create QGraphicsScene and QGraphicsView
-        self.scene = ViewGraphicsScene(self)
         self.scene.mousePressEvent = self._mouse_press_event
         self.view = QGraphicsView(self.scene)
-
 
         # Scale starting view to fit port drayage
         self.view.scale(2.4, 2.4)
@@ -52,7 +54,7 @@ class MapWidget(QWidget):
 
         # Load image and add it to the scene
         # Custom alignment to fit port drayage map with road links
-        self.scale_factor = .23
+        self.scale_factor = 0.23
         self.x_offset = -9.2
         self.y_offset = -176
         self.bg_image_item = self.load_bg_image(png_map_fp)
@@ -60,15 +62,17 @@ class MapWidget(QWidget):
 
         # Process data from port drayage
         mapInfo = self._readMapInfo(map_info_fp)
-        self.x_origin = mapInfo['origin'][0]
-        self.y_origin = mapInfo['origin'][1]
-        self.resolution = mapInfo['resolution']
-        self.points, lines = self._readGraphFile(graph_fp, roundPixelPosition = True)
+        self.x_origin = mapInfo["origin"][0]
+        self.y_origin = mapInfo["origin"][1]
+        self.resolution = mapInfo["resolution"]
+        self.points, lines = self._readGraphFile(graph_fp, roundPixelPosition=True)
 
         # Add all road segments to scene
         road_group = self.scene.createItemGroup([])
         for _, line in lines.iterrows():
-            roadLink = createRoadLink(line['start_x'], line['start_y'], line['end_x'], line['end_y'])
+            roadLink = createRoadLink(
+                line["start_x"], line["start_y"], line["end_x"], line["end_y"]
+            )
             self.scene.addItem(roadLink)
             road_group.addToGroup(roadLink)
 
@@ -92,11 +96,12 @@ class MapWidget(QWidget):
         self.scene.selectionChanged.connect(self._compactedSignal)
 
     def _compactedSignal(self):
-        '''
+        """
         Send custom signal that selection has changed only when new item is selected, ignore when selection is cleared to prevent other code from running multiple times
-        '''
+        """
         selected_ap_list = self.scene.selectedItems()
-        if not selected_ap_list: return #List isn't empty
+        if not selected_ap_list:
+            return  # List isn't empty
         # Multiple can be selected, but we should only ever have one selected
         if len(selected_ap_list) == 1:
             self.selectionUpdate.emit(selected_ap_list[0])
@@ -104,7 +109,7 @@ class MapWidget(QWidget):
             print("Error, multiple ap were selected in map which shouldn't be possible")
 
     def _readMapInfo(self, fp):
-        with open(fp, 'r') as stream:
+        with open(fp, "r") as stream:
             map_info = yaml.safe_load(stream)
         return map_info
 
@@ -113,19 +118,29 @@ class MapWidget(QWidget):
         Converts geojson file to usable data format
         """
         graph_data = gpd.read_file(graph_fp)
-        graph_data['adjusted_x'], graph_data['adjusted_y'] = self._convertCoords(graph_data['geometry'].x, graph_data['geometry'].y)
+        graph_data["adjusted_x"], graph_data["adjusted_y"] = self._convertCoords(
+            graph_data["geometry"].x, graph_data["geometry"].y
+        )
 
-        points = graph_data.loc[(graph_data['geometry'] != None)][['id', 'adjusted_x', 'adjusted_y']]
+        points = graph_data.loc[(graph_data["geometry"] != None)][
+            ["id", "adjusted_x", "adjusted_y"]
+        ]
         if roundPixelPosition:
             points = self._roundPixelPositions(points)
 
-        lines = graph_data.loc[(graph_data['geometry'] == None)]
+        lines = graph_data.loc[(graph_data["geometry"] == None)]
 
-        df_for_starts = points.rename(columns={'id':'startid', 'adjusted_x':'start_x', 'adjusted_y':'start_y'})
-        df_for_ends = points.rename(columns={'id':'endid', 'adjusted_x':'end_x', 'adjusted_y':'end_y'})
-        lines = lines.merge(df_for_starts, on='startid')
-        lines = lines.merge(df_for_ends, on='endid')
-        lines  = lines[['id', 'startid', 'endid', 'start_x', 'start_y', 'end_x', 'end_y']]
+        df_for_starts = points.rename(
+            columns={"id": "startid", "adjusted_x": "start_x", "adjusted_y": "start_y"}
+        )
+        df_for_ends = points.rename(
+            columns={"id": "endid", "adjusted_x": "end_x", "adjusted_y": "end_y"}
+        )
+        lines = lines.merge(df_for_starts, on="startid")
+        lines = lines.merge(df_for_ends, on="endid")
+        lines = lines[
+            ["id", "startid", "endid", "start_x", "start_y", "end_x", "end_y"]
+        ]
 
         return points, lines
 
@@ -133,8 +148,8 @@ class MapWidget(QWidget):
         """
         Round coordinates to the nearest pixel value until the roads look good and straight
         """
-        points['adjusted_x'] = nearest * round(points['adjusted_x']/nearest)
-        points['adjusted_y'] = nearest * round(points['adjusted_y']/nearest)
+        points["adjusted_x"] = nearest * round(points["adjusted_x"] / nearest)
+        points["adjusted_y"] = nearest * round(points["adjusted_y"] / nearest)
         return points
 
     def clearActionPoints(self):
@@ -148,9 +163,9 @@ class MapWidget(QWidget):
             self.vehicle_position = None
 
     def addActionPoint(self, lat, long, description="No Description"):
-        '''
+        """
         Takes an action point dictionary and adds the action point to the map
-        '''
+        """
         if long is None or lat is None:
             return
         x, y = self._convertCoords(long, lat)
@@ -159,16 +174,16 @@ class MapWidget(QWidget):
         self.scene.addItem(ap)
 
     def addActionPointList(self, ap_list):
-        '''
+        """
         Add multiple action points
-        '''
+        """
         for ap_dict in ap_list:
             self.addActionPointGI(ap_dict)
 
     def addVehiclePosition(self, lat, long):
-        '''
+        """
         Adds the vehicle position to the map
-        '''
+        """
         self.clearVehiclePosition()
         x, y = self._convertCoords(
             float(long) / DEGREE_TO_TENTH_MICRO, float(lat) / DEGREE_TO_TENTH_MICRO
@@ -188,13 +203,13 @@ class MapWidget(QWidget):
         converted_x = self.x_origin + (x * self.resolution)
         return converted_x, converted_y
 
-    def zoom_in (self):
+    def zoom_in(self):
         if self.zoomLevel >= 3:
             return
         self.view.scale(1.25, 1.25)
         self.zoomLevel += 1
 
-    def zoom_out (self):
+    def zoom_out(self):
         if self.zoomLevel <= -3:
             return
         self.view.scale(0.8, 0.8)
@@ -272,13 +287,14 @@ class MapWidget(QWidget):
 
     def _get_points(self):
         return [item for item in self.scene.items() if isinstance(item, ActionPointGI)]
-    
+
     def load_bg_image(self, image_path):
         pixmap = QPixmap(image_path)
         pixmap_item = QGraphicsPixmapItem(pixmap)
         pixmap_item.setScale(self.scale_factor)  # image scaling
         pixmap_item.setPos(self.x_offset, self.y_offset)  # x,y offsets
         return pixmap_item
+
 
 def createRoadLink(x1, y1, x2, y2):
     roadLink = QGraphicsLineItem(x1, y1, x2, y2)
