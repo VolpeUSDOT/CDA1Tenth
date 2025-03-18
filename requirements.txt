@@ -4,3 +4,5 @@ geopandas
 mysql-connector-python
 sqlalchemy
 pymysql
+pycrate
+websockets
