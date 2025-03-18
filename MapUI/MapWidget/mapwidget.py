@@ -14,7 +14,7 @@ import geopandas as gpd
 import yaml
 from PySide6.QtCore import Qt, QPointF, QLineF
 
-png_map = '../MapUI/PortDrayageData/roadmap_pd_1.png'
+png_map = '../MapUI/PortDrayageData/pdroadmap.png'
 pgm_map = '../MapUI/PortDrayageData/garage.pgm'
 map_info = '../MapUI/PortDrayageData/garage.yaml'
 graph = '../MapUI/PortDrayageData/garage_graph_port_drayage_v2.geojson'
@@ -30,7 +30,7 @@ class MapWidget(QWidget):
 
     def __init__(self, png_map_fp = png_map, pgm_map_fp = pgm_map, map_info_fp = map_info, graph_fp = graph):
         super().__init__()
-        self.setMinimumSize(QSize(600,400))
+        self.setMinimumSize(QSize(550,400))
         self.zoomLevel = 0
 
         # Used when create a new action point
@@ -44,7 +44,7 @@ class MapWidget(QWidget):
 
 
         # Scale starting view to fit port drayage
-        self.view.scale(3, 3)
+        self.view.scale(2.4, 2.4)
 
         # Set background color
         background_color = QColor(0, 0, 0)  # Black Background
@@ -54,7 +54,7 @@ class MapWidget(QWidget):
         # Custom alignment to fit port drayage map with road links
         self.scale_factor = .23
         self.x_offset = -9.2
-        self.y_offset = -174.8
+        self.y_offset = -176
         self.bg_image_item = self.load_bg_image(png_map_fp)
         self.scene.addItem(self.bg_image_item)
 
@@ -191,13 +191,13 @@ class MapWidget(QWidget):
     def zoom_in (self):
         if self.zoomLevel >= 3:
             return
-        self.view.scale(1.5, 1.5)
+        self.view.scale(1.25, 1.25)
         self.zoomLevel += 1
 
     def zoom_out (self):
         if self.zoomLevel <= -3:
             return
-        self.view.scale(0.75, 0.75)
+        self.view.scale(0.8, 0.8)
         self.zoomLevel -= 1
 
     def _mouse_press_event(self, event):
@@ -283,5 +283,6 @@ class MapWidget(QWidget):
 def createRoadLink(x1, y1, x2, y2):
     roadLink = QGraphicsLineItem(x1, y1, x2, y2)
     roadLink.setPen(roadLinkPen)
+    # Comment out line below to see roadlinks
     roadLink.setVisible(False) # Hides road links from displaying
     return roadLink
