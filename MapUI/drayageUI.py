@@ -136,7 +136,7 @@ class MainWindow(QMainWindow):
         )
         self.apWindow.webSocketClient.send_message(holding_action.convertToJSON())
         self.apWindow.apMap.addActionPoint(
-            self, self.holding_latitude, self.holding_longitude, "HOLDING_AREA"
+            self.holding_latitude, self.holding_longitude, "HOLDING_AREA"
         )  # Add action pt to map
 
     def showAPInfo(self):
