@@ -15,7 +15,7 @@ from binascii import hexlify
 
 # A set to store all connected WebSocket clients
 
-bsm = {'messageId': 20, 'value': {'BasicSafetyMessage': {'coreData': {'msgCnt': 18, 'id': '12345', 'secMark': 28782, 'lat': -20000000, 'long': -20000000, 'elev': 394, 'accuracy': {'semiMajor': 255, 'semiMinor': 255, 'orientation': 65535}, 'transmission': 'forwardGears', 'speed': 234, 'heading': 28800, 'angle': 127, 'accelSet': {'long': 2001, 'lat': 2001, 'vert': -127, 'yaw': 32767}, 'brakes': {'wheelBrakes': (0, 5), 'traction': 'unavailable', 'abs': 'unavailable', 'scs': 'unavailable', 'brakeBoost': 'unavailable', 'auxBrakes': 'unavailable'}, 'size': {'width': 0, 'length': 0}}}}}
+bsm = {'messageId': 20, 'value': {'BasicSafetyMessage': {'coreData': {'msgCnt': 18, 'id': '12345', 'secMark': 28782, 'lat': -3500000, 'long': -64500000, 'elev': 394, 'accuracy': {'semiMajor': 255, 'semiMinor': 255, 'orientation': 65535}, 'transmission': 'forwardGears', 'speed': 234, 'heading': 28800, 'angle': 127, 'accelSet': {'long': 2001, 'lat': 2001, 'vert': -127, 'yaw': 32767}, 'brakes': {'wheelBrakes': (0, 5), 'traction': 'unavailable', 'abs': 'unavailable', 'scs': 'unavailable', 'brakeBoost': 'unavailable', 'auxBrakes': 'unavailable'}, 'size': {'width': 0, 'length': 0}}}}}
 
 def add_asn1_path():
     asn1 = os.path.abspath('..') + "/asn_j2735"
@@ -51,14 +51,14 @@ def main():
             msgCount = getMsgCount(msgCount)
             bsm['value']['BasicSafetyMessage']['coreData']['msgCnt']  = msgCount
             bsm['value']['BasicSafetyMessage']['coreData']['secMark'] = getSecMark()
-            bsm['value']['BasicSafetyMessage']['coreData']['lat'] += 5000000
-            if bsm['value']['BasicSafetyMessage']['coreData']['lat'] > 0:
-                bsm['value']['BasicSafetyMessage']['coreData']['lat'] = -50000000
+            bsm['value']['BasicSafetyMessage']['coreData']['long'] += 900000
+            if bsm['value']['BasicSafetyMessage']['coreData']['long'] > 0:
+                bsm['value']['BasicSafetyMessage']['coreData']['long'] = -50000000
             try:
                 websocket.send(json.dumps(bsm['value']))
             except:
                 websocket = connect("ws://localhost:8765")
-            time.sleep(0.1)  # Wait 0.1 seconds (1/10th of a second)
+            time.sleep(0.1)  # Wait 0.1 seconds 
             print(bsm)
 
 if __name__ == "__main__":
