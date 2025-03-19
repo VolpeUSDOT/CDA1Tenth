@@ -46,7 +46,7 @@ class APWindow(QWidget):
         self.apListView = APListView()
         self.apListView.setModel(self.apModel)
         self.apMap = MapWidget()
-        self.apMap.setStyleSheet("background-color: grey;")
+        self.apMap.setStyleSheet("background-color: grey; color: black;")
         self.addAPButton = QPushButton("Add Action Point")
         self.editAPButton = QPushButton("Edit Action Point")
         self.activeEditor = None
@@ -60,8 +60,8 @@ class APWindow(QWidget):
         
 
         # Add black border to columns
-        self.bsmInfoBox.setStyleSheet("background-color: lightgrey; border: 1px solid black;")
-        self.apListView.setStyleSheet("background-color: white; border: 1px solid black;")
+        self.bsmInfoBox.setStyleSheet("background-color: lightgrey; border: 1px solid black; color: black;")
+        self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black;")
 
         # Title for BSM information
         self.bsmTitleLabel = QLabel("Vehicle BSM Information")
@@ -129,9 +129,12 @@ class APWindow(QWidget):
 
     def update_bsm_info(self, bsm_item):
         """ Update the BSM information shown in the BSM box. """
+        DEGREE_TO_TENTH_MICRO = 10000000
+        lat = bsm_item.latitude/DEGREE_TO_TENTH_MICRO
+        long = bsm_item.longitude/DEGREE_TO_TENTH_MICRO
         bsm_text = (
-            f"Latitude: {bsm_item.latitude}<br>"
-            f"Longitude: {bsm_item.longitude}<br>"
+            f"Latitude: {lat}<br>"
+            f"Longitude: {long}<br>"
             f"Speed: {bsm_item.speed}<br>"
             f"Heading: {bsm_item.heading}"
         )
