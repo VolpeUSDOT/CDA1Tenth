@@ -18,15 +18,15 @@ from binascii import hexlify
 def main():
     with connect("ws://localhost:8765") as websocket:
         while True:
-            input("Press 'Enter' to send a MOM:")
+            op = input("Which operation do you want to emulate? ")
 
             mom = {'MobilityOperationMessage':{
-                'action_id': 3,
-                'cmv_id': 'BIllys_truck',
+                'action_id': 2,
+                'cmv_id': 'Billys_truck',
                 'cargo_name': 'computers',
                 'cargo_id': 34506,
                 'destination': {'longitude': 0, 'latitude': 0},
-                'operation': "PORT_CHECKPOINT"
+                'operation': op
 
                 }
             }
