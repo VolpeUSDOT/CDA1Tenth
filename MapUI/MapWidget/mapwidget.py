@@ -43,7 +43,7 @@ class MapWidget(QWidget):
         self.view = QGraphicsView(self.scene)
 
         # Scale starting view to fit port drayage
-        self.view.scale(2.8, 2.8)
+        self.view.scale(2.5, 2.5)
 
         # Define the viewable portion of the scene
         scene_rect = QRectF(34, -123, 100, 100)  # x, y, width, height calibrated for port drayage

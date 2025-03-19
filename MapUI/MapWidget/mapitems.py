@@ -103,6 +103,11 @@ class VehicleGI(QGraphicsItem):
         # Set position to be centered based on the provided (x, y) coordinates
         self.setPos(x - (self.image.width()*self.imagescale) / 2, y - (self.image.height() * self.imagescale) / 2)
 
+        # Make the image and text visible
+        self.image_item.setVisible(True)
+
+        '''
+        COMMENTED OUT SECTION THAT HAS BSM INFO TEXT FOLLOWING VEHICLE POSITION
         # Create text for the vehicle
         self.text = QGraphicsTextItem(description, parent=self)
         self.text.setDefaultTextColor(Qt.black)  # Set text color to white
@@ -110,7 +115,7 @@ class VehicleGI(QGraphicsItem):
         
         # Set position for the text offset from vehicle
         self.text.setPos(3, -20)  # Adjust this to position it relative to the vehicle
-
+        
         # Create a background rectangle for the text
         self.background = QGraphicsRectItem(parent=self)  # No parent
         self.background.setBrush(QBrush(Qt.white))  # Set background to black
@@ -118,11 +123,11 @@ class VehicleGI(QGraphicsItem):
         
         # Set the initial position and size of the background rectangle
         self.set_background_size()
-        
-        # Make the image and text visible
-        self.image_item.setVisible(True)
         self.text.setVisible(True)
         self.background.setVisible(True)
+        '''
+
+
 
     def set_background_size(self):
         """Adjust the background rectangle to fit the text."""
@@ -137,3 +142,6 @@ class VehicleGI(QGraphicsItem):
     def boundingRect(self):
         """Return a bounding rectangle that includes the image and the text."""
         return QRectF(0, 0, self.image.width(), self.image.height())
+
+    def paint(self, painter, option, widget):
+        pass
