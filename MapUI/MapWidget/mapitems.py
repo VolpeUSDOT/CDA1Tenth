@@ -137,8 +137,3 @@ class VehicleGI(QGraphicsItem):
     def boundingRect(self):
         """Return a bounding rectangle that includes the image and the text."""
         return QRectF(0, 0, self.image.width(), self.image.height())
-
-    def paint(self, painter, option, widget):
-        # Optionally paint something, or you can leave this empty
-        pass       
-
