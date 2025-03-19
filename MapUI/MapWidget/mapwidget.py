@@ -12,7 +12,7 @@ from MapWidget.vgraphicsscene import ViewGraphicsScene
 from MapWidget.mapitems import ActionPointGI, VehicleGI
 import geopandas as gpd
 import yaml
-from PySide6.QtCore import Qt, QPointF, QLineF
+from PySide6.QtCore import Qt, QPointF, QLineF, QRectF
 
 png_map = '../MapUI/PortDrayageData/pdroadmap.png'
 pgm_map = '../MapUI/PortDrayageData/garage.pgm'
@@ -43,10 +43,14 @@ class MapWidget(QWidget):
         self.view = QGraphicsView(self.scene)
 
         # Scale starting view to fit port drayage
-        self.view.scale(2.4, 2.4)
+        self.view.scale(2.8, 2.8)
+
+        # Define the viewable portion of the scene
+        scene_rect = QRectF(34, -123, 100, 100)  # x, y, width, height calibrated for port drayage
+        self.scene.setSceneRect(scene_rect)  # Define the visible area
 
         # Set background color
-        background_color = QColor(0, 0, 0)  # Black Background
+        background_color = QColor(0, 109, 54)  # Green Background
         self.scene.setBackgroundBrush(QBrush(background_color))
 
         # Load image and add it to the scene
@@ -89,6 +93,7 @@ class MapWidget(QWidget):
 
         # Update map by redrawing whenever model changes
         #
+
         # Handle Scene event
         self.scene.selectionChanged.connect(self._compactedSignal)
 
@@ -201,13 +206,13 @@ class MapWidget(QWidget):
         return converted_x, converted_y
 
     def zoom_in(self):
-        if self.zoomLevel >= 3:
+        if self.zoomLevel >= 6:
             return
         self.view.scale(1.25, 1.25)
         self.zoomLevel += 1
 
     def zoom_out(self):
-        if self.zoomLevel <= -3:
+        if self.zoomLevel <= -6:
             return
         self.view.scale(0.8, 0.8)
         self.zoomLevel -= 1
@@ -291,7 +296,6 @@ class MapWidget(QWidget):
         pixmap_item.setScale(self.scale_factor)  # image scaling
         pixmap_item.setPos(self.x_offset, self.y_offset)  # x,y offsets
         return pixmap_item
-
 
 def createRoadLink(x1, y1, x2, y2):
     roadLink = QGraphicsLineItem(x1, y1, x2, y2)

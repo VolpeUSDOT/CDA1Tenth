@@ -73,7 +73,7 @@ class APWindow(QWidget):
         # self.apListWidget.indexesMoved().connect(self.propagateListReorder)
         self.messageDecoder = MessageDecoder()
 
-        self.webSocketClient = WebSocketClient()
+        self.webSocketClient = WebSocketClient("ws://localhost:8765")
         # Connect signals
         self.webSocketClient.message_received.connect(self.handleIncomingMessage)
         # Start connection
