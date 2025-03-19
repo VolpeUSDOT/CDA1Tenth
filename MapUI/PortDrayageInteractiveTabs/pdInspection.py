@@ -41,7 +41,6 @@ class PDInspectionWidget(QWidget):
         self.completeLabel = QLabel('''## Completed Inspections''')
         self.completeLabel.setTextFormat(Qt.TextFormat.MarkdownText)
 
-        self.completedResetButton = QPushButton("Clear")
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 1)
@@ -49,7 +48,6 @@ class PDInspectionWidget(QWidget):
         layout.addWidget(self.inspectionActionView, 2, 0, 1, 1)
         layout.addWidget(self.completeLabel, 3, 0, 1, 1)
         layout.addWidget(self.completedActionView, 4, 0, 1, 1)
-        layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
         inspection_signal.connect(self.addInspectionAction)
@@ -62,16 +60,12 @@ class PDInspectionWidget(QWidget):
         self.inspectionActionView.openPersistentEditor(self.model.index(i,0))
         self.model.layoutChanged.emit()
 
-    def deleteInspectionAction(self):
-        indexes = self.inspectionActionView.selectedIndexes()
-        if indexes:
-            # Indexes is a list of a single item in single-select mode.
-            index = indexes[0]
-            # Remove the item and refresh.
-            del self.model.inspectionActions[index.row()]
-            self.model.layoutChanged.emit()
-            # Clear the selection (as it is no longer valid).
-            self.inspectionActionView.clearSelection()
+    def deleteInspectionActions(self):
+        # Remove the items and refresh.
+        del self.model.inspectionActions[:]
+        self.model.layoutChanged.emit()
+        # Clear the selection (as it is no longer valid).
+        self.inspectionActionView.clearSelection()
 
 
 class PendingActionView(QListView):
