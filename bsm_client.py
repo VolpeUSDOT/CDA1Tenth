@@ -44,7 +44,6 @@ encoded_bsm = None  # Initialize the global variable
     
 def main():
     with connect("ws://localhost:8765") as websocket:
-        input("Garbage: ")
         while True:
             msgCount = 0
 

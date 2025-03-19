@@ -20,7 +20,10 @@ async def handle_client(websocket):
         async for message in websocket:
             # Broadcast the received message to all connected clients
             if "BasicSafetyMessage" or "MobilityOperationMessage" in message:
-                await broadcast(message)
+                clients_to_send = (
+                    client for client in connected_clients if client != websocket
+                )
+                await broadcast(message, clients_to_send)
             else: print('not the correct message type')
     except websockets.exceptions.ConnectionClosed:
         # Handle client disconnection
@@ -29,12 +32,12 @@ async def handle_client(websocket):
         # Remove the client from the set of connected clients
         connected_clients.remove(websocket)
 
-async def broadcast(message):
+async def broadcast(message, targets):
     """Broadcasts a message to all connected clients."""
-    if connected_clients:  # Only send if there are connected clients
+    if targets:  # Only send if there are connected clients
         try:
             await asyncio.gather(
-                *[client.send(message) for client in connected_clients]
+                *[client.send(message) for client in targets]
             )
         except:
             pass
