@@ -39,8 +39,8 @@ class APWindow(QWidget):
 
     def __init__(self, loading_signal, unloading_signal, inspection_signal):
         super().__init__()
-        self.title = QLabel('''# Action Points''')
-        self.title.setTextFormat(Qt.TextFormat.MarkdownText)
+        self.aptitle = QLabel('''# Action Points''')
+        self.aptitle.setTextFormat(Qt.TextFormat.MarkdownText)
         self.apModel = ActionPointModel()
         # self.apListWidget = APListWidget()
         self.apListView = APListView()
@@ -58,27 +58,25 @@ class APWindow(QWidget):
         self.bsmInfoBox = QWidget()
         self.bsmInfoBox.setFixedHeight(200)  # Set a fixed height
         
-
-        # Add black border to columns
-        self.bsmInfoBox.setStyleSheet("background-color: lightgrey; border: 1px solid black; color: black;")
-        self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black;")
-
         # Title for BSM information
-        self.bsmTitleLabel = QLabel("Vehicle BSM Information")
-        self.bsmTitleLabel.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-
-        # TextEdit for displaying detailed information
+        self.bsmtitle = QLabel('''# BSM Vehicle Information''')
+        self.bsmtitle.setTextFormat(Qt.TextFormat.MarkdownText)
         self.bsmTextEdit = QTextEdit(self.bsmInfoBox)
         self.bsmTextEdit.setReadOnly(True)  # Make the text edit read-only
         self.bsmTextEdit.setPlainText("No data")  # Set default text
 
+        # Add black border to columns
+        self.bsmTextEdit.setStyleSheet("background-color: lightgrey; border: 1px solid black; color: black;")
+        self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black;")
+
         layout = QGridLayout()
-        layout.addWidget(self.title, 0, 0, 1, 5)
-        layout.addWidget(self.apMap, 1, 0, 3, 3)
-        layout.addWidget(self.bsmInfoBox, 1, 3, 1, 2) 
-        layout.addWidget(self.apListView, 2, 3, 1, 2)
-        layout.addWidget(self.addAPButton, 4, 3, 1, 1)
-        layout.addWidget(self.editAPButton, 4, 4, 1, 1)
+        layout.addWidget(self.apMap, 1, 0, 6, 4)
+        layout.addWidget(self.bsmtitle, 1, 6, 1, 2)
+        layout.addWidget(self.bsmTextEdit, 2, 6, 1, 2) 
+        layout.addWidget(self.aptitle, 3, 6, 1, 2)
+        layout.addWidget(self.apListView, 4, 6, 1, 2)
+        layout.addWidget(self.addAPButton, 6, 6, 1, 1)
+        layout.addWidget(self.editAPButton, 6, 7, 1, 1)
         self.setLayout(layout)
 
         self.addAPButton.clicked.connect(self.launchNewAPEditor)
@@ -88,11 +86,6 @@ class APWindow(QWidget):
 
         # When a map item is selected, update the selection in the model
         self.apMap.selectionUpdate.connect(self.propagateMapSelection)
-
-        # Layout for BSM Info Box
-        bsmLayout = QVBoxLayout(self.bsmInfoBox)
-        bsmLayout.addWidget(self.bsmTitleLabel)
-        bsmLayout.addWidget(self.bsmTextEdit)
 
         # when list widget is reordered, update model to match
         # self.apListWidget.itemDropped.connect(self.propagateListReorder)
@@ -187,7 +180,7 @@ class APWindow(QWidget):
                 self.inspection_signal.emit(decoded_message)
 
     def updateVehiclePose(self, bsm):
-        self.apMap.clearVehiclePosition()
+        #self.apMap.clearVehiclePosition()
         self.update_bsm_info(bsm)
         self.apMap.addVehiclePosition(bsm.latitude, bsm.longitude)
 

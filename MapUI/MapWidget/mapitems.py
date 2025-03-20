@@ -23,7 +23,7 @@ class ActionPointGI(QGraphicsItem):
         # Create text for the action point
         self.text = QGraphicsTextItem(f"Action Point: \"{name}\"", parent=self)
         self.text.setDefaultTextColor(Qt.black)  # Set text color to black
-        self.text.setScale(.3)  # Change text scaling
+        self.text.setScale(.4)  # Change action point text scaling
         self.text.setPos(self.fixed_x, self.fixed_y)  # Set offset position for text
 
         # Create a background rectangle for the text

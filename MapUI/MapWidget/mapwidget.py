@@ -23,6 +23,7 @@ roadLinkPen = QPen(Qt.yellow, 1, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
 # Received latitude and longitude from vehicle is assumed following J2735 BSM standard and is in unit of measure 1/10 microdegree
 DEGREE_TO_TENTH_MICRO = 10000000
+MAX_VEHICLES = 50  # Maximum number of vehicle trails to display
 
 
 # Subclass QMainWindow to customize your application's main window
@@ -89,7 +90,7 @@ class MapWidget(QWidget):
         self.setLayout(mapWidgetLayout)
 
         self.ap_list = []
-        self.vehicle_position = None
+        self.vehicle_position = []
 
         # Update map by redrawing whenever model changes
         #
@@ -160,9 +161,10 @@ class MapWidget(QWidget):
         self.ap_list = []
 
     def clearVehiclePosition(self):
-        if self.vehicle_position is not None:
-            self.scene.removeItem(self.vehicle_position)
-            self.vehicle_position = None
+        '''Removes all vehicles from scene/empties array, not called when using trail method'''
+        for vehicle in self.vehicle_position:
+            self.scene.removeItem(vehicle)
+        self.vehicle_position = []
 
     def addActionPoint(self, lat, long, description="No Description"):
         """
@@ -184,15 +186,39 @@ class MapWidget(QWidget):
 
     def addVehiclePosition(self, lat, long):
         """
-        Adds the vehicle position to the map
+        Adds a new vehicle to the map and manages the vehicle_position list with opacity adjustments.
         """
-        self.clearVehiclePosition()
-        x, y = self._convertCoords(
-            float(long) / DEGREE_TO_TENTH_MICRO, float(lat) / DEGREE_TO_TENTH_MICRO
-        )
-        vehicle = VehicleGI(x, y, f'BSM - Lat: {lat/ DEGREE_TO_TENTH_MICRO}, Long: {long/ DEGREE_TO_TENTH_MICRO}', self.scene)
-        self.vehicle_position = vehicle
+        # Convert coordinates
+        x, y = self._convertCoords(float(long) / DEGREE_TO_TENTH_MICRO, float(lat) / DEGREE_TO_TENTH_MICRO)
+        
+        # Create a new vehicle
+        vehicle = VehicleGI(x, y, f'BSM - Lat: {lat / DEGREE_TO_TENTH_MICRO}, Long: {long / DEGREE_TO_TENTH_MICRO}', self.scene)
+
+        # Insert the new vehicle at the beginning of the list
+        self.vehicle_position.insert(0, vehicle)
         self.scene.addItem(vehicle)
+
+        # Ensure the list does not exceed MAX_VEHICLES
+        if len(self.vehicle_position) > MAX_VEHICLES:
+            # Remove the oldest vehicle from the scene and the list
+            removed_vehicle = self.vehicle_position.pop()  # Remove last element
+            self.scene.removeItem(removed_vehicle)
+
+        # Update opacities for all vehicles in the list
+        total = len(self.vehicle_position)
+        if total == 1:
+            # Only one vehicle, set opacity to 1.0
+            self.vehicle_position[0].setOpacity(1.0)
+        else:
+            for index, v in enumerate(self.vehicle_position):
+                if index == 0:
+                    # Set latest bsm positino to 100%
+                    v.setOpacity(1.0)
+                else:
+                    # Intepolate remaining positions from 0.8 - 0.01
+                    step = (0.6 - 0.01) / (MAX_VEHICLES - 1)
+                    opacity = 0.6 - step * (index - 1)
+                    v.setOpacity(opacity)
 
     def _convertCoords(self, x_vals, y_vals):
         converted_y = (y_vals - self.y_origin) / self.resolution * -1

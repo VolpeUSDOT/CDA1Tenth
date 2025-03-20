@@ -32,7 +32,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Port Drayage UI")
-        self.setMinimumSize(800, 600)
+        self.setMinimumSize(900, 600)
         self.tabBar = TabBar()
 
         self.apWindow = APWindow(
