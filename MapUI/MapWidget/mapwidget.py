@@ -23,7 +23,7 @@ roadLinkPen = QPen(Qt.yellow, 1, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
 # Received latitude and longitude from vehicle is assumed following J2735 BSM standard and is in unit of measure 1/10 microdegree
 DEGREE_TO_TENTH_MICRO = 10000000
-MAX_VEHICLES = 15  # Maximum number of vehicle trails to display
+MAX_VEHICLES = 50  # Maximum number of vehicle trails to display
 
 
 # Subclass QMainWindow to customize your application's main window
@@ -211,9 +211,14 @@ class MapWidget(QWidget):
             self.vehicle_position[0].setOpacity(1.0)
         else:
             for index, v in enumerate(self.vehicle_position):
-                # Linear interpolation from 1.0 to 0.01
-                new_opacity = 1.0 + (0.01 - 1.0) * (index / (total - 1))
-                v.setOpacity(new_opacity)
+                if index == 0:
+                    # Set latest bsm positino to 100%
+                    v.setOpacity(1.0)
+                else:
+                    # Intepolate remaining positions from 0.8 - 0.01
+                    step = (0.6 - 0.01) / (MAX_VEHICLES - 1)
+                    opacity = 0.6 - step * (index - 1)
+                    v.setOpacity(opacity)
 
     def _convertCoords(self, x_vals, y_vals):
         converted_y = (y_vals - self.y_origin) / self.resolution * -1
