@@ -70,13 +70,13 @@ class APWindow(QWidget):
         self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black;")
 
         layout = QGridLayout()
-        layout.addWidget(self.apMap, 1, 0, 6, 3)
-        layout.addWidget(self.bsmtitle, 1, 3, 1, 2)
-        layout.addWidget(self.bsmTextEdit, 2, 3, 1, 2) 
-        layout.addWidget(self.aptitle, 3, 3, 1, 2)
-        layout.addWidget(self.apListView, 4, 3, 1, 2)
-        layout.addWidget(self.addAPButton, 6, 3, 1, 1)
-        layout.addWidget(self.editAPButton, 6, 4, 1, 1)
+        layout.addWidget(self.apMap, 1, 0, 6, 4)
+        layout.addWidget(self.bsmtitle, 1, 6, 1, 2)
+        layout.addWidget(self.bsmTextEdit, 2, 6, 1, 2) 
+        layout.addWidget(self.aptitle, 3, 6, 1, 2)
+        layout.addWidget(self.apListView, 4, 6, 1, 2)
+        layout.addWidget(self.addAPButton, 6, 6, 1, 1)
+        layout.addWidget(self.editAPButton, 6, 7, 1, 1)
         self.setLayout(layout)
 
         self.addAPButton.clicked.connect(self.launchNewAPEditor)
@@ -180,7 +180,7 @@ class APWindow(QWidget):
                 self.inspection_signal.emit(decoded_message)
 
     def updateVehiclePose(self, bsm):
-        self.apMap.clearVehiclePosition()
+        #self.apMap.clearVehiclePosition()
         self.update_bsm_info(bsm)
         self.apMap.addVehiclePosition(bsm.latitude, bsm.longitude)
 
