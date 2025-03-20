@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QStackedWidget,
 )
 from PySide6.QtCore import Signal
+from PySide6.QtGui import QIcon
 from aporderbox import APOrderBoxWidget
 from apWindow import APWindow
 from PortDrayageInteractiveTabs.pdTabs import PDTabs
@@ -19,7 +20,11 @@ from actionPointItem import ActionPoint
 from sqlalchemy import text
 import json
 import sys
+import time
+import ctypes
 
+# Placeholder for actual app icon
+ICONPATH = '../MapUI/PortDrayageData/truckicon.png'
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
@@ -34,6 +39,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Port Drayage UI")
         self.setMinimumSize(900, 600)
         self.tabBar = TabBar()
+        self.setWindowIcon(QIcon(ICONPATH))  # Set icon here
 
         self.apWindow = APWindow(
             self.loading_signal, self.unloading_signal, self.inspection_signal
@@ -205,8 +211,13 @@ class App(QApplication):
     def __init__(self, args):
         super().__init__()
 
+# Workaround to get icon to show up in taskbar - TODO test on linux computer
+myappid = 'temp' 
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+time.sleep(1)
 
 app = App(sys.argv)
 window = MainWindow()
+window.setWindowIcon(QIcon(ICONPATH)) # adding icon image
 window.show()
 app.exec()

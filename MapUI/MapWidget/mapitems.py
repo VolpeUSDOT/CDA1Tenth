@@ -17,7 +17,7 @@ class ActionPointGI(QGraphicsItem):
         self.setPos(x, y)
 
         # Fixed offset position for the text and background rectangle
-        self.fixed_x = -25
+        self.fixed_x = -30
         self.fixed_y = 5
         
         # Create text for the action point
