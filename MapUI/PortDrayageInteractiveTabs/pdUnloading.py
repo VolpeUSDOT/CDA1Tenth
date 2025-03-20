@@ -264,8 +264,8 @@ class ActionEditor(QWidget):
         # Internal widgets
         self.progressButton = QPushButton("Start Unloading")
         self.portArea = QWidget() # Placeholder b/c I have no clue what is intended to be in that box
-        self.vehicleLabel = QLabel("Vehicle: ")
-        self.cargoLabel = QLabel("With Cargo: ")
+        self.vehicleLabel = QLabel(f"Vehicle: {self.m_action_data.vehicle.veh_id}")
+        self.cargoLabel = QLabel(f"With Cargo: {self.m_action_data.cargo.cargo_uuid}")
         self.statusLabel = QLabel(f"Status: {self.m_action_data.status}")
 
         # Layout widgets
@@ -298,8 +298,13 @@ class ActionEditor(QWidget):
 
     def setValue(self, value):
         self.m_action_data = value
+        if value is not None:
+            self.vehicleLabel.setText(f"Vehicle: {value.vehicle.veh_id}")
+            self.cargoLabel.setText(f"Cargo: {value.cargo.cargo_uuid}")
+            self.statusLabel.setText(f"Status: {value.status}")
 
     def value(self):
+
         return self.m_action_data
 
     # Creates both QT and Python properties (I should have just done this in c++)

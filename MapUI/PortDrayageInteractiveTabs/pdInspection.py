@@ -223,6 +223,7 @@ class ActionDelegate(QStyledItemDelegate):
 
     def sizeHint(self, option, index):
         editor = ActionEditor(None, self.holding_signal)
+        editor.setValue(index.data(role=Qt.ItemDataRole.EditRole))
         return editor.sizeHint()
 
     def createEditor(self, parent, option, index):
@@ -268,8 +269,8 @@ class ActionEditor(QWidget):
         self.requestInspectionButton = QPushButton("Request Further Inspection")
         self.completeInspectionButton = QPushButton("Complete Inspection")
         self.portArea = QWidget() # Placeholder b/c I have no clue what is intended to be in that box
-        self.vehicleLabel = QLabel("Vehicle: ")
-        self.cargoLabel = QLabel("With Cargo: ")
+        self.vehicleLabel = QLabel(f"Vehicle: {self.m_action_data.vehicle.veh_id}")
+        self.cargoLabel = QLabel(f"With Cargo: {self.m_action_data.cargo.cargo_uuid}")
         self.statusLabel = QLabel(f"Status: {self.m_action_data.status}")
 
         # Layout widgets
@@ -318,6 +319,11 @@ class ActionEditor(QWidget):
 
     def setValue(self, value):
         self.m_action_data = value
+        if value is not None:
+            self.vehicleLabel.setText(f"Vehicle: {value.vehicle.veh_id}")
+            self.cargoLabel.setText(f"Cargo: {value.cargo.cargo_uuid}")
+            self.statusLabel.setText(f"Status: {value.status}")
+
         if self.m_action_data is not None:
             if self.m_action_data.actionPoint.name == "PORT_CHECKPOINT":
                 self.layout.addWidget(self.completeInspectionButton, 2, 0, 1, 2)
