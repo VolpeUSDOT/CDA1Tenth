@@ -66,8 +66,8 @@ class APWindow(QWidget):
         self.bsmTextEdit.setPlainText("No data")  # Set default text
 
         # Add black border to columns
-        self.bsmTextEdit.setStyleSheet("background-color: lightgrey; border: 1px solid black; color: black;")
-        self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black;")
+        self.bsmTextEdit.setStyleSheet("background-color: lightgrey; border: 1px solid black; color: black; font-size: 16px;")
+        self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black; font-size: 16px;")
 
         layout = QGridLayout()
         layout.addWidget(self.apMap, 1, 0, 6, 4)
@@ -129,6 +129,7 @@ class APWindow(QWidget):
             f"Latitude: {lat}<br>"
             f"Longitude: {long}<br>"
             f"Speed: {bsm_item.speed}<br>"
+            '''remove heading, add tempid, and msgcount'''
             f"Heading: {bsm_item.heading}"
         )
         self.bsmTextEdit.setHtml(bsm_text)  # Use setHtml for formatting

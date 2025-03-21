@@ -18,6 +18,8 @@ png_map = '../MapUI/PortDrayageData/pdroadmap.png'
 pgm_map = '../MapUI/PortDrayageData/garage.pgm'
 map_info = '../MapUI/PortDrayageData/garage.yaml'
 graph = '../MapUI/PortDrayageData/garage_center_line.geojson'
+cdalogo = '../Resources/Cooperative Driving Automation 1Tenth_White.png'
+volpelogo = '../Resources/volpewh.png'
 
 roadLinkPen = QPen(Qt.yellow, 1, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
@@ -30,7 +32,8 @@ MAX_VEHICLES = 50  # Maximum number of vehicle trails to display
 class MapWidget(QWidget):
     selectionUpdate = Signal(ActionPointGI)
 
-    def __init__(self, png_map_fp=png_map, pgm_map_fp=pgm_map, map_info_fp=map_info, graph_fp=graph,):
+    def __init__(self, png_map_fp=png_map, pgm_map_fp=pgm_map, map_info_fp=map_info,
+     graph_fp=graph, volpe_fp = volpelogo, cda_fp = cdalogo):
         super().__init__()
         self.setMinimumSize(QSize(550,400))
         self.zoomLevel = 0
@@ -51,16 +54,31 @@ class MapWidget(QWidget):
         self.scene.setSceneRect(scene_rect)  # Define the visible area
 
         # Set background color
-        background_color = QColor(0, 109, 54)  # Green Background
+        background_color = QColor(23, 30, 93)  # Dark Blue Background
         self.scene.setBackgroundBrush(QBrush(background_color))
 
-        # Load image and add it to the scene
+        # Load map image and add it to the scene
         # Custom alignment to fit port drayage map with road links
-        self.scale_factor = 0.23
-        self.x_offset = -9.2
-        self.y_offset = -176
-        self.bg_image_item = self.load_bg_image(png_map_fp)
+        scale_factor = 0.23
+        x_offset = 9
+        y_offset = -139.5
+        self.bg_image_item = self.load_bg_image(png_map_fp, scale_factor, x_offset, y_offset)
         self.scene.addItem(self.bg_image_item)
+
+        
+        # Load volpe logo and add it to the scene
+        scale_factor = 0.028
+        x_offset = 86
+        y_offset = -103
+        self.volpelogo = self.load_bg_image(volpe_fp, scale_factor, x_offset, y_offset)
+        self.scene.addItem(self.volpelogo)
+
+        # Load CDA logo and add it to the scene
+        scale_factor = 0.1
+        x_offset = 106
+        y_offset = -136
+        self.cdalogo = self.load_bg_image(cda_fp, scale_factor, x_offset, y_offset)
+        self.scene.addItem(self.cdalogo)
 
         # Process data from port drayage
         mapInfo = self._readMapInfo(map_info_fp)
@@ -206,19 +224,16 @@ class MapWidget(QWidget):
 
         # Update opacities for all vehicles in the list
         total = len(self.vehicle_position)
-        if total == 1:
-            # Only one vehicle, set opacity to 1.0
-            self.vehicle_position[0].setOpacity(1.0)
-        else:
-            for index, v in enumerate(self.vehicle_position):
-                if index == 0:
-                    # Set latest bsm positino to 100%
-                    v.setOpacity(1.0)
-                else:
-                    # Intepolate remaining positions from 0.8 - 0.01
-                    step = (0.6 - 0.01) / (MAX_VEHICLES - 1)
-                    opacity = 0.6 - step * (index - 1)
-                    v.setOpacity(opacity)
+        for index, v in enumerate(self.vehicle_position):
+            if index == 0:
+                # Set latest bsm positino to 100%
+                v.setOpacity(1.0)
+            else:
+                opacityRangeTop = 0.3
+                # Intepolate remaining positions from 0.8 - 0.01
+                step = (opacityRangeTop - 0.01) / (MAX_VEHICLES - 1)
+                opacity = opacityRangeTop - step * (index - 1)
+                v.setOpacity(opacity)
 
     def _convertCoords(self, x_vals, y_vals):
         converted_y = (y_vals - self.y_origin) / self.resolution * -1
@@ -316,11 +331,11 @@ class MapWidget(QWidget):
     def _get_points(self):
         return [item for item in self.scene.items() if isinstance(item, ActionPointGI)]
 
-    def load_bg_image(self, image_path):
+    def load_bg_image(self, image_path, sf, xoff, yoff):
         pixmap = QPixmap(image_path)
         pixmap_item = QGraphicsPixmapItem(pixmap)
-        pixmap_item.setScale(self.scale_factor)  # image scaling
-        pixmap_item.setPos(self.x_offset, self.y_offset)  # x,y offsets
+        pixmap_item.setScale(sf)  # image scaling
+        pixmap_item.setPos(xoff, yoff)  # x,y offsets
         return pixmap_item
 
 def createRoadLink(x1, y1, x2, y2):

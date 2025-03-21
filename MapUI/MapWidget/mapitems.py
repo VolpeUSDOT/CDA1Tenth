@@ -88,7 +88,7 @@ class GraphicsPoint(QGraphicsItem):
 
 
 class VehicleGI(QGraphicsItem):
-    def __init__(self, x, y, description, mapScene, image_path='../MapUI/PortDrayageData/truckicon.png'):
+    def __init__(self, x, y, description, mapScene, image_path='../Resources/truckicon.png'):
         super().__init__()
         self.mapScene = mapScene
         

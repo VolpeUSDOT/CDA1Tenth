@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QWidget,
     QStackedWidget,
+    QStyleFactory
 )
 from PySide6.QtCore import Signal
 from PySide6.QtGui import QIcon
@@ -21,10 +22,10 @@ from sqlalchemy import text
 import json
 import sys
 import time
-import ctypes
+# import ctypes
 
 # Placeholder for actual app icon
-ICONPATH = '../MapUI/PortDrayageData/truckicon.png'
+ICONPATH = '../Resources/truckicon.png'
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
@@ -211,13 +212,17 @@ class App(QApplication):
     def __init__(self, args):
         super().__init__()
 
-# Workaround to get icon to show up in taskbar - TODO test on linux computer
+'''
+# Workaround to get icon to show up in taskbar - TODO find solution for linux
 myappid = 'temp' 
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 time.sleep(1)
+'''
 
 app = App(sys.argv)
 window = MainWindow()
 window.setWindowIcon(QIcon(ICONPATH)) # adding icon image
 window.show()
+app.setStyle(QStyleFactory.create("Fusion"))
 app.exec()
+
