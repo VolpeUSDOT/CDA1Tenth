@@ -26,8 +26,9 @@ class MessageDecoder:
         longitude = bsm_dict['BasicSafetyMessage']['coreData'].get('long', None)
         speed = bsm_dict['BasicSafetyMessage']['coreData'].get('speed', None)
         heading = bsm_dict['BasicSafetyMessage']['coreData'].get('heading', None)
-        '''add tempid,msgcount'''
-        bsm = BSMItem(latitude, longitude, speed, heading)
+        msgCnt = bsm_dict['BasicSafetyMessage']['coreData'].get('msgCnt', None)
+        tempid = bsm_dict['BasicSafetyMessage']['coreData'].get('id', None)
+        bsm = BSMItem(latitude, longitude, speed, heading, msgCnt, tempid)
 
         
         return bsm

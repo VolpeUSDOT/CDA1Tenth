@@ -66,8 +66,8 @@ class APWindow(QWidget):
         self.bsmTextEdit.setPlainText("No data")  # Set default text
 
         # Add black border to columns
-        self.bsmTextEdit.setStyleSheet("background-color: lightgrey; border: 1px solid black; color: black; font-size: 16px;")
-        self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black; font-size: 16px;")
+        self.bsmTextEdit.setStyleSheet("background-color: lightgrey; border: 1px solid black; color: black; font-size: 15px;")
+        self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black; font-size: 15px;")
 
         layout = QGridLayout()
         layout.addWidget(self.apMap, 1, 0, 6, 4)
@@ -123,14 +123,14 @@ class APWindow(QWidget):
     def update_bsm_info(self, bsm_item):
         """ Update the BSM information shown in the BSM box. """
         DEGREE_TO_TENTH_MICRO = 10000000
-        lat = bsm_item.latitude/DEGREE_TO_TENTH_MICRO
-        long = bsm_item.longitude/DEGREE_TO_TENTH_MICRO
+        lat = float(bsm_item.latitude)/DEGREE_TO_TENTH_MICRO
+        long = float(bsm_item.longitude)/DEGREE_TO_TENTH_MICRO
         bsm_text = (
+            f"Message ID: {bsm_item.tempid}<br>"
             f"Latitude: {lat}<br>"
             f"Longitude: {long}<br>"
             f"Speed: {bsm_item.speed}<br>"
-            '''remove heading, add tempid, and msgcount'''
-            f"Heading: {bsm_item.heading}"
+            f"Message Count: {bsm_item.msgCnt}"
         )
         self.bsmTextEdit.setHtml(bsm_text)  # Use setHtml for formatting
     
