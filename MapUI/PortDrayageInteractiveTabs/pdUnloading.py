@@ -42,7 +42,6 @@ class PDUnloadingWidget(QWidget):
         self.completeLabel = QLabel('''## Completed Unloading Actions''')
         self.completeLabel.setTextFormat(Qt.TextFormat.MarkdownText)
 
-        self.completedResetButton = QPushButton("Clear")
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 1)
@@ -50,7 +49,6 @@ class PDUnloadingWidget(QWidget):
         layout.addWidget(self.unloadingActionView, 2, 0, 1, 1)
         layout.addWidget(self.completeLabel, 3, 0, 1, 1)
         layout.addWidget(self.completedActionView, 4, 0, 1, 1)
-        layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
         unloading_signal.connect(self.addUnloadingAction)
@@ -63,16 +61,12 @@ class PDUnloadingWidget(QWidget):
         self.unloadingActionView.openPersistentEditor(self.model.index(i,0))
         self.model.layoutChanged.emit()
 
-    def deleteLoadingAction(self):
-        indexes = self.unloadingActionView.selectedIndexes()
-        if indexes:
-            # Indexes is a list of a single item in single-select mode.
-            index = indexes[0]
-            # Remove the item and refresh.
-            del self.model.unloadingActions[index.row()]
-            self.model.layoutChanged.emit()
-            # Clear the selection (as it is no longer valid).
-            self.unloadingActionView.clearSelection()
+    def deleteUnloadingActions(self):
+        # Remove the items and refresh.
+        del self.model.unloadingActions[:]
+        self.model.layoutChanged.emit()
+        # Clear the selection (as it is no longer valid).
+        self.unloadingActionView.clearSelection()
 
 
 class PendingActionView(QListView):

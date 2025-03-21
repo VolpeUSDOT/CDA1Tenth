@@ -1,7 +1,7 @@
 '''
 Widget to contain all port drayage tabs in one item
 '''
-from PySide6.QtWidgets import QMainWindow, QStackedWidget, QTabBar
+from PySide6.QtWidgets import QMainWindow, QStackedWidget, QTabBar, QPushButton, QVBoxLayout, QWidget
 from PortDrayageInteractiveTabs.pdLoading import PDLoadingWidget
 from PortDrayageInteractiveTabs.pdUnloading import PDUnloadingWidget
 from PortDrayageInteractiveTabs.pdInspection import PDInspectionWidget
@@ -15,6 +15,7 @@ class PDTabs(QMainWindow):
         self.loadingWidget = PDLoadingWidget(loading_signal)
         self.unloadingWidget = PDUnloadingWidget(unloading_signal)
         self.inspectionWidget = PDInspectionWidget(inspection_signal, holding_signal)
+        self.completedResetButton = QPushButton("Clear")
 
         self.tabBar = QTabBar()
         self.tabBar.addTab('Loading')
@@ -26,10 +27,16 @@ class PDTabs(QMainWindow):
         self.stackedWidget.addWidget(self.unloadingWidget)
         self.stackedWidget.addWidget(self.inspectionWidget)
 
-        self.setCentralWidget(self.stackedWidget)
+        central_widget = QWidget()
+        layout = QVBoxLayout(central_widget)
+        layout.addWidget(self.tabBar)
+        layout.addWidget(self.stackedWidget)
+        layout.addWidget(self.completedResetButton)
+        self.setCentralWidget(central_widget)
         self.setMenuWidget(self.tabBar)
 
         self.tabBar.currentChanged.connect(self.changeTab)
+        self.completedResetButton.clicked.connect(self.clearActions)
 
     def changeTab(self):
         '''
@@ -39,3 +46,11 @@ class PDTabs(QMainWindow):
         '''
         tabIndex = self.tabBar.currentIndex()
         self.stackedWidget.setCurrentIndex(tabIndex)
+    
+    def clearActions(self):
+        '''
+        Clear all actions from all tabs
+        '''
+        self.loadingWidget.deleteLoadingActions()
+        self.unloadingWidget.deleteUnloadingActions()
+        self.inspectionWidget.deleteInspectionActions()
