@@ -141,7 +141,7 @@ class MainWindow(QMainWindow):
         self.SQLdb.insertHoldingAction(
             self.SQLdb.createSQLEngine(), holding_action.convertToSQLDict()
         )
-        self.apWindow.webSocketClient.send_message(holding_action.convertToJSON())
+        self.apWindow.webSocketClient.send_message(inspection_action.convertToJSON())
         self.apWindow.apMap.addActionPoint(
             self.holding_latitude, self.holding_longitude, "HOLDING_AREA"
         )  # Add action pt to map
