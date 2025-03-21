@@ -6,7 +6,6 @@ from sqlalchemy.orm import Session
 import datetime as dt
 import warnings
 import json
-from sqlalchemy import text
 import logging
 
 logging.basicConfig(
@@ -168,6 +167,31 @@ class Database:
                 )
                 session.commit()
 
+    def updatePrevActionId(self, action_id, prev_action_id):
+        """
+        Update the previous action id of action data in the database
+        """
+        actionsQuery = (
+            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
+        )
+        action = pd.read_sql(actionsQuery, con=self.engine)
+        if not action.empty:
+            action.at[0, "prev_action_id"] = prev_action_id
+            update_query = text(
+                f"UPDATE `{self.schema}`.`action` SET prev_action_id = :prev_action_id WHERE action_id = :action_id"
+            )
+            with Session(self.engine) as session:
+                session.execute(
+                    update_query,
+                    {"prev_action_id": prev_action_id, "action_id": action_id},
+                )
+                session.commit()
+            logging.info(
+                "Action(id=%s) prev_action_id updated to %s", action_id, prev_action_id
+            )
+        else:
+            logging.info("Action(id=%s) not found", action_id)
+
     def updateCargoName(self, action_id, cargo_name):
         """
         Update the cargo name of action data in the database
@@ -263,6 +287,20 @@ class Database:
         # After insert new action, update the previous last action's next action id to the new action id
         self.updateNextActionId(last_action_id, actionPoint.actionID)
         return actionPoint.actionID
+    
+    def deleteActionPoint(self, actionPoint):
+        """
+        Delete action point from the database
+        """
+        if actionPoint.prev_action != -1:
+            self.updateNextActionId(actionPoint.prev_action, actionPoint.next_action)
+        if actionPoint.next_action != -1:
+            self.updatePrevActionId(actionPoint.next_action, actionPoint.prev_action)
+        delete_query = text(f"DELETE FROM `{self.schema}`.`action` WHERE action_id = :action_id")
+        with Session(self.engine) as session:
+            session.execute(delete_query, {"action_id": actionPoint.actionID})
+            session.commit()
+            logging.info("Action(id=%s) deleted", actionPoint.actionID)
 
 
 if __name__ == "__main__":

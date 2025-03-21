@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 from MapWidget.mapwidget import MapWidget
-from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint, QItemSelectionModel
+from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint, QItemSelectionModel, QModelIndex
 from PySide6.QtWidgets import (
     QComboBox,
     QMessageBox,
@@ -49,6 +49,7 @@ class APWindow(QWidget):
         self.apMap.setStyleSheet("background-color: grey; color: black;")
         self.addAPButton = QPushButton("Add Action Point")
         self.editAPButton = QPushButton("Edit Action Point")
+        self.removeAPButton = QPushButton("Remove Action Point")
         self.activeEditor = None
         self.loading_signal = loading_signal
         self.unloading_signal = unloading_signal
@@ -71,16 +72,18 @@ class APWindow(QWidget):
 
         layout = QGridLayout()
         layout.addWidget(self.apMap, 1, 0, 6, 4)
-        layout.addWidget(self.bsmtitle, 1, 6, 1, 2)
-        layout.addWidget(self.bsmTextEdit, 2, 6, 1, 2) 
-        layout.addWidget(self.aptitle, 3, 6, 1, 2)
-        layout.addWidget(self.apListView, 4, 6, 1, 2)
-        layout.addWidget(self.addAPButton, 6, 6, 1, 1)
-        layout.addWidget(self.editAPButton, 6, 7, 1, 1)
+        layout.addWidget(self.bsmtitle, 1, 6, 1, 3)
+        layout.addWidget(self.bsmTextEdit, 2, 6, 1, 3) 
+        layout.addWidget(self.aptitle, 3, 6, 1, 3)
+        layout.addWidget(self.apListView, 4, 6, 1, 3)
+        layout.addWidget(self.addAPButton, 5, 6, 1, 1)
+        layout.addWidget(self.editAPButton, 5, 7, 1, 1)
+        layout.addWidget(self.removeAPButton, 5, 8, 1, 1)
         self.setLayout(layout)
 
         self.addAPButton.clicked.connect(self.launchNewAPEditor)
         self.editAPButton.clicked.connect(self.launchAPEditor)
+        self.removeAPButton.clicked.connect(self.removeAP)
 
         self.apModel.dataChanged.connect(self.updateView)
 
@@ -220,6 +223,16 @@ class APWindow(QWidget):
         self.activeEditor.pushUpdates.clicked.connect(self.closeEditorAndUpdate)
         self.activeEditor.show()
 
+    def removeAP(self):
+        if len(self.apListView.selectedIndexes()) < 1:
+            return
+        index = self.apListView.selectedIndexes()[0]
+        if index.isValid():
+            SQLdb = Database("PORT_DRAYAGE")
+            SQLdb.deleteActionPoint(index.data(role=Qt.ItemDataRole.EditRole))
+            self.apModel.removeRow(index.row())
+            self.updateMap()
+
     def closeEditorAndUpdate(self):
         # i = self.apListWidget.selectedItems()[0].real_index
         # self.apModel.setData(self.apModel.index(i,0), value = self.activeEditor.m_ap, role=Qt.ItemDataRole.EditRole)
@@ -281,6 +294,7 @@ class APWindow(QWidget):
         Pull action points from SQL and add them to map and list
         # TODO: This loads in the ap in reverse order (replace 0 in inser trow with something better)
         '''
+        self.apModel.clear()
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
             ap = ActionPoint(

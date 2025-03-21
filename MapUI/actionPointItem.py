@@ -256,3 +256,17 @@ class ActionPointModel(QAbstractListModel):
 
         flags |= Qt.ItemFlag.ItemIsDropEnabled
         return flags
+    
+    def removeRow(self, row, parent=QModelIndex()):
+        """Safely remove a single row from the model."""
+        if 0 <= row < len(self.actions):
+            self.beginRemoveRows(parent, row, row) 
+            del self.actions[row]
+            self.endRemoveRows()  
+            return True
+        return False
+    
+    def clear(self):
+        self.actions = []
+        self.layoutChanged.emit()
+        return True
