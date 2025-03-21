@@ -281,13 +281,15 @@ class ActionEditor(QWidget):
         self.layout.addWidget(self.portArea, 0, 2, 3, 2)
         self.setLayout(self.layout)
 
+        self.setAutoFillBackground(True)
+
         self.progressButton.clicked.connect(self.progressStatus)
         self.completeInspectionButton.clicked.connect(self.completeInspection)
         self.requestInspectionButton.clicked.connect(self.requestInspection)
 
         self.webSocketClient = WebSocketClient()
         self.webSocketClient.start_connection()
-    
+
     def completeInspection(self):
         self.m_action_data.status = "Completed"
         self.m_action_data.timeCompleted = dt.datetime.now()

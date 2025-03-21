@@ -276,6 +276,8 @@ class ActionEditor(QWidget):
         self.layout.addWidget(self.portArea, 0, 2, 3, 2)
         self.setLayout(self.layout)
 
+        self.setAutoFillBackground(True)
+
         self.progressButton.clicked.connect(self.progressStatus)
 
         self.webSocketClient = WebSocketClient()
