@@ -157,36 +157,12 @@ class ActionPointModel(QAbstractListModel):
         types = ["application/vnd.text.list"]
         return types
 
-    def mimeData(self, indexes):
-        mimeData = QMimeData()
-        encodedData = QByteArray()
-        stream = QDataStream(encodedData, QIODevice.OpenModeFlag.WriteOnly)
-        json_list = []
-        for index in indexes:
-            if index.isValid():
-                data = self.data(index, role=Qt.ItemDataRole.EditRole)
-                json_str = data.convertToJSON()
-                json_list.append(json_str)
-
-        stream.writeQStringList(json_list)
-        mimeData.setData("application/vnd.text.list", encodedData)
-        return mimeData
-
-    # def canDropMimeData(self, data, action, row, column, parent):
-    #     if column > 0:
-    #         return False
-    #     return True
-    #     # return super().canDropMimeData(data, action, row, column, parent)
-
     def dropMimeData(self, data, action, row, column, parent):
-        # if not self.canDropMimeData(data, action, row, column, parent):
-        #     return False
+        if action != Qt.DropAction.MoveAction:
+            return False
 
         if column > 0:
             return False
-
-        if action == Qt.DropAction.IgnoreAction:
-            return True
 
         if row != -1:
             beginRow = row
@@ -197,12 +173,9 @@ class ActionPointModel(QAbstractListModel):
 
         encodedData = data.data("application/vnd.text.list")
         stream = QDataStream(encodedData, QIODevice.OpenModeFlag.ReadOnly)
-        self.insertRows(beginRow, count=1, parent=parent)
 
-        # json_list = json.load(stream.readQStringList())
+        temp_list = []
         for json_str in stream.readQStringList():
-
-            index = self.index(beginRow, 0, parent)
             ap_data = json.loads(json_str)
             ap = ActionPoint()
 
@@ -217,8 +190,12 @@ class ActionPointModel(QAbstractListModel):
             # ap.status = ap_data["status"]
             # ap.is_notify = ap_data["is_notify"]
 
-            self.setData(index, ap, role=Qt.ItemDataRole.EditRole)
-            beginRow += 1
+            temp_list.append(ap)
+
+        # Insert the dropped item at the correct position
+        self.beginInsertRows(QModelIndex(), beginRow, beginRow)
+        self.actions.insert(beginRow, temp_list[0])
+        self.endInsertRows()
 
         return True
         # return super().dropMimeData(data, action, row, column, parent)
@@ -256,16 +233,16 @@ class ActionPointModel(QAbstractListModel):
 
         flags |= Qt.ItemFlag.ItemIsDropEnabled
         return flags
-    
+
     def removeRow(self, row, parent=QModelIndex()):
         """Safely remove a single row from the model."""
         if 0 <= row < len(self.actions):
-            self.beginRemoveRows(parent, row, row) 
+            self.beginRemoveRows(parent, row, row)
             del self.actions[row]
-            self.endRemoveRows()  
+            self.endRemoveRows()
             return True
         return False
-    
+
     def clear(self):
         self.actions = []
         self.layoutChanged.emit()
