@@ -150,6 +150,23 @@ class ActionPointModel(QAbstractListModel):
         self.actions = [self.actions[i] for i in index_list]
         return True
 
+    def moveAction(self, from_index, to_index):
+        """Move action from one index to another.
+
+        Args:
+            from_index (int): starting index
+            to_index (int): ending index
+        """
+        if 0 <= from_index < len(self.actions) and 0 <= to_index < len(self.actions):
+            action_to_move = self.actions.pop(from_index)
+            self.actions.insert(to_index, action_to_move)
+            self.dataChanged.emit(
+                self.index(min(from_index, to_index)),
+                self.index(max(from_index, to_index)),
+            )
+        else:
+            print("Index out of bounds for moving action.")
+
     def supportedDropActions(self):
         return Qt.DropAction.MoveAction
 
@@ -256,16 +273,16 @@ class ActionPointModel(QAbstractListModel):
 
         flags |= Qt.ItemFlag.ItemIsDropEnabled
         return flags
-    
+
     def removeRow(self, row, parent=QModelIndex()):
         """Safely remove a single row from the model."""
         if 0 <= row < len(self.actions):
-            self.beginRemoveRows(parent, row, row) 
+            self.beginRemoveRows(parent, row, row)
             del self.actions[row]
-            self.endRemoveRows()  
+            self.endRemoveRows()
             return True
         return False
-    
+
     def clear(self):
         self.actions = []
         self.layoutChanged.emit()
