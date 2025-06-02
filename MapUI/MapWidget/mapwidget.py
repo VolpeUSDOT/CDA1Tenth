@@ -1,79 +1,70 @@
-from PySide6.QtCore import QSize, Signal, Qt
+from PySide6.QtCore import QSize, Signal, Qt, QPointF, QLineF, QRectF
 from PySide6.QtWidgets import (
     QWidget,
     QGridLayout,
     QGraphicsView,
+    QPushButton,
     QGraphicsLineItem,
     QGraphicsItem,
     QGraphicsPixmapItem,
 )
 from PySide6.QtGui import QPen, QBrush, QPixmap, QColor
-from MapWidget.vgraphicsscene import ViewGraphicsScene
-from MapWidget.mapitems import ActionPointGI, VehicleGI
 import geopandas as gpd
 import yaml
-from PySide6.QtCore import Qt, QPointF, QLineF, QRectF
+from MapWidget.vgraphicsscene import ViewGraphicsScene
+from MapWidget.mapitems import ActionPointGI, VehicleGI
 
+# Constants
 png_map = '../MapUI/PortDrayageData/pdroadmap.png'
 pgm_map = '../MapUI/PortDrayageData/garage.pgm'
 map_info = '../MapUI/PortDrayageData/garage.yaml'
 graph = '../MapUI/PortDrayageData/garage_center_line.geojson'
 cdalogo = '../Resources/Cooperative Driving Automation 1Tenth_White.png'
 volpelogo = '../Resources/volpewh.png'
-
 roadLinkPen = QPen(Qt.yellow, 1, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
-
-# Received latitude and longitude from vehicle is assumed following J2735 BSM standard and is in unit of measure 1/10 microdegree
 DEGREE_TO_TENTH_MICRO = 10000000
 MAX_VEHICLES = 50  # Maximum number of vehicle trails to display
 
-
-# Subclass QMainWindow to customize your application's main window
 class MapWidget(QWidget):
     selectionUpdate = Signal(ActionPointGI)
 
     def __init__(self, png_map_fp=png_map, pgm_map_fp=pgm_map, map_info_fp=map_info,
-     graph_fp=graph, volpe_fp = volpelogo, cda_fp = cdalogo):
+                 graph_fp=graph, volpe_fp=volpelogo, cda_fp=cdalogo):
         super().__init__()
-        self.setMinimumSize(QSize(550,400))
+
+        self.setMinimumSize(QSize(550, 400))
         self.zoomLevel = 0
+        self.graphicsVisible = True  # State to track graphics visibility
 
         # Create QGraphicsScene and QGraphicsView
         self.scene = ViewGraphicsScene(self)
-
-        # Used when create a new action point
-        self.isAddActionPoint = False
-        self.scene.mousePressEvent = self._mouse_press_event
         self.view = QGraphicsView(self.scene)
 
-        # Scale starting view to fit port drayage
+        # Scale starting view
         self.view.scale(2.5, 2.5)
 
         # Define the viewable portion of the scene
-        scene_rect = QRectF(34, -123, 100, 100)  # x, y, width, height calibrated for port drayage
-        self.scene.setSceneRect(scene_rect)  # Define the visible area
+        scene_rect = QRectF(34, -123, 100, 100) 
+        self.scene.setSceneRect(scene_rect)
 
         # Set background color
-        background_color = QColor(23, 30, 93)  # Dark Blue Background
+        background_color = QColor(23, 30, 93)  
         self.scene.setBackgroundBrush(QBrush(background_color))
 
         # Load map image and add it to the scene
-        # Custom alignment to fit port drayage map with road links
         scale_factor = 0.23
         x_offset = 9
         y_offset = -139.5
         self.bg_image_item = self.load_bg_image(png_map_fp, scale_factor, x_offset, y_offset)
         self.scene.addItem(self.bg_image_item)
 
-        
-        # Load volpe logo and add it to the scene
+        # Load logos and add to the scene
         scale_factor = 0.028
         x_offset = 86
         y_offset = -103
         self.volpelogo = self.load_bg_image(volpe_fp, scale_factor, x_offset, y_offset)
         self.scene.addItem(self.volpelogo)
 
-        # Load CDA logo and add it to the scene
         scale_factor = 0.1
         x_offset = 106
         y_offset = -136
@@ -85,35 +76,35 @@ class MapWidget(QWidget):
         self.x_origin = mapInfo["origin"][0]
         self.y_origin = mapInfo["origin"][1]
         self.resolution = mapInfo["resolution"]
-        self.points, lines = self._readGraphFile(graph_fp, roundPixelPosition=True)
+        self.points, self.lines = self._readGraphFile(graph_fp, roundPixelPosition=True)
 
-        # Add all road segments to scene
-        road_group = self.scene.createItemGroup([])
-        for _, line in lines.iterrows():
+        # Add road segments
+        self.road_group = self.scene.createItemGroup([])
+        for _, line in self.lines.iterrows():
             roadLink = createRoadLink(
                 line["start_x"], line["start_y"], line["end_x"], line["end_y"]
             )
             self.scene.addItem(roadLink)
-            road_group.addToGroup(roadLink)
+            self.road_group.addToGroup(roadLink)
+        self.road_group.setVisible(False)
 
-        # point_group = self.scene.createItemGroup([])
-        # for point in points.iterrows():
-        #     gp = GraphicsPoint(point['adjusted_x'], point['adjusted_y'])
-        #     self.scene.addItem(gp)
-        #     point_group.addToGroup(gp)
+        # Create toggle button
+        self.toggle_button = QPushButton("Toggle Graphics")
+        self.toggle_button.clicked.connect(self.toggleGraphicsVisibility)
+        self.opacityRangeTop = 0.3 # default value
+        self.opacityTruckValue = self.opacityRangeTop # by default starts visible
 
-        # Add QGraphicsView to main window
+        # Add QGraphicsView and button to layout
         mapWidgetLayout = QGridLayout()
         mapWidgetLayout.addWidget(self.view, 0, 0)
+        mapWidgetLayout.addWidget(self.toggle_button, 1, 0)  # Add button below the map view
         self.setLayout(mapWidgetLayout)
 
+        # Initialize lists for action points and vehicle positions
         self.ap_list = []
         self.vehicle_position = []
 
-        # Update map by redrawing whenever model changes
-        #
-
-        # Handle Scene event
+        # Connect selection signal
         self.scene.selectionChanged.connect(self._compactedSignal)
 
     def _compactedSignal(self):
@@ -128,50 +119,6 @@ class MapWidget(QWidget):
             self.selectionUpdate.emit(selected_ap_list[0])
         else:
             print("Error, multiple ap were selected in map which shouldn't be possible")
-
-    def _readMapInfo(self, fp):
-        with open(fp, "r") as stream:
-            map_info = yaml.safe_load(stream)
-        return map_info
-
-    def _readGraphFile(self, graph_fp, roundPixelPosition):
-        """
-        Converts geojson file to usable data format
-        """
-        graph_data = gpd.read_file(graph_fp)
-        graph_data["adjusted_x"], graph_data["adjusted_y"] = self._convertCoords(
-            graph_data["geometry"].x, graph_data["geometry"].y
-        )
-
-        points = graph_data.loc[(graph_data["geometry"] != None)][
-            ["id", "adjusted_x", "adjusted_y"]
-        ]
-        if roundPixelPosition:
-            points = self._roundPixelPositions(points)
-
-        lines = graph_data.loc[(graph_data["geometry"] == None)]
-
-        df_for_starts = points.rename(
-            columns={"id": "startid", "adjusted_x": "start_x", "adjusted_y": "start_y"}
-        )
-        df_for_ends = points.rename(
-            columns={"id": "endid", "adjusted_x": "end_x", "adjusted_y": "end_y"}
-        )
-        lines = lines.merge(df_for_starts, on="startid")
-        lines = lines.merge(df_for_ends, on="endid")
-        lines = lines[
-            ["id", "startid", "endid", "start_x", "start_y", "end_x", "end_y"]
-        ]
-
-        return points, lines
-
-    def _roundPixelPositions(self, points, nearest=5):
-        """
-        Round coordinates to the nearest pixel value until the roads look good and straight
-        """
-        points["adjusted_x"] = nearest * round(points["adjusted_x"] / nearest)
-        points["adjusted_y"] = nearest * round(points["adjusted_y"] / nearest)
-        return points
 
     def clearActionPoints(self):
         for ap in self.ap_list:
@@ -202,19 +149,49 @@ class MapWidget(QWidget):
         for ap_dict in ap_list:
             self.addActionPointGI(ap_dict)
 
+    def toggleGraphicsVisibility(self):
+        """
+        Toggles the visibility of all graphical elements (background images, logos, roads, and vehicle trails).
+        """
+        self.graphicsVisible = not self.graphicsVisible  # Flip the state
+        self.bg_image_item.setVisible(self.graphicsVisible)
+        self.volpelogo.setVisible(self.graphicsVisible)
+        self.cdalogo.setVisible(self.graphicsVisible)
+        self.road_group.setVisible(not self.graphicsVisible)
+
+        if (self.graphicsVisible):
+            self.opacityTruckValue = self.opacityRangeTop
+        else:
+            self.opacityTruckValue = 0
+
+
     def addVehiclePosition(self, lat, long):
         """
         Adds a new vehicle to the map and manages the vehicle_position list with opacity adjustments.
+        If self.opacityTruckValue == 0, only the latest vehicle is kept visible (no trail).
         """
         # Convert coordinates
         x, y = self._convertCoords(float(long) / DEGREE_TO_TENTH_MICRO, float(lat) / DEGREE_TO_TENTH_MICRO)
         
         # Create a new vehicle
         vehicle = VehicleGI(x, y, f'BSM - Lat: {lat / DEGREE_TO_TENTH_MICRO}, Long: {long / DEGREE_TO_TENTH_MICRO}', self.scene)
+        self.scene.addItem(vehicle)
+
+        # Check opacity behavior: keep only current vehicle if opacityTruckValue is 0
+        if self.opacityTruckValue == 0:
+            # Remove all previous vehicles from the scene
+            for v in self.vehicle_position:
+                self.scene.removeItem(v)
+            # Clear the vehicle list
+            self.vehicle_position = []
+            # Add only the current vehicle
+            self.vehicle_position.append(vehicle)
+            # Set full opacity for the current vehicle
+            vehicle.setOpacity(1.0)
+            return 
 
         # Insert the new vehicle at the beginning of the list
         self.vehicle_position.insert(0, vehicle)
-        self.scene.addItem(vehicle)
 
         # Ensure the list does not exceed MAX_VEHICLES
         if len(self.vehicle_position) > MAX_VEHICLES:
@@ -223,29 +200,74 @@ class MapWidget(QWidget):
             self.scene.removeItem(removed_vehicle)
 
         # Update opacities for all vehicles in the list
-        total = len(self.vehicle_position)
+        #total = len(self.vehicle_position)
         for index, v in enumerate(self.vehicle_position):
             if index == 0:
-                # Set latest bsm positino to 100%
+                # Set latest vehicle position to 100% opacity
                 v.setOpacity(1.0)
             else:
-                opacityRangeTop = 0.3
-                # Intepolate remaining positions from 0.8 - 0.01
-                step = (opacityRangeTop - 0.01) / (MAX_VEHICLES - 1)
-                opacity = opacityRangeTop - step * (index - 1)
+                # Interpolate remaining positions from opacityTruckValue down to 0.01
+                step = (self.opacityTruckValue - 0.01) / (MAX_VEHICLES - 1)
+                opacity = self.opacityTruckValue - step * (index - 1)
                 v.setOpacity(opacity)
+
+    def load_bg_image(self, image_path, sf, xoff, yoff):
+        pixmap = QPixmap(image_path)
+        pixmap_item = QGraphicsPixmapItem(pixmap)
+        pixmap_item.setScale(sf)  # image scaling
+        pixmap_item.setPos(xoff, yoff)  # x, y offsets
+        return pixmap_item
+
+    def _readMapInfo(self, fp):
+        with open(fp, "r") as stream:
+            map_info = yaml.safe_load(stream)
+        return map_info
+
+    def _readGraphFile(self, graph_fp, roundPixelPosition):
+        graph_data = gpd.read_file(graph_fp)
+        graph_data["adjusted_x"], graph_data["adjusted_y"] = self._convertCoords(
+            graph_data["geometry"].x, graph_data["geometry"].y
+        )
+        points = graph_data.loc[(graph_data["geometry"] != None)][
+            ["id", "adjusted_x", "adjusted_y"]
+        ]
+        if roundPixelPosition:
+            points = self._roundPixelPositions(points)
+        lines = graph_data.loc[(graph_data["geometry"] == None)]
+        df_for_starts = points.rename(
+            columns={"id": "startid", "adjusted_x": "start_x", "adjusted_y": "start_y"}
+        )
+        df_for_ends = points.rename(
+            columns={"id": "endid", "adjusted_x": "end_x", "adjusted_y": "end_y"}
+        )
+        lines = lines.merge(df_for_starts, on="startid")
+        lines = lines.merge(df_for_ends, on="endid")
+        lines = lines[
+            ["id", "startid", "endid", "start_x", "start_y", "end_x", "end_y"]
+        ]
+        return points, lines
 
     def _convertCoords(self, x_vals, y_vals):
         converted_y = (y_vals - self.y_origin) / self.resolution * -1
         converted_x = (x_vals - self.x_origin) / self.resolution
         return converted_x, converted_y
 
+    def _roundPixelPositions(self, points, nearest=5):
+        points["adjusted_x"] = nearest * round(points["adjusted_x"] / nearest)
+        points["adjusted_y"] = nearest * round(points["adjusted_y"] / nearest)
+        return points
+    
+    def _convertCoords(self, x_vals, y_vals):
+            converted_y = (y_vals - self.y_origin) / self.resolution * -1
+            converted_x = (x_vals - self.x_origin) / self.resolution
+            return converted_x, converted_y
+    
     def reverseCoordConversion(self, x, y):
         # TODO Check this is working 100%
         converted_y = self.y_origin + (y * self.resolution) * -1
         converted_x = self.x_origin + (x * self.resolution)
         return converted_x, converted_y
-
+    
     def zoom_in(self):
         if self.zoomLevel >= 6:
             return
@@ -263,7 +285,6 @@ class MapWidget(QWidget):
         lines = self._get_lines()
         if not lines:
             return
-
         nearest_point = self._get_nearest_point_on_lines(self._get_lines(), click_pos)
         self.clickedNewPoint = nearest_point
         existing_points = self._get_points()
@@ -277,14 +298,12 @@ class MapWidget(QWidget):
             # Assuming when map is used for creating an action point, there is no point item on the map
             self.isAddActionPoint = True
             self._add_clicked_point_to_map()
-
         # Call the base class mousePressEvent to ensure default behavior
         super(ViewGraphicsScene, self.scene).mousePressEvent(event)
 
     def _add_clicked_point_to_map(self, description="No Description"):
         if self.clickedNewPoint is None:
             return
-
         newActionPoint = ActionPointGI(
             self.clickedNewPoint.x(), self.clickedNewPoint.y(), description, self.scene
         )
@@ -296,51 +315,39 @@ class MapWidget(QWidget):
         )
         nearest_point = self._get_nearest_point_on_line(nearest_line, click_pos)
         return nearest_point
-
+    
     def _get_nearest_point_on_line(self, line, click_pos):
         """Finds the closest point on a given line segment to the click position."""
         line_f = line.line()
         p1, p2 = line_f.p1(), line_f.p2()  # Line endpoints
-
         # Vector math to compute closest point
         v_line = p2 - p1
         v_click = click_pos - p1
-
         # Projection formula
         t = (v_click.x() * v_line.x() + v_click.y() * v_line.y()) / (
             v_line.x() ** 2 + v_line.y() ** 2
         )
         t = max(0, min(1, t))  # Clamp t to stay within the segment
-
         # Compute the closest point coordinates
         nearest_x = p1.x() + t * v_line.x()
         nearest_y = p1.y() + t * v_line.y()
-
         return QPointF(nearest_x, nearest_y)
-
+    
     def _distance_to_line(self, line, point):
         """Calculates the perpendicular distance from a point to a line segment."""
         nearest_point = self._get_nearest_point_on_line(line, point)
         return (nearest_point - point).manhattanLength()  # Approximate distance
-
+    
     def _get_lines(self):
         return [
             item for item in self.scene.items() if isinstance(item, QGraphicsLineItem)
         ]
-
+    
     def _get_points(self):
         return [item for item in self.scene.items() if isinstance(item, ActionPointGI)]
-
-    def load_bg_image(self, image_path, sf, xoff, yoff):
-        pixmap = QPixmap(image_path)
-        pixmap_item = QGraphicsPixmapItem(pixmap)
-        pixmap_item.setScale(sf)  # image scaling
-        pixmap_item.setPos(xoff, yoff)  # x,y offsets
-        return pixmap_item
 
 def createRoadLink(x1, y1, x2, y2):
     roadLink = QGraphicsLineItem(x1, y1, x2, y2)
     roadLink.setPen(roadLinkPen)
-    # Comment out line below to see roadlinks
-    roadLink.setVisible(False) # Hides road links from displaying
+    #roadLink.setVisible(False)  # Initially hidden to match default toggle state
     return roadLink

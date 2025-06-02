@@ -25,7 +25,7 @@ import time
 # import ctypes
 
 # Placeholder for actual app icon
-ICONPATH = '../Resources/truckicon.png'
+ICONPATH = '../Resources/White Triskelion.png'
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
