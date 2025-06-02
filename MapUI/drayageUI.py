@@ -45,6 +45,7 @@ class MainWindow(QMainWindow):
         self.apWindow = APWindow(
             self.loading_signal, self.unloading_signal, self.inspection_signal
         )
+        webSocketClient = self.apWindow.webSocketClient
         # Prep action Point Widget
         # Get action points from SQL and populate widgets with them
         self.SQLdb = Database("PORT_DRAYAGE")
@@ -56,7 +57,7 @@ class MainWindow(QMainWindow):
             self.loading_signal,
             self.unloading_signal,
             self.inspection_signal,
-            self.holding_signal,
+            self.holding_signal, webSocketClient
         )
         self.cargoWindow = CargoWindow()
         self.stackedWidget = QStackedWidget()

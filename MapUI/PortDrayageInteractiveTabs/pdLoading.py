@@ -19,10 +19,10 @@ class PDLoadingWidget(QWidget):
     '''
     Main Widget for the loading display to be referenced outside this file
     '''
-    def __init__(self, loading_signal):
+    def __init__(self, loading_signal, websocketClient):
         super().__init__()
         self.model = LoadingActionList(loadingActions=[])
-        self.loadingActionView = PendingActionView()
+        self.loadingActionView = PendingActionView(websocketClient)
         self.completedActionView = CompletedActionView()
         self.inProgressFilterProxyModel = InProgressActionListProxyModel()
         self.inProgressFilterProxyModel.setSourceModel(self.model)
@@ -71,11 +71,11 @@ class PendingActionView(QListView):
     '''
     Subclass of list view for showing a list of editable action items
     '''
-    def __init__(self):
+    def __init__(self, websocketClient):
         super().__init__()
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setUniformItemSizes(True)
-        self.setItemDelegate(ActionDelegate())
+        self.setItemDelegate(ActionDelegate(None, websocketClient))
         # self.setEditTriggers(QAbstractItemView.DoubleClicked | QAbstractItemView.SelectedClicked)
         self.setEditTriggers(QAbstractItemView.EditTrigger.AllEditTriggers)
 
@@ -210,15 +210,16 @@ class ActionDelegate(QStyledItemDelegate):
     '''
     Creates an alternate, interactable and editable view for items in the model and connects the data in the temporary editor with the model
     '''
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, websocketClient = None):
         super().__init__(parent)
+        self.websocketClient = websocketClient
 
     def sizeHint(self, option, index):
-        editor = ActionEditor(None)
+        editor = ActionEditor(None, self.websocketClient)
         return editor.sizeHint()
 
     def createEditor(self, parent, option, index):
-        editor = ActionEditor(parent)
+        editor = ActionEditor(parent, self.websocketClient)
         # Connect the dataChanged signal from each item to update the backend model data
         editor.actionDataChanged.connect(self.commit_from_editor) # TODO Might need to lose this line
         return editor
@@ -250,7 +251,7 @@ class ActionEditor(QWidget):
     '''
     actionDataChanged = Signal()
 
-    def __init__(self, parent):
+    def __init__(self, parent, websocketClient):
         super().__init__(parent)
         self.m_action_data = ActionItem()
 
@@ -274,8 +275,7 @@ class ActionEditor(QWidget):
 
         self.progressButton.clicked.connect(self.progressStatus)
 
-        self.webSocketClient = WebSocketClient()
-        self.webSocketClient.start_connection()
+        self.webSocketClient = websocketClient
 
     def progressStatus(self):
         if self.m_action_data.status == "Pending":

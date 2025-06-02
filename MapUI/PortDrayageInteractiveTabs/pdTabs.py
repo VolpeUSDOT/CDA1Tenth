@@ -9,12 +9,12 @@ from PortDrayageInteractiveTabs.pdInspection import PDInspectionWidget
 class PDTabs(QMainWindow):
 
 
-    def __init__(self, loading_signal, unloading_signal, inspection_signal, holding_signal):
+    def __init__(self, loading_signal, unloading_signal, inspection_signal, holding_signal, websocketClient):
         super().__init__()
 
-        self.loadingWidget = PDLoadingWidget(loading_signal)
-        self.unloadingWidget = PDUnloadingWidget(unloading_signal)
-        self.inspectionWidget = PDInspectionWidget(inspection_signal, holding_signal)
+        self.loadingWidget = PDLoadingWidget(loading_signal, websocketClient)
+        self.unloadingWidget = PDUnloadingWidget(unloading_signal, websocketClient)
+        self.inspectionWidget = PDInspectionWidget(inspection_signal, holding_signal, websocketClient)
         self.completedResetButton = QPushButton("Clear")
 
         self.tabBar = QTabBar()

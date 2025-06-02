@@ -19,10 +19,10 @@ class PDInspectionWidget(QWidget):
     '''
     Main Widget for the inspection display to be referenced outside this file
     '''
-    def __init__(self, inspection_signal, holding_signal):
+    def __init__(self, inspection_signal, holding_signal, websocketClient):
         super().__init__()
         self.model = InspectionActionList(inspectionActions=[])
-        self.inspectionActionView = PendingActionView(holding_signal)
+        self.inspectionActionView = PendingActionView(holding_signal, websocketClient)
         self.completedActionView = CompletedActionView()
         self.inProgressFilterProxyModel = InProgressActionListProxyModel()
         self.inProgressFilterProxyModel.setSourceModel(self.model)
@@ -72,11 +72,11 @@ class PendingActionView(QListView):
     '''
     Subclass of list view for showing a list of editable action items
     '''
-    def __init__(self, holding_signal):
+    def __init__(self, holding_signal, websocketClient):
         super().__init__()
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setUniformItemSizes(True)
-        self.setItemDelegate(ActionDelegate(holding_signal))
+        self.setItemDelegate(ActionDelegate(holding_signal, None, websocketClient))
         # self.setEditTriggers(QAbstractItemView.DoubleClicked | QAbstractItemView.SelectedClicked)
         self.setEditTriggers(QAbstractItemView.EditTrigger.AllEditTriggers)
 
@@ -211,17 +211,18 @@ class ActionDelegate(QStyledItemDelegate):
     '''
     Creates an alternate, interactable and editable view for items in the model and connects the data in the temporary editor with the model
     '''
-    def __init__(self, holding_signal, parent=None):
+    def __init__(self, holding_signal, parent=None, websocketClient = None):
         super().__init__(parent)
         self.holding_signal = holding_signal
+        self.websocketClient = websocketClient
 
     def sizeHint(self, option, index):
-        editor = ActionEditor(None, self.holding_signal)
+        editor = ActionEditor(None, self.holding_signal, self.websocketClient)
         editor.setValue(index.data(role=Qt.ItemDataRole.EditRole))
         return editor.sizeHint()
 
     def createEditor(self, parent, option, index):
-        editor = ActionEditor(parent, self.holding_signal)
+        editor = ActionEditor(parent, self.holding_signal, self.websocketClient)
         # Connect the dataChanged signal from each item to update the backend model data
         editor.actionDataChanged.connect(self.commit_from_editor) # TODO Might need to lose this line
         return editor
@@ -253,7 +254,7 @@ class ActionEditor(QWidget):
     '''
     actionDataChanged = Signal()
 
-    def __init__(self, parent, holding_signal):
+    def __init__(self, parent, holding_signal, websocketClient):
         super().__init__(parent)
         self.m_action_data = ActionItem()
         self.holding_signal = holding_signal
@@ -281,8 +282,7 @@ class ActionEditor(QWidget):
         self.completeInspectionButton.clicked.connect(self.completeInspection)
         self.requestInspectionButton.clicked.connect(self.requestInspection)
 
-        self.webSocketClient = WebSocketClient()
-        self.webSocketClient.start_connection()
+        self.webSocketClient = websocketClient
 
     def completeInspection(self):
         self.m_action_data.status = "Completed"
