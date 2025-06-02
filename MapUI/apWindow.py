@@ -94,10 +94,7 @@ class APWindow(QWidget):
         # self.apListWidget.itemDropped.connect(self.propagateListReorder)
         # self.apListWidget.indexesMoved().connect(self.propagateListReorder)
         self.messageDecoder = MessageDecoder()
-
         self.webSocketClient = websocketClient
-        print("saved a websocket connection through refactor")
-
         self.webSocketClient.message_received.connect(self.handleIncomingMessage)
 
         ''' 
