@@ -22,6 +22,7 @@ from sqlalchemy import text
 import json
 import sys
 import time
+from webSocketClient import WebSocketClient
 # import ctypes
 
 # Placeholder for actual app icon
@@ -42,10 +43,17 @@ class MainWindow(QMainWindow):
         self.tabBar = TabBar()
         self.setWindowIcon(QIcon(ICONPATH))  # Set icon here
 
+        self.webSocketClient = WebSocketClient("ws://localhost:8765")
+        # Connect signals
+        #self.webSocketClient.message_received.connect(self.handleIncomingMessage)
+        # Start connection
+        self.webSocketClient.start_connection()
+        self.webSocketClient.connected.connect(lambda: print("webSocket connected"))
+
         self.apWindow = APWindow(
-            self.loading_signal, self.unloading_signal, self.inspection_signal
+            self.loading_signal, self.unloading_signal, self.inspection_signal, self.webSocketClient
         )
-        webSocketClient = self.apWindow.webSocketClient
+
         # Prep action Point Widget
         # Get action points from SQL and populate widgets with them
         self.SQLdb = Database("PORT_DRAYAGE")
@@ -57,7 +65,7 @@ class MainWindow(QMainWindow):
             self.loading_signal,
             self.unloading_signal,
             self.inspection_signal,
-            self.holding_signal, webSocketClient
+            self.holding_signal, self.webSocketClient
         )
         self.cargoWindow = CargoWindow()
         self.stackedWidget = QStackedWidget()

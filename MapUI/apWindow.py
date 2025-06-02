@@ -37,7 +37,7 @@ class APWindow(QWidget):
 
     '''
 
-    def __init__(self, loading_signal, unloading_signal, inspection_signal):
+    def __init__(self, loading_signal, unloading_signal, inspection_signal, websocketClient):
         super().__init__()
         self.aptitle = QLabel('''# Action Points''')
         self.aptitle.setTextFormat(Qt.TextFormat.MarkdownText)
@@ -95,12 +95,20 @@ class APWindow(QWidget):
         # self.apListWidget.indexesMoved().connect(self.propagateListReorder)
         self.messageDecoder = MessageDecoder()
 
-        self.webSocketClient = WebSocketClient("ws://localhost:8765")
+        self.webSocketClient = websocketClient
+        print("saved a websocket connection through refactor")
+
+        self.webSocketClient.message_received.connect(self.handleIncomingMessage)
+
+        ''' 
+        Moved to drayageui to reduce # of connections
+        #self.webSocketClient = WebSocketClient("ws://localhost:8765")
         # Connect signals
         self.webSocketClient.message_received.connect(self.handleIncomingMessage)
         # Start connection
-        self.webSocketClient.start_connection()
-        self.webSocketClient.connected.connect(lambda: print("webSocket connected"))
+        #self.webSocketClient.start_connection()
+        #self.webSocketClient.connected.connect(lambda: print("webSocket connected"))
+        '''
 
         # When a list widget item is selected, update the selection
         # self.apListWidget.itemSelectionChanged.connect(self.propagateListSelection)

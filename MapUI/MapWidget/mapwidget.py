@@ -40,6 +40,11 @@ class MapWidget(QWidget):
         self.scene = ViewGraphicsScene(self)
         self.view = QGraphicsView(self.scene)
 
+        # Used when create a new action point
+        self.isAddActionPoint = False
+        self.scene.mousePressEvent = self._mouse_press_event
+        self.view = QGraphicsView(self.scene)
+
         # Scale starting view
         self.view.scale(2.5, 2.5)
 
