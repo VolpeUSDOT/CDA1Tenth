@@ -243,7 +243,12 @@ class APWindow(QWidget):
         # self.apModel.setData(self.apModel.index(i,0), value = self.activeEditor.m_ap, role=Qt.ItemDataRole.EditRole)
         index = self.apListView.selectedIndexes()[0]
         selectedRow = index.data(role=Qt.ItemDataRole.EditRole)
-        clickedNewPoint = self.activeEditor.apMap.clickedNewPoint
+        # If a new point is clicked in editor, then assign, otherwise clickedNewPoint = None
+        if hasattr(self.activeEditor.apMap, 'clickedNewPoint'):
+            clickedNewPoint = self.activeEditor.apMap.clickedNewPoint
+        else:
+            clickedNewPoint = None
+
         SQLdb = Database("PORT_DRAYAGE")
         # Update database
         isDBUpdate = False

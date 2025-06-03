@@ -53,6 +53,14 @@ class MapWidget(QWidget):
         self.view = QGraphicsView(self.scene)
         self.view.scale(2.5, 2.5)  # Scale starting view
 
+        # Used when create a new action pointAdd commentMore actions
+        self.isAddActionPoint = False
+        self.scene.mousePressEvent = self._mouse_press_event
+        self.view = QGraphicsView(self.scene)
+
+        # Scale starting view
+        self.view.scale(2.5, 2.5)
+
         # Define the viewable portion of the scene
         scene_rect = QRectF(34, -123, 100, 100)
         self.scene.setSceneRect(scene_rect)
