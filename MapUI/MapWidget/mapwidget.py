@@ -31,59 +31,71 @@ class MapWidget(QWidget):
     def __init__(self, png_map_fp=png_map, pgm_map_fp=pgm_map, map_info_fp=map_info,
                  graph_fp=graph, volpe_fp=volpelogo, cda_fp=cdalogo):
         super().__init__()
-
         self.setMinimumSize(QSize(550, 400))
         self.zoomLevel = 0
-        self.graphicsVisible = True  # State to track graphics visibility
+        self.graphicsVisible = True  # State to track overall graphics visibility
+
+        # State variables for individual graphical elements
+        self.show_bg_map = bool(png_map_fp)  # Set to False if file path is None or ""
+        self.show_logos = bool(volpe_fp and cda_fp) # Set to False if file path is None or ""
+        self.show_vehicle_trail = True  # Vehicle trail visibility
+        if (not self.show_bg_map):
+            self.show_road_links = True # Default to true if no bg map
+        else:
+            self.show_road_links = False
+
+        self.opacityRangeTop = 0.3  # 2nd vehicle in trail opacity (goes to 0 from here)
+        self.opacityTruckValue = self.opacityRangeTop  # Initial trail visibility
+        self.isAddActionPoint = False  # State to create a new action point
 
         # Create QGraphicsScene and QGraphicsView
         self.scene = ViewGraphicsScene(self)
         self.view = QGraphicsView(self.scene)
-
-        # Used when create a new action point
-        self.isAddActionPoint = False
-        self.scene.mousePressEvent = self._mouse_press_event
-        self.view = QGraphicsView(self.scene)
-
-        # Scale starting view
-        self.view.scale(2.5, 2.5)
+        self.view.scale(2.5, 2.5)  # Scale starting view
 
         # Define the viewable portion of the scene
-        scene_rect = QRectF(34, -123, 100, 100) 
+        scene_rect = QRectF(34, -123, 100, 100)
         self.scene.setSceneRect(scene_rect)
 
-        # Set background color
-        background_color = QColor(23, 30, 93)  
+        # Set background color for the scene
+        background_color = QColor(23, 30, 93)  # Dark Blue
         self.scene.setBackgroundBrush(QBrush(background_color))
 
-        # Load map image and add it to the scene
-        scale_factor = 0.23
-        x_offset = 9
-        y_offset = -139.5
-        self.bg_image_item = self.load_bg_image(png_map_fp, scale_factor, x_offset, y_offset)
-        self.scene.addItem(self.bg_image_item)
+        # Load map image as the background and add it to the scene (if valid)
+        if png_map_fp:
+            scale_factor = 0.23
+            x_offset = 9
+            y_offset = -139.5
+            self.bg_image_item = self.load_bg_image(png_map_fp, scale_factor, x_offset, y_offset)
+            self.scene.addItem(self.bg_image_item)
+        else:
+            self.bg_image_item = None  # No background image available
 
-        # Load logos and add to the scene
-        scale_factor = 0.028
-        x_offset = 86
-        y_offset = -103
-        self.volpelogo = self.load_bg_image(volpe_fp, scale_factor, x_offset, y_offset)
-        self.scene.addItem(self.volpelogo)
+        # Load logos and add them to the scene (if valid)
+        if volpe_fp and cda_fp:
+            scale_factor = 0.028
+            x_offset = 86
+            y_offset = -103
+            self.volpelogo = self.load_bg_image(volpe_fp, scale_factor, x_offset, y_offset)
+            self.scene.addItem(self.volpelogo)
 
-        scale_factor = 0.1
-        x_offset = 106
-        y_offset = -136
-        self.cdalogo = self.load_bg_image(cda_fp, scale_factor, x_offset, y_offset)
-        self.scene.addItem(self.cdalogo)
+            scale_factor = 0.1
+            x_offset = 106
+            y_offset = -136
+            self.cdalogo = self.load_bg_image(cda_fp, scale_factor, x_offset, y_offset)
+            self.scene.addItem(self.cdalogo)
+        else:
+            self.volpelogo = None
+            self.cdalogo = None
 
-        # Process data from port drayage
+        # Process graph data and road links
         mapInfo = self._readMapInfo(map_info_fp)
         self.x_origin = mapInfo["origin"][0]
         self.y_origin = mapInfo["origin"][1]
         self.resolution = mapInfo["resolution"]
         self.points, self.lines = self._readGraphFile(graph_fp, roundPixelPosition=True)
 
-        # Add road segments
+        # Create a group for road links
         self.road_group = self.scene.createItemGroup([])
         for _, line in self.lines.iterrows():
             roadLink = createRoadLink(
@@ -91,26 +103,91 @@ class MapWidget(QWidget):
             )
             self.scene.addItem(roadLink)
             self.road_group.addToGroup(roadLink)
-        self.road_group.setVisible(False)
-
-        # Create toggle button
-        self.toggle_button = QPushButton("Toggle Graphics")
-        self.toggle_button.clicked.connect(self.toggleGraphicsVisibility)
-        self.opacityRangeTop = 0.3 # default value
-        self.opacityTruckValue = self.opacityRangeTop # by default starts visible
-
-        # Add QGraphicsView and button to layout
-        mapWidgetLayout = QGridLayout()
-        mapWidgetLayout.addWidget(self.view, 0, 0)
-        mapWidgetLayout.addWidget(self.toggle_button, 1, 0)  # Add button below the map view
-        self.setLayout(mapWidgetLayout)
+        self.road_group.setVisible(self.show_road_links)
 
         # Initialize lists for action points and vehicle positions
         self.ap_list = []
         self.vehicle_position = []
 
-        # Connect selection signal
-        self.scene.selectionChanged.connect(self._compactedSignal)
+        # Create individual toggle buttons for graphics manipulation
+        self.map_button = QPushButton("Toggle Map")
+        self.map_button.setCheckable(True)
+        self.map_button.setChecked(self.show_bg_map)
+        self.map_button.setEnabled(self.show_bg_map)  # Disable button if no map file
+        self.map_button.clicked.connect(self.toggle_bg_map)
+        self.update_button_style(self.map_button, self.show_bg_map)
+
+        self.logos_button = QPushButton("Toggle Logos")
+        self.logos_button.setCheckable(True)
+        self.logos_button.setChecked(self.show_logos)
+        self.logos_button.setEnabled(self.show_logos)  # Disable button if logos are invalid
+        self.logos_button.clicked.connect(self.toggle_logos)
+        self.update_button_style(self.logos_button, self.show_logos)
+        
+
+        self.trail_button = QPushButton("Toggle Trail")
+        self.trail_button.setCheckable(True)
+        self.trail_button.setChecked(self.show_vehicle_trail)
+        self.trail_button.clicked.connect(self.toggle_vehicle_trail)
+        self.update_button_style(self.trail_button, self.show_vehicle_trail)
+
+        self.road_button = QPushButton("Toggle Roads")
+        self.road_button.setCheckable(True)
+        self.road_button.setChecked(self.show_road_links)
+        self.road_button.clicked.connect(self.toggle_road_links)
+        self.update_button_style(self.road_button, self.show_road_links)
+
+        # Add QGraphicsView and toggle buttons to the layout
+        mapWidgetLayout = QGridLayout()
+        mapWidgetLayout.addWidget(self.view, 0, 0, 1, 4)  # QGraphicsView spans 4 columns
+        mapWidgetLayout.addWidget(self.map_button, 1, 0)
+        mapWidgetLayout.addWidget(self.logos_button, 1, 1)
+        mapWidgetLayout.addWidget(self.trail_button, 1, 2)
+        mapWidgetLayout.addWidget(self.road_button, 1, 3)
+        self.setLayout(mapWidgetLayout)
+
+    # Button toggle methods
+    def toggle_bg_map(self):
+        self.show_bg_map = not self.show_bg_map
+        self.bg_image_item.setVisible(self.show_bg_map)
+        self.update_button_style(self.map_button, self.show_bg_map)
+
+    def toggle_logos(self):
+        self.show_logos = not self.show_logos
+        self.volpelogo.setVisible(self.show_logos)
+        self.cdalogo.setVisible(self.show_logos)
+        self.update_button_style(self.logos_button, self.show_logos)
+
+    def toggle_vehicle_trail(self):
+        self.show_vehicle_trail = not self.show_vehicle_trail
+        if self.show_vehicle_trail:
+            self.opacityTruckValue = self.opacityRangeTop
+        else:
+            self.clearVehiclePosition()
+            self.opacityTruckValue = 0
+        self.update_button_style(self.trail_button, self.show_vehicle_trail)
+
+    def toggle_road_links(self):
+        self.show_road_links = not self.show_road_links
+        self.road_group.setVisible(self.show_road_links)
+        self.update_button_style(self.road_button, self.show_road_links)
+
+    def update_button_style(self, button, is_checked):
+        """
+        Update the button style based on its state (pressed or unpressed).
+        Pressed state uses light green, unpressed state uses light coral.
+        """
+        if is_checked:
+            button.setStyleSheet("background-color: lightgreen;")
+        else:
+            button.setStyleSheet("background-color: lightcoral;")
+
+    def load_bg_image(self, image_path, sf, xoff, yoff):
+        pixmap = QPixmap(image_path)
+        pixmap_item = QGraphicsPixmapItem(pixmap)
+        pixmap_item.setScale(sf)
+        pixmap_item.setPos(xoff, yoff)
+        return pixmap_item
 
     def _compactedSignal(self):
         """
@@ -153,22 +230,6 @@ class MapWidget(QWidget):
         """
         for ap_dict in ap_list:
             self.addActionPointGI(ap_dict)
-
-    def toggleGraphicsVisibility(self):
-        """
-        Toggles the visibility of all graphical elements (background images, logos, roads, and vehicle trails).
-        """
-        self.graphicsVisible = not self.graphicsVisible  # Flip the state
-        self.bg_image_item.setVisible(self.graphicsVisible)
-        self.volpelogo.setVisible(self.graphicsVisible)
-        self.cdalogo.setVisible(self.graphicsVisible)
-        self.road_group.setVisible(not self.graphicsVisible)
-
-        if (self.graphicsVisible):
-            self.opacityTruckValue = self.opacityRangeTop
-        else:
-            self.opacityTruckValue = 0
-
 
     def addVehiclePosition(self, lat, long):
         """
@@ -215,13 +276,6 @@ class MapWidget(QWidget):
                 step = (self.opacityTruckValue - 0.01) / (MAX_VEHICLES - 1)
                 opacity = self.opacityTruckValue - step * (index - 1)
                 v.setOpacity(opacity)
-
-    def load_bg_image(self, image_path, sf, xoff, yoff):
-        pixmap = QPixmap(image_path)
-        pixmap_item = QGraphicsPixmapItem(pixmap)
-        pixmap_item.setScale(sf)  # image scaling
-        pixmap_item.setPos(xoff, yoff)  # x, y offsets
-        return pixmap_item
 
     def _readMapInfo(self, fp):
         with open(fp, "r") as stream:

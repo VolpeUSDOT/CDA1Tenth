@@ -27,6 +27,7 @@ from webSocketClient import WebSocketClient
 
 # Placeholder for actual app icon
 ICONPATH = '../Resources/White Triskelion.png'
+SOCKET_URL = "ws://localhost:8765"
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
@@ -43,7 +44,7 @@ class MainWindow(QMainWindow):
         self.tabBar = TabBar()
         self.setWindowIcon(QIcon(ICONPATH))  # Set icon here
 
-        self.webSocketClient = WebSocketClient("ws://localhost:8765")
+        self.webSocketClient = WebSocketClient(SOCKET_URL)
         # Connect signals
         #self.webSocketClient.message_received.connect(self.handleIncomingMessage)
         # Start connection
