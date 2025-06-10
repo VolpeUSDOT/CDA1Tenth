@@ -140,33 +140,6 @@ class ActionPointModel(QAbstractListModel):
             self.actions.pop(row)
         return True
 
-    # TODO: See if this is correct and how it syncs with database etc.
-    def updateItemOrder(self, index_list):
-        """
-        Reorder elements in model based off index_list
-        """
-        if len(index_list) != self.rowCount(None):
-            return False
-        self.actions = [self.actions[i] for i in index_list]
-        return True
-
-    def moveAction(self, from_index, to_index):
-        """Move action from one index to another.
-
-        Args:
-            from_index (int): starting index
-            to_index (int): ending index
-        """
-        if 0 <= from_index < len(self.actions) and 0 <= to_index < len(self.actions):
-            action_to_move = self.actions.pop(from_index)
-            self.actions.insert(to_index, action_to_move)
-            self.dataChanged.emit(
-                self.index(min(from_index, to_index)),
-                self.index(max(from_index, to_index)),
-            )
-        else:
-            print("Index out of bounds for moving action.")
-
     def supportedDropActions(self):
         return Qt.DropAction.MoveAction
 
