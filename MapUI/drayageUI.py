@@ -40,7 +40,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Port Drayage UI")
-        self.setMinimumSize(900, 600)
+        self.setMinimumSize(950, 600)
         self.tabBar = TabBar()
         self.setWindowIcon(QIcon(ICONPATH))  # Set icon here
 
