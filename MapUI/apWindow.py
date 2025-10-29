@@ -178,7 +178,7 @@ class APWindow(QWidget):
             ap_data = self.apModel.data(self.apModel.index(i,0), role=Qt.ItemDataRole.EditRole)
             if hasattr(ap_data, "actionPoint"):
                 ap_data = ap_data.actionPoint
-            self.apMap.addActionPoint(ap_data.latitude, ap_data.longitude, ap_data.name)
+            self.apMap.addActionPoint(ap_data.latitude, ap_data.longitude, ap_data.actionID, ap_data.name)
 
     def updateView(self):
         self.updateMap()
@@ -261,16 +261,20 @@ class APWindow(QWidget):
             adjacentIndexRow = selectedIndexRow - 1
             adjacentIndex = index.siblingAtRow(adjacentIndexRow)
             adjacentRow = adjacentIndex.data(role=Qt.ItemDataRole.EditRole) 
+            selectedRow.actionPoint.actionID, selectedRow.actionPoint.prev_action, selectedRow.actionPoint.next_action = adjacentIndexRow, adjacentIndexRow - 1, adjacentIndexRow + 1
+            adjacentRow.actionPoint.actionID, adjacentRow.actionPoint.prev_action, adjacentRow.actionPoint.next_action = selectedIndexRow, selectedIndexRow - 1, selectedIndexRow + 1
             self.apModel.insertRow(adjacentIndexRow, selectedRow)
             self.apModel.removeRow(selectedIndexRow + 1)
         elif direction == Qt.ArrowType.DownArrow:
             adjacentIndexRow = selectedIndexRow + 1
             adjacentIndex = index.siblingAtRow(adjacentIndexRow)
             adjacentRow = adjacentIndex.data(role=Qt.ItemDataRole.EditRole) 
+            selectedRow.actionPoint.actionID, selectedRow.actionPoint.prev_action, selectedRow.actionPoint.next_action = adjacentIndexRow, adjacentIndexRow - 1, adjacentIndexRow + 1
+            adjacentRow.actionPoint.actionID, adjacentRow.actionPoint.prev_action, adjacentRow.actionPoint.next_action = selectedIndexRow, selectedIndexRow - 1, selectedIndexRow + 1 
             self.apModel.insertRow(selectedIndexRow, adjacentRow)
             self.apModel.removeRow(adjacentIndexRow + 1)
 
-        # update selection to follow initially selected row
+        # update map and selection to follow initially selected row
         self.apListView.selectionModel().clearSelection()
         self.apListView.selectionModel().setCurrentIndex(adjacentIndex, QItemSelectionModel.SelectionFlag.Select)
         
@@ -326,7 +330,7 @@ class APWindow(QWidget):
             actionPoint.longitude = clickedNewPointLong
             SQLdb.insertNewActionPoint(actionPoint)
             # Update the main action point map after it is saved to DB
-            self.apMap.addActionPoint(clickedNewPointLat, clickedNewPointLong)
+            self.apMap.addActionPoint(clickedNewPointLat, clickedNewPointLong, actionPoint.actionID)
             isDBUpdate = True
 
         if isDBUpdate:
@@ -389,7 +393,7 @@ class APWindow(QWidget):
             actionID += 1
             prev_action += 1
             next_action += 1
-            if actionID < self.apModel.rowCount(self):
+            if actionID == self.apModel.rowCount(self) - 1:
                 next_action = -1
 
         self.SQLdb = Database("PORT_DRAYAGE")
@@ -510,7 +514,7 @@ class APItemEditor(QWidget):
 
         self.apMap = MapWidget(acceptHoverEvents=False)
         self.apMap.setStyleSheet("background-color: grey;")
-        self.apMap.addActionPoint(self.m_ap.latitude, self.m_ap.longitude)
+        self.apMap.addActionPoint(self.m_ap.latitude, self.m_ap.longitude, self.m_ap.actionID)
         if len(self.apMap.ap_list) > 0:
             self.apMap.ap_list[0].setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
             self.apMap.ap_list[0].setFlag(

@@ -222,14 +222,14 @@ class MapWidget(QWidget):
             self.scene.removeItem(vehicle)
         self.vehicle_position = []
 
-    def addActionPoint(self, lat, long, description="No Description"):
+    def addActionPoint(self, lat, long, orderID, description="No Description"):
         """
         Takes an action point dictionary and adds the action point to the map
         """
         if long is None or lat is None:
             return
         x, y = self._convertCoords(long, lat)
-        ap = ActionPointGI(x, y, self.acceptHoverEvents, description, self.scene)
+        ap = ActionPointGI(x, y, self.acceptHoverEvents, orderID, description, self.scene)
         self.ap_list.append(ap)
         self.scene.addItem(ap)
 
@@ -369,11 +369,11 @@ class MapWidget(QWidget):
         # Call the base class mousePressEvent to ensure default behavior
         super(ViewGraphicsScene, self.scene).mousePressEvent(event)
 
-    def _add_clicked_point_to_map(self, description="No Description"):
+    def _add_clicked_point_to_map(self, orderID="", description="No Description"):
         if self.clickedNewPoint is None:
             return
         newActionPoint = ActionPointGI(
-            self.clickedNewPoint.x(), self.clickedNewPoint.y(), self.acceptHoverEvents, description, self.scene
+            self.clickedNewPoint.x(), self.clickedNewPoint.y(), self.acceptHoverEvents, orderID, description, self.scene
         )
         self.scene.addItem(newActionPoint)
 

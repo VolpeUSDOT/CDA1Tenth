@@ -7,7 +7,7 @@ actionPointPen = QPen(Qt.red, 6, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 vehiclePen = QPen(Qt.blue, 6, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
 class ActionPointGI(QGraphicsItem):
-    def __init__(self, x, y, acceptHoverEvents, name, mapScene):
+    def __init__(self, x, y, acceptHoverEvents, orderID, name, mapScene):
         super().__init__()
         self.setAcceptHoverEvents(acceptHoverEvents)
         self.setAcceptedMouseButtons(Qt.LeftButton)
@@ -25,6 +25,14 @@ class ActionPointGI(QGraphicsItem):
         self.text.setDefaultTextColor(Qt.black)  # Set text color to black
         self.text.setScale(.4)  # Change action point text scaling
         self.text.setPos(self.fixed_x, self.fixed_y)  # Set offset position for text
+
+        # Create number for the action point
+        self.number = QGraphicsTextItem(f"{orderID}", parent=self)
+        self.number.setDefaultTextColor(Qt.black)  # Set text color to black
+        self.number.setScale(.35)  # Change action point text scaling
+        self.number_x = (-self.number.boundingRect().width()*self.number.scale())/2
+        self.number_y = (-self.number.boundingRect().height()*self.number.scale())/2
+        self.number.setPos(self.number_x,self.number_y)
 
         # Create a background rectangle for the text
         self.background = QGraphicsRectItem(parent=self)

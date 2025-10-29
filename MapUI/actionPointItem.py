@@ -46,7 +46,7 @@ class ActionPoint:
         )
 
     def completedActionPointDisplay(self):
-        return f"Name: {self.name} \t\t "
+        return f"{self.actionID} - {self.name} \t\t "
 
     def convertToJSON(self):
         json_dict = {
