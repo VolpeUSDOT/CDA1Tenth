@@ -26,7 +26,7 @@ from webSocketClient import WebSocketClient
 # import ctypes
 
 # Placeholder for actual app icon
-ICONPATH = '../Resources/White Triskelion.png'
+ICONPATH = '../Resources/Triskelion-Blue.png'
 SOCKET_URL = "ws://localhost:8765"
 
 # Subclass QMainWindow to customize your application's main window
