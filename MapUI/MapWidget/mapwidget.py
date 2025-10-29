@@ -28,7 +28,7 @@ MAX_VEHICLES = 50  # Maximum number of vehicle trails to display
 class MapWidget(QWidget):
     selectionUpdate = Signal(ActionPointGI)
 
-    def __init__(self, png_map_fp=png_map, pgm_map_fp=pgm_map, map_info_fp=map_info,
+    def __init__(self, acceptHoverEvents, png_map_fp=png_map, pgm_map_fp=pgm_map, map_info_fp=map_info,
                  graph_fp=graph, volpe_fp=volpelogo, cda_fp=cdalogo):
         super().__init__()
         self.setMinimumSize(QSize(550, 400))
@@ -47,6 +47,7 @@ class MapWidget(QWidget):
         self.opacityRangeTop = 0.3  # 2nd vehicle in trail opacity (goes to 0 from here)
         self.opacityTruckValue = self.opacityRangeTop  # Initial trail visibility
         self.isAddActionPoint = False  # State to create a new action point
+        self.acceptHoverEvents = acceptHoverEvents
 
         # Create QGraphicsScene and QGraphicsView
         self.scene = ViewGraphicsScene(self)
@@ -228,7 +229,7 @@ class MapWidget(QWidget):
         if long is None or lat is None:
             return
         x, y = self._convertCoords(long, lat)
-        ap = ActionPointGI(x, y, description, self.scene)
+        ap = ActionPointGI(x, y, self.acceptHoverEvents, description, self.scene)
         self.ap_list.append(ap)
         self.scene.addItem(ap)
 
@@ -372,7 +373,7 @@ class MapWidget(QWidget):
         if self.clickedNewPoint is None:
             return
         newActionPoint = ActionPointGI(
-            self.clickedNewPoint.x(), self.clickedNewPoint.y(), description, self.scene
+            self.clickedNewPoint.x(), self.clickedNewPoint.y(), self.acceptHoverEvents, description, self.scene
         )
         self.scene.addItem(newActionPoint)
 

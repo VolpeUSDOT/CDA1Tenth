@@ -7,9 +7,9 @@ actionPointPen = QPen(Qt.red, 6, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 vehiclePen = QPen(Qt.blue, 6, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
 
 class ActionPointGI(QGraphicsItem):
-    def __init__(self, x, y, name, mapScene):
+    def __init__(self, x, y, acceptHoverEvents, name, mapScene):
         super().__init__()
-        self.setAcceptHoverEvents(True)
+        self.setAcceptHoverEvents(acceptHoverEvents)
         self.setAcceptedMouseButtons(Qt.LeftButton)
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
 

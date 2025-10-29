@@ -46,7 +46,7 @@ class APWindow(QWidget):
         # self.apListWidget = APListWidget()
         self.apListView = APListView()
         self.apListView.setModel(self.apModel)
-        self.apMap = MapWidget()
+        self.apMap = MapWidget(acceptHoverEvents=True)
         self.apMap.setStyleSheet("background-color: grey; color: black;")
         self.addAPButton = QPushButton("Add Point")
         self.editAPButton = QPushButton("Edit Point")
@@ -508,7 +508,7 @@ class APItemEditor(QWidget):
 
         self.pushUpdates = QPushButton("Save Action Point")
 
-        self.apMap = MapWidget()
+        self.apMap = MapWidget(acceptHoverEvents=False)
         self.apMap.setStyleSheet("background-color: grey;")
         self.apMap.addActionPoint(self.m_ap.latitude, self.m_ap.longitude)
         if len(self.apMap.ap_list) > 0:
