@@ -26,7 +26,7 @@ DEGREE_TO_TENTH_MICRO = 10000000
 MAX_VEHICLES = 50  # Maximum number of vehicle trails to display
 
 class MapWidget(QWidget):
-    selectionUpdate = Signal(ActionPointGI)
+    selectionUpdate = Signal(int)
 
     def __init__(self, acceptHoverEvents, png_map_fp=png_map, pgm_map_fp=pgm_map, map_info_fp=map_info,
                  graph_fp=graph, volpe_fp=volpelogo, cda_fp=cdalogo):
@@ -238,7 +238,7 @@ class MapWidget(QWidget):
         Add multiple action points
         """
         for ap_dict in ap_list:
-            self.addActionPointGI(ap_dict)
+            self.addActionPoint(ap_dict)
 
     def addVehiclePosition(self, lat, long):
         """
@@ -293,15 +293,16 @@ class MapWidget(QWidget):
 
     def _readGraphFile(self, graph_fp, roundPixelPosition):
         graph_data = gpd.read_file(graph_fp)
-        graph_data["adjusted_x"], graph_data["adjusted_y"] = self._convertCoords(
-            graph_data["geometry"].x, graph_data["geometry"].y
+        points = graph_data.loc[(graph_data["geometry"].geom_type == "Point")].copy()
+        points["adjusted_x"], points["adjusted_y"] = self._convertCoords(
+            points["geometry"].x, points["geometry"].y
         )
-        points = graph_data.loc[(graph_data["geometry"] != None)][
+        points = points.loc[(graph_data["geometry"] != None)][
             ["id", "adjusted_x", "adjusted_y"]
         ]
         if roundPixelPosition:
             points = self._roundPixelPositions(points)
-        lines = graph_data.loc[(graph_data["geometry"] == None)]
+        lines = graph_data.loc[(graph_data["geometry"].geom_type == "MultiLineString")]
         df_for_starts = points.rename(
             columns={"id": "startid", "adjusted_x": "start_x", "adjusted_y": "start_y"}
         )
@@ -368,6 +369,10 @@ class MapWidget(QWidget):
             self._add_clicked_point_to_map()
         # Call the base class mousePressEvent to ensure default behavior
         super(ViewGraphicsScene, self.scene).mousePressEvent(event)
+        # If at least one point item is present and a point item is clicked, update the selection
+        self.selected_ap_list = self._update_selected_ap()
+        if self.selected_ap_list:
+            self.selectionUpdate.emit(self.selected_ap_list[0].order)
 
     def _add_clicked_point_to_map(self, orderID="", description="No Description"):
         if self.clickedNewPoint is None:
@@ -413,6 +418,9 @@ class MapWidget(QWidget):
     
     def _get_points(self):
         return [item for item in self.scene.items() if isinstance(item, ActionPointGI)]
+    
+    def _update_selected_ap(self):
+        return [item for item in self.scene.selectedItems() if isinstance(item, ActionPointGI)]
 
 def createRoadLink(x1, y1, x2, y2):
     roadLink = QGraphicsLineItem(x1, y1, x2, y2)
