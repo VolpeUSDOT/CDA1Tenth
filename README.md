@@ -15,9 +15,8 @@ This repository provides a comprehensive educational engineering platform for st
    * Install Packages from requirements.txt
    * Create your own secrets.json file containing your mySQL/mariadb credentials (Temp until V2X integration)
 2. **Installation:**
-3. **Tutorials:**
+3. **Execution:**
    * Run UI from drayageUI.py in MapUI folder
-   * Familiarize yourself with the platform's functionalities by working through the step-by-step tutorials in the `TUTORIALS` directory. These tutorials will guide you through basic tasks, simulations, and application development.
 
 ### License
 
