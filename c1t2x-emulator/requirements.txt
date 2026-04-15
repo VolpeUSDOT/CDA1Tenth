@@ -1,3 +1,0 @@
-ruamel.yaml
-netifaces
-asn1tools
