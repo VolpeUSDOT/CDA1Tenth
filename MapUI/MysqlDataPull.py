@@ -6,7 +6,6 @@ from sqlalchemy.orm import Session
 import datetime as dt
 import warnings
 import json
-from sqlalchemy import text
 import logging
 
 logging.basicConfig(
@@ -56,6 +55,12 @@ class Database:
         action_data = pd.read_sql(actionsQuery, con=self.engine)
         return action_data
 
+    def updateActionData(self, new_data):
+        new_data.to_sql("action",con=self.engine,if_exists='replace',index=False,schema=self.schema)
+        with self.engine.connect() as conn:
+            update_actions_query = f"""ALTER TABLE `{self.schema}`.`action` ADD PRIMARY KEY (`action_id`)"""
+            conn.execute(text(update_actions_query))
+    
     def createSQLEngine(self):
         with open("secrets.json") as f:
             secrets = json.load(f)
@@ -168,6 +173,81 @@ class Database:
                 )
                 session.commit()
 
+    def updatePrevActionId(self, action_id, prev_action_id):
+        """
+        Update the previous action id of action data in the database
+        """
+        actionsQuery = (
+            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
+        )
+        action = pd.read_sql(actionsQuery, con=self.engine)
+        if not action.empty:
+            action.at[0, "prev_action_id"] = prev_action_id
+            update_query = text(
+                f"UPDATE `{self.schema}`.`action` SET prev_action_id = :prev_action_id WHERE action_id = :action_id"
+            )
+            with Session(self.engine) as session:
+                session.execute(
+                    update_query,
+                    {"prev_action_id": prev_action_id, "action_id": action_id},
+                )
+                session.commit()
+            logging.info(
+                "Action(id=%s) prev_action_id updated to %s", action_id, prev_action_id
+            )
+        else:
+            logging.info("Action(id=%s) not found", action_id)
+
+    def updateActionLatitude(self, action_id, area_lat):
+        """
+        Update the previous action id of action data in the database
+        """
+        actionsQuery = (
+            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
+        )
+        action = pd.read_sql(actionsQuery, con=self.engine)
+        if not action.empty:
+            action.at[0, "area_lat"] = area_lat
+            update_query = text(
+                f"UPDATE `{self.schema}`.`action` SET area_lat = :area_lat WHERE action_id = :action_id"
+            )
+            with Session(self.engine) as session:
+                session.execute(
+                    update_query,
+                    {"area_lat": area_lat, "action_id": action_id},
+                )
+                session.commit()
+            logging.info(
+                "Action(id=%s) area_lat updated to %s", action_id, area_lat
+            )
+        else:
+            logging.info("Action(id=%s) not found", action_id)
+
+    def updateActionLongitude(self, action_id, area_long):
+        """
+        Update the previous action id of action data in the database
+        """
+        actionsQuery = (
+            f"""SELECT * FROM `{self.schema}`.`action` where action_id = {action_id};"""
+        )
+        action = pd.read_sql(actionsQuery, con=self.engine)
+        if not action.empty:
+            action.at[0, "area_long"] = area_long
+            update_query = text(
+                f"UPDATE `{self.schema}`.`action` SET area_long = :area_long WHERE action_id = :action_id"
+            )
+            with Session(self.engine) as session:
+                session.execute(
+                    update_query,
+                    {"area_long": area_long, "action_id": action_id},
+                )
+                session.commit()
+            logging.info(
+                "Action(id=%s) area_long updated to %s", action_id, area_long
+            )
+        else:
+            logging.info("Action(id=%s) not found", action_id)
+
     def updateCargoName(self, action_id, cargo_name):
         """
         Update the cargo name of action data in the database
@@ -264,7 +344,26 @@ class Database:
         self.updateNextActionId(last_action_id, actionPoint.actionID)
         return actionPoint.actionID
 
+    def deleteActionPoint(self, actionPoint):
+        """
+        Delete action point from the database
+        """
+        if actionPoint.prev_action != -1:
+            self.updateNextActionId(actionPoint.prev_action, actionPoint.next_action)
+        if actionPoint.next_action != -1:
+            self.updatePrevActionId(actionPoint.next_action, actionPoint.prev_action)
+        delete_query = text(f"DELETE FROM `{self.schema}`.`action` WHERE action_id = :action_id")
+        with Session(self.engine) as session:
+            session.execute(delete_query, {"action_id": actionPoint.actionID})
+            session.commit()
+            logging.info("Action(id=%s) deleted", actionPoint.actionID)
 
+    # def updateActionPointOrder(self)
+    #     warnings.simplefilter(action="ignore", category=UserWarning)
+    #     actionsQuery = f"""SELECT * FROM `{self.schema}`.`action`;"""
+    #     action_data = pd.to_sql(actionsQuery, con=self.engine)
+    #     return action_data
+    
 if __name__ == "__main__":
     print("test")
     ap_df = pd.DataFrame({"TestCol": [2, 3, 4, 5, 6, 7], "AP_ID": [1, 2, 3, 4, 5, 6]})

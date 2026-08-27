@@ -1,7 +1,7 @@
 import sys
-import numpy as np
+import pandas as pd
 from MapWidget.mapwidget import MapWidget
-from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint, QItemSelectionModel
+from PySide6.QtCore import QAbstractListModel, Qt, Property, QSortFilterProxyModel, Signal, QPoint, QItemSelectionModel, QModelIndex
 from PySide6.QtWidgets import (
     QComboBox,
     QMessageBox,
@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QStackedWidget,
     QPushButton,
+    QToolButton,
     QAbstractItemView,
     QListView,
     QLineEdit,
@@ -19,6 +20,8 @@ from PySide6.QtWidgets import (
     QListWidget,
     QListWidgetItem,
     QGraphicsItem,
+    QTextEdit,
+    QVBoxLayout,
 )
 from actionPointItem import ActionPoint,  ActionPointModel
 from webSocketClient import WebSocketClient
@@ -35,33 +38,61 @@ class APWindow(QWidget):
 
     '''
 
-    def __init__(self, loading_signal, unloading_signal, inspection_signal):
+    def __init__(self, loading_signal, unloading_signal, inspection_signal, websocketClient):
         super().__init__()
-        self.title = QLabel('''# Action Points''')
-        self.title.setTextFormat(Qt.TextFormat.MarkdownText)
+        self.aptitle = QLabel('''# Action Points''')
+        self.aptitle.setTextFormat(Qt.TextFormat.MarkdownText)
         self.apModel = ActionPointModel()
         # self.apListWidget = APListWidget()
         self.apListView = APListView()
         self.apListView.setModel(self.apModel)
-        self.apMap = MapWidget()
-        self.apMap.setStyleSheet("background-color: grey;")
-        self.addAPButton = QPushButton("Add Action Point")
-        self.editAPButton = QPushButton("Edit Action Point")
+        self.apMap = MapWidget(acceptHoverEvents=True)
+        self.apMap.setStyleSheet("background-color: grey; color: black;")
+        self.addAPButton = QPushButton("Add Point")
+        self.editAPButton = QPushButton("Edit Point")
+        self.removeAPButton = QPushButton("Remove Point")
+        self.moveAPUpButton = QToolButton()
+        self.moveAPUpButton.setArrowType(Qt.ArrowType.UpArrow)
+        self.moveAPDownButton = QToolButton()
+        self.moveAPDownButton.setArrowType(Qt.ArrowType.DownArrow)
         self.activeEditor = None
         self.loading_signal = loading_signal
         self.unloading_signal = unloading_signal
         self.inspection_signal = inspection_signal
 
+        # Create an information box for BSM info
+        self.bsmInfoBox = QWidget()
+        self.bsmInfoBox.setFixedHeight(200)  # Set a fixed height
+        
+        # Title for BSM information
+        self.bsmtitle = QLabel('''# BSM Vehicle Information''')
+        self.bsmtitle.setTextFormat(Qt.TextFormat.MarkdownText)
+        self.bsmTextEdit = QTextEdit(self.bsmInfoBox)
+        self.bsmTextEdit.setReadOnly(True)  # Make the text edit read-only
+        self.bsmTextEdit.setPlainText("No data")  # Set default text
+
+        # Add black border to columns
+        self.bsmTextEdit.setStyleSheet("background-color: lightgrey; border: 1px solid black; color: black; font-size: 15px;")
+        self.apListView.setStyleSheet("background-color: white; border: 1px solid black; color: black; font-size: 15px;")
+
         layout = QGridLayout()
-        layout.addWidget(self.title, 0, 0, 1, 5)
-        layout.addWidget(self.apMap, 1, 0, 3, 3)
-        layout.addWidget(self.apListView, 1, 3, 1, 2)
-        layout.addWidget(self.addAPButton, 2, 3, 1, 1)
-        layout.addWidget(self.editAPButton, 2, 4, 1, 1)
+        layout.addWidget(self.apMap, 1, 0, 6, 4)
+        layout.addWidget(self.bsmtitle, 1, 6, 1, 5)
+        layout.addWidget(self.bsmTextEdit, 2, 6, 1, 5) 
+        layout.addWidget(self.aptitle, 3, 6, 1, 5)
+        layout.addWidget(self.apListView, 4, 6, 1, 5)
+        layout.addWidget(self.addAPButton, 5, 6, 1, 1)
+        layout.addWidget(self.editAPButton, 5, 7, 1, 1)
+        layout.addWidget(self.removeAPButton, 5, 8, 1, 1)
+        layout.addWidget(self.moveAPUpButton, 5, 9, 1, 1)
+        layout.addWidget(self.moveAPDownButton, 5, 10, 1, 1)
         self.setLayout(layout)
 
         self.addAPButton.clicked.connect(self.launchNewAPEditor)
         self.editAPButton.clicked.connect(self.launchAPEditor)
+        self.removeAPButton.clicked.connect(self.removeAP)
+        self.moveAPUpButton.clicked.connect(self.repositionAP)
+        self.moveAPDownButton.clicked.connect(self.repositionAP)
 
         self.apModel.dataChanged.connect(self.updateView)
 
@@ -72,12 +103,18 @@ class APWindow(QWidget):
         # self.apListWidget.itemDropped.connect(self.propagateListReorder)
         # self.apListWidget.indexesMoved().connect(self.propagateListReorder)
         self.messageDecoder = MessageDecoder()
+        self.webSocketClient = websocketClient
+        self.webSocketClient.message_received.connect(self.handleIncomingMessage)
 
-        self.webSocketClient = WebSocketClient()
+        ''' 
+        Moved to drayageui to reduce # of connections
+        #self.webSocketClient = WebSocketClient("ws://localhost:8765")
         # Connect signals
         self.webSocketClient.message_received.connect(self.handleIncomingMessage)
         # Start connection
-        self.webSocketClient.start_connection()
+        #self.webSocketClient.start_connection()
+        #self.webSocketClient.connected.connect(lambda: print("webSocket connected"))
+        '''
 
         # When a list widget item is selected, update the selection
         # self.apListWidget.itemSelectionChanged.connect(self.propagateListSelection)
@@ -100,6 +137,20 @@ class APWindow(QWidget):
     #     self.apModel.updateItemOrder(index_list)
     #     # self.apListWidget.clearSelection()
 
+    def update_bsm_info(self, bsm_item):
+        """ Update the BSM information shown in the BSM box. """
+        DEGREE_TO_TENTH_MICRO = 10000000
+        lat = float(bsm_item.latitude)/DEGREE_TO_TENTH_MICRO
+        long = float(bsm_item.longitude)/DEGREE_TO_TENTH_MICRO
+        bsm_text = (
+            f"Message ID: {bsm_item.tempid}<br>"
+            f"Latitude: {lat}<br>"
+            f"Longitude: {long}<br>"
+            f"Speed: {bsm_item.speed}<br>"
+            f"Message Count: {bsm_item.msgCnt}"
+        )
+        self.bsmTextEdit.setHtml(bsm_text)  # Use setHtml for formatting
+    
     def propagateMapSelection(self, mapItem):
         '''
         map selections will be passed to the list widget
@@ -127,13 +178,14 @@ class APWindow(QWidget):
             ap_data = self.apModel.data(self.apModel.index(i,0), role=Qt.ItemDataRole.EditRole)
             if hasattr(ap_data, "actionPoint"):
                 ap_data = ap_data.actionPoint
-            self.apMap.addActionPoint(ap_data.latitude, ap_data.longitude)
+            self.apMap.addActionPoint(ap_data.latitude, ap_data.longitude, ap_data.actionID, ap_data.name)
 
     def updateView(self):
         self.updateMap()
         # self.updateListView()
 
     def handleIncomingMessage(self, message):
+        #print(message)
         decoded_message = self.messageDecoder.decodeMessage(message)
         if type(decoded_message) is BSMItem:
             self.updateVehiclePose(decoded_message)
@@ -146,11 +198,12 @@ class APWindow(QWidget):
                 self.inspection_signal.emit(decoded_message)
 
     def updateVehiclePose(self, bsm):
-        self.apMap.clearVehiclePosition()
+        #self.apMap.clearVehiclePosition()
+        self.update_bsm_info(bsm)
         self.apMap.addVehiclePosition(bsm.latitude, bsm.longitude)
 
     def launchNewAPEditor(self):
-        index = self.apModel.insertRow(0, ActionPoint())
+        index = self.apModel.insertRow(self.apModel.rowCount(self), ActionPoint())
         self.apListView.selectionModel().clearSelection()
         self.apListView.selectionModel().setCurrentIndex(index, QItemSelectionModel.SelectionFlag.Select)
         index = self.apListView.selectedIndexes()[0]
@@ -184,12 +237,61 @@ class APWindow(QWidget):
         self.activeEditor.pushUpdates.clicked.connect(self.closeEditorAndUpdate)
         self.activeEditor.show()
 
+    def removeAP(self):
+        if len(self.apListView.selectedIndexes()) < 1:
+            return
+        index = self.apListView.selectedIndexes()[0]
+        if index.isValid():
+            SQLdb = Database("PORT_DRAYAGE")
+            SQLdb.deleteActionPoint(index.data(role=Qt.ItemDataRole.EditRole))
+            self.apModel.removeRow(index.row())
+            self.updateMap()
+
+    def repositionAP(self, direction):
+        # identify selected row
+        if len(self.apListView.selectedIndexes()) < 1:
+            return
+        index = self.apListView.selectedIndexes()[0]
+        selectedRow = index.data(role=Qt.ItemDataRole.EditRole)         
+        selectedIndexRow = index.row()
+
+        # insert copy of row in desired location, remove old copy
+        direction = self.sender().arrowType()
+        if direction == Qt.ArrowType.UpArrow:
+            adjacentIndexRow = selectedIndexRow - 1
+            adjacentIndex = index.siblingAtRow(adjacentIndexRow)
+            adjacentRow = adjacentIndex.data(role=Qt.ItemDataRole.EditRole) 
+            selectedRow.actionPoint.actionID, selectedRow.actionPoint.prev_action, selectedRow.actionPoint.next_action = adjacentIndexRow, adjacentIndexRow - 1, adjacentIndexRow + 1
+            adjacentRow.actionPoint.actionID, adjacentRow.actionPoint.prev_action, adjacentRow.actionPoint.next_action = selectedIndexRow, selectedIndexRow - 1, selectedIndexRow + 1
+            self.apModel.insertRow(adjacentIndexRow, selectedRow)
+            self.apModel.removeRow(selectedIndexRow + 1)
+        elif direction == Qt.ArrowType.DownArrow:
+            adjacentIndexRow = selectedIndexRow + 1
+            adjacentIndex = index.siblingAtRow(adjacentIndexRow)
+            adjacentRow = adjacentIndex.data(role=Qt.ItemDataRole.EditRole) 
+            selectedRow.actionPoint.actionID, selectedRow.actionPoint.prev_action, selectedRow.actionPoint.next_action = adjacentIndexRow, adjacentIndexRow - 1, adjacentIndexRow + 1
+            adjacentRow.actionPoint.actionID, adjacentRow.actionPoint.prev_action, adjacentRow.actionPoint.next_action = selectedIndexRow, selectedIndexRow - 1, selectedIndexRow + 1 
+            self.apModel.insertRow(selectedIndexRow, adjacentRow)
+            self.apModel.removeRow(adjacentIndexRow + 1)
+
+        # update map and selection to follow initially selected row
+        self.apListView.selectionModel().clearSelection()
+        self.apListView.selectionModel().setCurrentIndex(adjacentIndex, QItemSelectionModel.SelectionFlag.Select)
+        
+        # update SQL database with new order
+        self.writeSQLActionPoints()
+
     def closeEditorAndUpdate(self):
         # i = self.apListWidget.selectedItems()[0].real_index
         # self.apModel.setData(self.apModel.index(i,0), value = self.activeEditor.m_ap, role=Qt.ItemDataRole.EditRole)
         index = self.apListView.selectedIndexes()[0]
         selectedRow = index.data(role=Qt.ItemDataRole.EditRole)
-        clickedNewPoint = self.activeEditor.apMap.clickedNewPoint
+        # If a new point is clicked in editor, then assign, otherwise clickedNewPoint = None
+        if hasattr(self.activeEditor.apMap, 'clickedNewPoint'):
+            clickedNewPoint = self.activeEditor.apMap.clickedNewPoint
+        else:
+            clickedNewPoint = None
+
         SQLdb = Database("PORT_DRAYAGE")
         # Update database
         isDBUpdate = False
@@ -204,6 +306,9 @@ class APWindow(QWidget):
             SQLdb.updateActionAreaName(actionPoint.actionID, actionPoint.name)
             SQLdb.updateCargoName(actionPoint.actionID, actionPoint.cargo_name)
             SQLdb.updateVehicleId(actionPoint.actionID, actionPoint.vehicle_id)
+            SQLdb.updateActionLatitude(actionPoint.actionID, actionPoint.latitude)
+            SQLdb.updateActionLongitude(actionPoint.actionID, actionPoint.longitude)
+
             isDBUpdate = True
         elif (
             clickedNewPoint is not None
@@ -225,7 +330,7 @@ class APWindow(QWidget):
             actionPoint.longitude = clickedNewPointLong
             SQLdb.insertNewActionPoint(actionPoint)
             # Update the main action point map after it is saved to DB
-            self.apMap.addActionPoint(clickedNewPointLat, clickedNewPointLong)
+            self.apMap.addActionPoint(clickedNewPointLat, clickedNewPointLong, actionPoint.actionID)
             isDBUpdate = True
 
         if isDBUpdate:
@@ -240,11 +345,13 @@ class APWindow(QWidget):
                 "No valid coordinates selected, or area name, vehicle id, cardo name are empty for the new action point.",
             )
             self.apModel.removeRow(index.row())
+
     def readSQLActionPoints(self, actionData):
         '''
         Pull action points from SQL and add them to map and list
-        # TODO: This loads in the ap in reverse order (replace 0 in inser trow with something better)
+
         '''
+        self.apModel.clear()
         for _, actionPointData in actionData.iterrows():
             ap_dict = actionPointData.to_dict()
             ap = ActionPoint(
@@ -262,7 +369,35 @@ class APWindow(QWidget):
             vehicle = VehicleItem(name=ap_dict['veh_name'], veh_id=ap_dict['veh_id'])
             cargo = CargoItem(name=ap_dict['cargo_name'], cargo_uuid=ap_dict['cargo_uuid'])
             action = ActionItem(vehicle=vehicle, cargo=cargo, actionPoint=ap)
-            self.apModel.insertRow(0, action)
+            self.apModel.insertRow(self.apModel.rowCount(self), action)
+
+    def writeSQLActionPoints(self):
+        ap_df = pd.DataFrame(pd.NA,index=range(self.apModel.rowCount(self)),columns=['action_id','prev_action_id','next_action_id','veh_id','veh_name','cargo_name','cargo_uuid','area_lat','area_long','area_name','area_status','area_is_notify'])
+        actionID = 0
+        prev_action = -1
+        next_action = 1
+        for ap in self.apModel.actions:
+            ap_df.loc[actionID,'action_id'] = actionID
+            ap_df.loc[actionID,'prev_action_id'] = prev_action
+            ap_df.loc[actionID,'next_action_id'] = next_action
+            ap_df.loc[actionID,'veh_id'] = ap.actionPoint.vehicle_id
+            ap_df.loc[actionID,'veh_name'] = ap.vehicle.name
+            ap_df.loc[actionID,'cargo_name'] = ap.actionPoint.cargo_name
+            ap_df.loc[actionID,'cargo_uuid'] = ap.cargo.cargo_uuid
+            ap_df.loc[actionID,'area_lat'] = ap.actionPoint.latitude
+            ap_df.loc[actionID,'area_long'] = ap.actionPoint.longitude
+            ap_df.loc[actionID,'area_name'] = ap.actionPoint.name
+            ap_df.loc[actionID,'area_status'] = ap.actionPoint.status
+            ap_df.loc[actionID,'area_is_notify'] = ap.actionPoint.is_notify
+            
+            actionID += 1
+            prev_action += 1
+            next_action += 1
+            if actionID == self.apModel.rowCount(self) - 1:
+                next_action = -1
+
+        self.SQLdb = Database("PORT_DRAYAGE")
+        self.SQLdb.updateActionData(ap_df)
 
 # class APListWidget(QListWidget):
 #     itemSelectionDropped = Signal()
@@ -300,8 +435,8 @@ class APListView(QListView):
         super().__init__()
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setUniformItemSizes(True)
-        self.setDragEnabled(True)
-        self.setAcceptDrops(True)
+        self.setDragEnabled(False)
+        self.setAcceptDrops(False)
         self.setDropIndicatorShown(True)
         self.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
 
@@ -377,9 +512,9 @@ class APItemEditor(QWidget):
 
         self.pushUpdates = QPushButton("Save Action Point")
 
-        self.apMap = MapWidget()
+        self.apMap = MapWidget(acceptHoverEvents=False)
         self.apMap.setStyleSheet("background-color: grey;")
-        self.apMap.addActionPoint(self.m_ap.latitude, self.m_ap.longitude)
+        self.apMap.addActionPoint(self.m_ap.latitude, self.m_ap.longitude, self.m_ap.actionID)
         if len(self.apMap.ap_list) > 0:
             self.apMap.ap_list[0].setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
             self.apMap.ap_list[0].setFlag(
@@ -446,7 +581,7 @@ def Distance_Formula(point1, point2):
     y2 = point2[1]
     x_diff = (x2 - x1)**2
     y_diff = (y2 - y1)**2
-    distance = np.sqrt(x_diff + y_diff)
+    distance = pd.sqrt(x_diff + y_diff)
     return distance
 
 

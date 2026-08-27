@@ -19,10 +19,10 @@ class PDLoadingWidget(QWidget):
     '''
     Main Widget for the loading display to be referenced outside this file
     '''
-    def __init__(self, loading_signal):
+    def __init__(self, loading_signal, websocketClient):
         super().__init__()
         self.model = LoadingActionList(loadingActions=[])
-        self.loadingActionView = PendingActionView()
+        self.loadingActionView = PendingActionView(websocketClient)
         self.completedActionView = CompletedActionView()
         self.inProgressFilterProxyModel = InProgressActionListProxyModel()
         self.inProgressFilterProxyModel.setSourceModel(self.model)
@@ -41,7 +41,6 @@ class PDLoadingWidget(QWidget):
         self.completeLabel = QLabel('''## Completed Loading Actions''')
         self.completeLabel.setTextFormat(Qt.TextFormat.MarkdownText)
 
-        self.completedResetButton = QPushButton("Clear")
 
         layout = QGridLayout()
         layout.addWidget(self.title, 0, 0, 1, 1)
@@ -49,7 +48,6 @@ class PDLoadingWidget(QWidget):
         layout.addWidget(self.loadingActionView, 2, 0, 1, 1)
         layout.addWidget(self.completeLabel, 3, 0, 1, 1)
         layout.addWidget(self.completedActionView, 4, 0, 1, 1)
-        layout.addWidget(self.completedResetButton, 5, 0, 1, 1)
 
         self.setLayout(layout)
         loading_signal.connect(self.addLoadingAction)
@@ -61,27 +59,23 @@ class PDLoadingWidget(QWidget):
         self.loadingActionView.openPersistentEditor(self.model.index(i,0))
         self.model.layoutChanged.emit()
 
-    def deleteLoadingAction(self):
-        indexes = self.loadingActionView.selectedIndexes()
-        if indexes:
-            # Indexes is a list of a single item in single-select mode.
-            index = indexes[0]
-            # Remove the item and refresh.
-            del self.model.loadingActions[index.row()]
-            self.model.layoutChanged.emit()
-            # Clear the selection (as it is no longer valid).
-            self.loadingActionView.clearSelection()
+    def deleteLoadingActions(self):
+        # Remove the items and refresh.
+        del self.model.loadingActions[:]
+        self.model.layoutChanged.emit()
+        # Clear the selection (as it is no longer valid).
+        self.loadingActionView.clearSelection()
 
 
 class PendingActionView(QListView):
     '''
     Subclass of list view for showing a list of editable action items
     '''
-    def __init__(self):
+    def __init__(self, websocketClient):
         super().__init__()
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setUniformItemSizes(True)
-        self.setItemDelegate(ActionDelegate())
+        self.setItemDelegate(ActionDelegate(None, websocketClient))
         # self.setEditTriggers(QAbstractItemView.DoubleClicked | QAbstractItemView.SelectedClicked)
         self.setEditTriggers(QAbstractItemView.EditTrigger.AllEditTriggers)
 
@@ -216,15 +210,16 @@ class ActionDelegate(QStyledItemDelegate):
     '''
     Creates an alternate, interactable and editable view for items in the model and connects the data in the temporary editor with the model
     '''
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, websocketClient = None):
         super().__init__(parent)
+        self.websocketClient = websocketClient
 
     def sizeHint(self, option, index):
-        editor = ActionEditor(None)
+        editor = ActionEditor(None, self.websocketClient)
         return editor.sizeHint()
 
     def createEditor(self, parent, option, index):
-        editor = ActionEditor(parent)
+        editor = ActionEditor(parent, self.websocketClient)
         # Connect the dataChanged signal from each item to update the backend model data
         editor.actionDataChanged.connect(self.commit_from_editor) # TODO Might need to lose this line
         return editor
@@ -256,15 +251,15 @@ class ActionEditor(QWidget):
     '''
     actionDataChanged = Signal()
 
-    def __init__(self, parent):
+    def __init__(self, parent, websocketClient):
         super().__init__(parent)
         self.m_action_data = ActionItem()
 
         # Internal widgets
         self.progressButton = QPushButton("Start Loading")
         self.portArea = QWidget() # Placeholder b/c I have no clue what is intended to be in that box
-        self.vehicleLabel = QLabel("Vehicle: ")
-        self.cargoLabel = QLabel("With Cargo: ")
+        self.vehicleLabel = QLabel(f"Vehicle: {self.m_action_data.vehicle.veh_id}")
+        self.cargoLabel = QLabel(f"With Cargo: {self.m_action_data.cargo.cargo_uuid}")
         self.statusLabel = QLabel(f"Status: {self.m_action_data.status}")
 
         # Layout widgets
@@ -276,10 +271,11 @@ class ActionEditor(QWidget):
         self.layout.addWidget(self.portArea, 0, 2, 3, 2)
         self.setLayout(self.layout)
 
+        self.setAutoFillBackground(True)
+
         self.progressButton.clicked.connect(self.progressStatus)
 
-        self.webSocketClient = WebSocketClient()
-        self.webSocketClient.start_connection()
+        self.webSocketClient = websocketClient
 
     def progressStatus(self):
         if self.m_action_data.status == "Pending":
@@ -297,6 +293,10 @@ class ActionEditor(QWidget):
 
     def setValue(self, value):
         self.m_action_data = value
+        if value is not None:
+            self.vehicleLabel.setText(f"Vehicle: {value.vehicle.veh_id}")
+            self.cargoLabel.setText(f"Cargo: {value.cargo.cargo_uuid}")
+            self.statusLabel.setText(f"Status: {value.status}")
 
     def value(self):
         return self.m_action_data
